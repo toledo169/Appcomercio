@@ -21,16 +21,12 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private TextView nombre;
-    private FloatingActionButton fab;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        Bundle args = new Bundle();
-        String valornombre=args.getString("valor");
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        nombre= root.findViewById(R.id.nombreusuario);
-        nombre.setText(valornombre);
+
         //final TextView textView = root.findViewById(R.id.text_home);
        // homeViewModel.getText().observe(this, new Observer<String>() {
        //     @Override

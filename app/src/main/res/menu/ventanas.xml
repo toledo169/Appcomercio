@@ -4,6 +4,8 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="Cerrar sesion"
+        android:title="Ver mapa"
         app:showAsAction="never" />
 </menu>
+
+
