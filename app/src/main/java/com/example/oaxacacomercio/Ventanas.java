@@ -5,6 +5,12 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
+import com.example.oaxacacomercio.ui.send.SendFragment;
+import com.example.oaxacacomercio.ui.share.ShareFragment;
+import com.example.oaxacacomercio.ui.slideshow.SlideshowFragment;
+import com.example.oaxacacomercio.ui.tools.ToolsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -12,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -30,8 +38,7 @@ import android.widget.TextView;
 public class Ventanas extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-    public static final String apellido_paterno="apellido_paterno";
-    TextView apellidop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +56,7 @@ public class Ventanas extends AppCompatActivity implements NavigationView.OnNavi
         //});
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        apellidop=(TextView)findViewById(R.id.nombreusuario);
-        String apellidopaterno=getIntent().getStringExtra("apellido_paterno");
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -79,6 +85,37 @@ public class Ventanas extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+        int id = menuItem.getItemId();
+
+        Fragment miFragment=null;
+        boolean fragmentSeleccionado=false;
+
+        if (id == R.id.nav_home) {
+            miFragment=new HomeFragment();
+            fragmentSeleccionado=true;
+        }else if (id == R.id.nav_tools) {
+            miFragment=new ToolsFragment();
+            fragmentSeleccionado=true;
+        } else if (id == R.id.nav_gallery) {
+            miFragment=new GalleryFragment();
+            fragmentSeleccionado=true;
+        } else if (id == R.id.nav_send) {
+            miFragment=new SendFragment();
+            fragmentSeleccionado=true;
+        } else if (id == R.id.nav_share) {
+            miFragment=new ShareFragment();
+            fragmentSeleccionado=true;
+        } else if (id == R.id.nav_slideshow) {
+            miFragment=new SlideshowFragment();
+            fragmentSeleccionado=true;
+        }
+
+        if (fragmentSeleccionado==true){
+            getSupportFragmentManager().beginTransaction().replace(R.id.escena,miFragment).commit();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

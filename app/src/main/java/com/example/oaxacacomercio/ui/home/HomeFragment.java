@@ -21,12 +21,24 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private TextView nombre;
+    public static final String apellido_paternos="apellido_paterno";
+    public static final String apellido_maternos="apellido_materno";
+    public static final String nombres="name";
+    TextView apellidop;
+    TextView nomb;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        nomb=(TextView)root.findViewById(R.id.nombreusuario);
+        String nomusuario=getActivity().getIntent().getStringExtra("name");
+        nomb.setText(nomusuario);
 
+        apellidop=(TextView) root.findViewById(R.id.apellido);
+        String usuario=getActivity().getIntent().getStringExtra("apellido_paterno");
+        String apmusuario=getActivity().getIntent().getStringExtra("apellido_materno");
+        apellidop.setText(usuario +" " + apmusuario);
         //final TextView textView = root.findViewById(R.id.text_home);
        // homeViewModel.getText().observe(this, new Observer<String>() {
        //     @Override

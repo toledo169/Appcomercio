@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_color"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    >
     <LinearLayout
+        android:id="@+id/escena"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
