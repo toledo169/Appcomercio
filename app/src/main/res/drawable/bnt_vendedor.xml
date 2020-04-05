@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#6e676a">
+    android:color="#313d4c">
     <item android:drawable="@drawable/bg_ripple_vendedor"/>
 </ripple>

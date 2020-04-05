@@ -35,7 +35,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.TextView;
 
-public class Ventanas extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Ventanas extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -83,39 +83,4 @@ public class Ventanas extends AppCompatActivity implements NavigationView.OnNavi
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
-
-        Fragment miFragment=null;
-        boolean fragmentSeleccionado=false;
-
-        if (id == R.id.nav_home) {
-            miFragment=new HomeFragment();
-            fragmentSeleccionado=true;
-        }else if (id == R.id.nav_tools) {
-            miFragment=new ToolsFragment();
-            fragmentSeleccionado=true;
-        } else if (id == R.id.nav_gallery) {
-            miFragment=new GalleryFragment();
-            fragmentSeleccionado=true;
-        } else if (id == R.id.nav_send) {
-            miFragment=new SendFragment();
-            fragmentSeleccionado=true;
-        } else if (id == R.id.nav_share) {
-            miFragment=new ShareFragment();
-            fragmentSeleccionado=true;
-        } else if (id == R.id.nav_slideshow) {
-            miFragment=new SlideshowFragment();
-            fragmentSeleccionado=true;
-        }
-
-        if (fragmentSeleccionado==true){
-            getSupportFragmentManager().beginTransaction().replace(R.id.escena,miFragment).commit();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

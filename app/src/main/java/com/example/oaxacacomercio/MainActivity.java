@@ -37,7 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener,Response.Listener<JSONObject>,Response.ErrorListener {
+public class MainActivity extends AppCompatActivity  implements Response.Listener<JSONObject>,Response.ErrorListener {
     private TextInputLayout inputCorreo,inputPassword;
     private Button usuarioadmi,vendedor;
     private ProgressDialog progreso;
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.escena, new HomeFragment()).commit();
+       // FragmentManager fm = getSupportFragmentManager();
+       // fm.beginTransaction().replace(R.id.escena, new HomeFragment()).commit();
 
         crearComponentes();
         request= Volley.newRequestQueue(this);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         progress=new ProgressDialog(this);
         progress.setMessage("Cargando...");
         progress.show();
-        String url="http://192.168.0.11/api/Usuario/iniciar/"+inputCorreo.getEditText().getText().toString();
+        String url="http://192.168.0.23/api/Usuario/iniciar/"+inputCorreo.getEditText().getText().toString();
         jsonRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonRequest);
     }
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         User usuario= new User();
         Toast.makeText(this,"Inicio de sesión con exito",Toast.LENGTH_SHORT).show();
 
-        JSONArray jsonArray= response.optJSONArray("User");
+        JSONArray jsonArray= response.optJSONArray("admin");
         JSONObject jsonObject=null;
         try {
             jsonObject= jsonArray.getJSONObject(0);
@@ -107,40 +107,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         startActivity(goMain);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
 
-        Fragment miFragment=null;
-        boolean fragmentSeleccionado=false;
-
-        if (id == R.id.nav_home) {
-            miFragment=new HomeFragment();
-            fragmentSeleccionado=true;
-        }else if (id == R.id.nav_tools) {
-            miFragment=new ToolsFragment();
-            fragmentSeleccionado=true;
-        } else if (id == R.id.nav_gallery) {
-            miFragment=new GalleryFragment();
-            fragmentSeleccionado=true;
-        } else if (id == R.id.nav_send) {
-            miFragment=new SendFragment();
-            fragmentSeleccionado=true;
-        } else if (id == R.id.nav_share) {
-            miFragment=new ShareFragment();
-            fragmentSeleccionado=true;
-        } else if (id == R.id.nav_slideshow) {
-            miFragment=new SlideshowFragment();
-            fragmentSeleccionado=true;
-        }
-
-        if (fragmentSeleccionado==true){
-            getSupportFragmentManager().beginTransaction().replace(R.id.escena,miFragment).commit();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
     }
 

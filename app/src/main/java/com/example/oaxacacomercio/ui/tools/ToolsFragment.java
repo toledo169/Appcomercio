@@ -1,6 +1,7 @@
 package com.example.oaxacacomercio.ui.tools;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.OrganizacionAdapter;
+import com.example.oaxacacomercio.Helper.MySwipeHelper;
+import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.Organizacion;
 import com.example.oaxacacomercio.R;
 
@@ -33,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ToolsFragment extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
     private ToolsViewModel toolsViewModel;
@@ -66,6 +70,37 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
         adapter= new OrganizacionAdapter(listaorganizacion);
         recyclerorganizaciones.setAdapter(adapter);
         request = Volley.newRequestQueue(getContext());
+
+        MySwipeHelper swipeHelper= new MySwipeHelper(getContext(),recyclerorganizaciones,200) {
+            @Override
+            public void instanciateMyButton(RecyclerView.ViewHolder viewHolder, List<Mybutton> buffer) {
+                buffer.add(new Mybutton(getContext(),
+                        "Detalles",
+                        40,
+                        0,
+                        Color.parseColor("#5d2442"),
+                        new MybuttonClickListener(){
+                            @Override
+                            public void onClick(int pos) {
+                                Toast.makeText(getContext(),"Detalles", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        ));
+                buffer.add(new Mybutton(getContext(),
+                        "Ver mapa",
+                        40,
+                        0,
+                        Color.parseColor("#b34766"),
+                        new MybuttonClickListener(){
+                            @Override
+                            public void onClick(int pos) {
+                                Toast.makeText(getContext(),"Eliminar", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                ));
+            }
+        };
+
         cargarwebservice();
         return vista;
     }
@@ -73,7 +108,9 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
         progress=new ProgressDialog(getContext());
         progress.setMessage("Consultando...");
         progress.show();
-        String url="http://192.168.0.11/api/Usuario/listarorg/";
+        String url="http://192.168.0.23/api/Usuario/listarorg/";
+        // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
+        //casa angel 192.168.0.23
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
     }
