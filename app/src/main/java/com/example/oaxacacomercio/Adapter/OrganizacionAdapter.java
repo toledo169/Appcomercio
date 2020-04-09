@@ -6,12 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.oaxacacomercio.Organizacion;
+import com.example.oaxacacomercio.Modelos.Organizacion;
 import com.example.oaxacacomercio.R;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class OrganizacionAdapter extends RecyclerView.Adapter<OrganizacionAdapter.OrganizacionHolder> {
@@ -48,7 +47,7 @@ public class OrganizacionAdapter extends RecyclerView.Adapter<OrganizacionAdapte
         ImageView imageView;
         public OrganizacionHolder(View itemView) {
             super(itemView);
-            txtDocumento=(TextView)itemView.findViewById(R.id.txtDocumento);
+            txtDocumento=(TextView)itemView.findViewById(R.id.txtclave);
             txtNombre= (TextView) itemView.findViewById(R.id.txtNombre);
             txtProfesion= (TextView) itemView.findViewById(R.id.txtProfesion);
             imageView=(ImageView) itemView.findViewById(R.id.imageView2);

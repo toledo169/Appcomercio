@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -17,6 +19,7 @@ import com.example.oaxacacomercio.R;
 public class ShareFragment extends Fragment {
 
     private ShareViewModel shareViewModel;
+    private Toolbar toolbar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class ShareFragment extends Fragment {
         //        textView.setText(s);
        //     }
       //  });
+
         return root;
     }
 }

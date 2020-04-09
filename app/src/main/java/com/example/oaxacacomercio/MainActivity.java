@@ -1,18 +1,11 @@
 package com.example.oaxacacomercio;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,13 +17,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
-import com.example.oaxacacomercio.ui.send.SendFragment;
-import com.example.oaxacacomercio.ui.share.ShareFragment;
-import com.example.oaxacacomercio.ui.slideshow.SlideshowFragment;
-import com.example.oaxacacomercio.ui.tools.ToolsFragment;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
@@ -58,6 +46,7 @@ public class MainActivity extends AppCompatActivity  implements Response.Listene
     public void goMain(View v){
 
         iniciarsesion();
+
     }
 
     private void crearComponentes(){
@@ -70,7 +59,7 @@ public class MainActivity extends AppCompatActivity  implements Response.Listene
         progress=new ProgressDialog(this);
         progress.setMessage("Cargando...");
         progress.show();
-        String url="http://192.168.0.23/api/Usuario/iniciar/"+inputCorreo.getEditText().getText().toString();
+        String url="http://192.168.0.11/api/Usuario/iniciar/"+inputCorreo.getEditText().getText().toString();
         jsonRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonRequest);
     }
@@ -93,6 +82,9 @@ public class MainActivity extends AppCompatActivity  implements Response.Listene
             usuario.setNombre(jsonObject.optString("name"));
             usuario.setApellido_paterno(jsonObject.optString("apellido_paterno"));
            usuario.setApellido_materno(jsonObject.optString("apellido_materno"));
+           usuario.setCorreoelectronico(jsonObject.optString("email"));
+            usuario.setCargo(jsonObject.optString("cargo"));
+            usuario.setMunicipio(jsonObject.optString("nombre"));
             progress.hide();
         }
 
@@ -104,6 +96,9 @@ public class MainActivity extends AppCompatActivity  implements Response.Listene
         goMain.putExtra(HomeFragment.apellido_paternos,usuario.getApellido_paterno());
         goMain.putExtra(HomeFragment.apellido_maternos,usuario.getApellido_materno());
         goMain.putExtra(HomeFragment.nombres,usuario.getNombre());
+        goMain.putExtra(HomeFragment.correo,usuario.getCorreoelectronico());
+        goMain.putExtra(HomeFragment.cargo,usuario.getCargo());
+        goMain.putExtra(HomeFragment.municipio,usuario.getMunicipio());
         startActivity(goMain);
     }
 

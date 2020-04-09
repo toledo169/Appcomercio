@@ -1,4 +1,4 @@
-package com.example.oaxacacomercio;
+package com.example.oaxacacomercio.Modelos;
 
 public class Organizacion {
     private Integer documento;
