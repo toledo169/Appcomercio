@@ -1,6 +1,7 @@
 package com.example.oaxacacomercio.ui.send;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.ZonaAdapter;
+import com.example.oaxacacomercio.DetallesZonaActivity;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.R;
@@ -68,12 +70,12 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
         recyclerViewzonas.setLayoutManager(layoutManager);
         recyclerViewzonas.setHasFixedSize(true);
 
-        adapter=new ZonaAdapter(listazona);
+        adapter=new ZonaAdapter(listazona,getContext());
         recyclerViewzonas.setAdapter(adapter);
         request= Volley.newRequestQueue(getContext());
         MySwipeHelper swipeHelper= new MySwipeHelper(getContext(),recyclerViewzonas,200) {
             @Override
-            public void instanciateMyButton(RecyclerView.ViewHolder viewHolder, List<Mybutton> buffer) {
+            public void instanciateMyButton(final RecyclerView.ViewHolder viewHolder, List<Mybutton> buffer) {
                 buffer.add(new Mybutton(getContext(),
                         "Detalles",
                         40,
@@ -82,6 +84,10 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
                         new MybuttonClickListener(){
                             @Override
                             public void onClick(int pos) {
+                                Intent intent=new Intent(getContext(), DetallesZonaActivity.class);
+                                intent.putExtra("id_zona",listazona.get(viewHolder.getAdapterPosition()).getId());
+                                intent.putExtra("nombre",listazona.get(viewHolder.getAdapterPosition()).getNombre());
+                                getContext().startActivity(intent);
                                 Toast.makeText(getContext(),"Detalles", Toast.LENGTH_SHORT).show();
                             }
                         }

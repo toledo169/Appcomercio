@@ -1,0 +1,85 @@
+package com.example.oaxacacomercio.Adapter;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.oaxacacomercio.Modelos.Vendedor;
+import com.example.oaxacacomercio.R;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class DetallesZonaVendedorAdapter extends RecyclerView.Adapter<DetallesZonaVendedorAdapter.ZonaHolder> {
+    List<Vendedor> listavendedoresdetallezona;
+    Dialog dialog;
+    Context mcontext;
+
+    public DetallesZonaVendedorAdapter(List<Vendedor> listavendedoresdetallezona,Context mcontext) {
+        this.listavendedoresdetallezona = listavendedoresdetallezona;
+        this.mcontext=mcontext;
+    }
+
+    @NonNull
+    @Override
+    public ZonaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View vista= LayoutInflater.from(parent.getContext()).inflate(R.layout.vistavendedor,parent,false);
+        RecyclerView.LayoutParams layoutParams=new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        vista.setLayoutParams(layoutParams);
+        final ZonaHolder zonaHolder=new ZonaHolder(vista);
+        dialog=new Dialog(mcontext);
+        dialog.setContentView(R.layout.detallesvendedorpop);
+        zonaHolder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView dialogname=(TextView) dialog.findViewById(R.id.nombrevendedor);
+                TextView dialogapp=(TextView)dialog.findViewById(R.id.apellidosvendedor);
+                TextView girovend=(TextView)dialog.findViewById(R.id.giro);
+                TextView nameorgani=(TextView)dialog.findViewById(R.id.nomorganizacion);
+                TextView nameactividad=(TextView)dialog.findViewById(R.id.nomactividad);
+                TextView namezona= (TextView)dialog.findViewById(R.id.zona);
+                dialogname.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getNombrev());
+                dialogapp.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getApellido_paterno() +" "+ listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getApellido_materno() );
+                girovend.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getGiro());
+                nameorgani.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getNomorganizacion());
+                nameactividad.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getActividad());
+                namezona.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getNomzona());
+                Toast.makeText(mcontext,"vendedor seleccionado"+String.valueOf(zonaHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
+                dialog.show();
+            }
+        });
+        return zonaHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ZonaHolder holder, int position) {
+        holder.txtclave.setText(listavendedoresdetallezona.get(position).getId().toString()) ;
+        holder.txtnombrev.setText(listavendedoresdetallezona.get(position).getNombrev().toString());
+        holder.textapellidos.setText(listavendedoresdetallezona.get(position).getApellido_paterno().toString());
+    }
+
+    @Override
+    public int getItemCount() {
+        return listavendedoresdetallezona.size();
+    }
+
+    public class ZonaHolder extends RecyclerView.ViewHolder {
+        LinearLayout item;
+        TextView txtclave,txtnombrev,textapellidos;
+        public ZonaHolder(@NonNull View itemView) {
+            super(itemView);
+            item=(LinearLayout) itemView.findViewById(R.id.infovendedor);
+            txtclave=(TextView)itemView.findViewById(R.id.txtclaveven);
+            txtnombrev=(TextView)itemView.findViewById(R.id.txtNombrecalle);
+            textapellidos=(TextView)itemView.findViewById(R.id.txtapellidos);
+        }
+    }
+}

@@ -1,6 +1,7 @@
 package com.example.oaxacacomercio.ui.tools;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.OrganizacionAdapter;
+import com.example.oaxacacomercio.DetallesorganizacionActivity;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.Modelos.Organizacion;
@@ -46,11 +48,12 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
     private LinearLayoutManager layoutManager;
     OrganizacionAdapter adapter;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         toolsViewModel =
                 ViewModelProviders.of(this).get(ToolsViewModel.class);
-        View vista = inflater.inflate(R.layout.fragment_tools, container, false);
+        final View vista = inflater.inflate(R.layout.fragment_tools, container, false);
        // final TextView textView = root.findViewById(R.id.text_tools);
       //  toolsViewModel.getText().observe(this, new Observer<String>() {
       //      @Override
@@ -65,13 +68,14 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
         recyclerorganizaciones.setLayoutManager(layoutManager);
         recyclerorganizaciones.setHasFixedSize(true);
 
-        adapter= new OrganizacionAdapter(listaorganizacion);
+        adapter= new OrganizacionAdapter(listaorganizacion,getContext());
         recyclerorganizaciones.setAdapter(adapter);
         request = Volley.newRequestQueue(getContext());
 
         final MySwipeHelper swipeHelper= new MySwipeHelper(getContext(),recyclerorganizaciones,200) {
+
             @Override
-            public void instanciateMyButton(RecyclerView.ViewHolder viewHolder, List<Mybutton> buffer) {
+            public void instanciateMyButton(final RecyclerView.ViewHolder viewHolder, final List<Mybutton> buffer) {
                 buffer.add(new Mybutton(getContext(),
                         "Detalles",
                         40,
@@ -80,6 +84,11 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
                         new MybuttonClickListener(){
                             @Override
                             public void onClick(int pos) {
+                                Intent i=new Intent(getContext(), DetallesorganizacionActivity.class);
+                                i.putExtra("id_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getDocumento());
+                                i.putExtra("nombre_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getNombre());
+                                i.putExtra("nombre_dirigente",listaorganizacion.get(viewHolder.getAdapterPosition()).getProfesion());
+                                getContext().startActivity(i);
                                 Toast.makeText(getContext(),"Detalles", Toast.LENGTH_SHORT).show();
                             }
                         }

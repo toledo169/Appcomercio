@@ -6,6 +6,7 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#500014"
+
     >
     <TextView
         android:layout_width="match_parent"
