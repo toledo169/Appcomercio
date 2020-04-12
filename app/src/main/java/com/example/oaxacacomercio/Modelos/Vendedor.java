@@ -3,6 +3,23 @@ package com.example.oaxacacomercio.Modelos;
 public class Vendedor {
     public Integer id;
     public String nombre, apellido_paterno, apellido_materno,nomorganizacion,actividad,giro,nomzona;
+    public Double latitud,longitud;
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
 
     public Integer getId() {
         return id;

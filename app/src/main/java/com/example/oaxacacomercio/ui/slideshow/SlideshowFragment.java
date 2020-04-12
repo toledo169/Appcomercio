@@ -112,6 +112,8 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
                 vendedor.setActividad(jsonObject.optString("tipo_actividad"));
                 vendedor.setGiro(jsonObject.optString("giro"));
                 vendedor.setNomzona(jsonObject.optString("nombre"));
+                vendedor.setLatitud(jsonObject.optDouble("latitud"));
+                vendedor.setLongitud(jsonObject.optDouble("longitud"));
                 listavendedores.add(vendedor);
             }
             progress.hide();
