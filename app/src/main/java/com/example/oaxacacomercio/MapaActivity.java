@@ -18,6 +18,15 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
 public class MapaActivity extends AppCompatActivity {
     private MapView mapView;
+    private static final List<List<Point>> POINTS = new ArrayList<>();
+    private static final List<Point> OUTER_POINTS = new ArrayList<>();
+    static {
+        OUTER_POINTS.add(Point.fromLngLat(17.060081, -96.729958));
+        OUTER_POINTS.add(Point.fromLngLat(17.059917, -96.728998));
+        OUTER_POINTS.add(Point.fromLngLat(17.058932, -96.729207));
+        OUTER_POINTS.add(Point.fromLngLat(17.059107, -96.730125));
+        POINTS.add(OUTER_POINTS);
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -57,20 +66,29 @@ public class MapaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, "pk.eyJ1IjoidG9sZWRvMTYiLCJhIjoiY2s4eGR3aHl5MHg5ajNucGsxMHN6YWg0MyJ9.EcFmUIJJCWb47aJAFHddRw");
-        String latitud=getIntent().getExtras().getString("latitud");
-        String longitu=getIntent().getExtras().getString("longitud");
-        String nombrev=getIntent().getExtras().getString("name");
+        //String latitud=getIntent().getExtras().getString("latitud");
+       // String longitu=getIntent().getExtras().getString("longitud");
+       // String nombrev=getIntent().getExtras().getString("name");
         setContentView(R.layout.activity_mapa);
         mapView =(MapView)findViewById(R.id.mapamaps);
         mapView.onCreate(savedInstanceState);
         mapView.setStyleUrl(Style.MAPBOX_STREETS);
 
         mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
+         /*   @Override
             public void onMapReady(MapboxMap mapboxMap) {
                 mapboxMap.addMarker(new MarkerOptions().position
                         (new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitu))).title(nombrev));
-            }
+            }*/
+            mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                @Override
+                public void onStyleLoaded(@NonNull Style style) {
+                    style.addSource(new GeoJsonSource("source-id", Polygon.fromLngLats(POINTS)));
+                    style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
+                            fillColor(Color.parseColor("#3bb2d0"))), "settlement-label"
+                    );
+                }
+            });
 
         });
     }
