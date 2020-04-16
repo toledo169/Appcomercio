@@ -1,19 +1,21 @@
 package com.example.oaxacacomercio.ui.slideshow;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,8 +28,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.VendedorAdapter;
-import com.example.oaxacacomercio.Helper.MySwipeHelper;
-import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 
@@ -36,18 +36,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SlideshowFragment extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
 
     private SlideshowViewModel slideshowViewModel;
     RecyclerView recyclerViewvendedores;
     ArrayList<Vendedor>listavendedores;
+    ArrayList<Vendedor>listauxiliar;
     ProgressDialog progress;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     VendedorAdapter adapter;
+    private EditText search;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,8 +63,10 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
           //  }
        // });
         listavendedores=new ArrayList<>();
+        listauxiliar=new ArrayList<>();
 
         recyclerViewvendedores= (RecyclerView) root.findViewById(R.id.idRecyclerVendedor);
+        search=(EditText)root.findViewById(R.id.searchusuario);
         layoutManager= new LinearLayoutManager(getActivity());
         recyclerViewvendedores.setLayoutManager(layoutManager);
         recyclerViewvendedores.setHasFixedSize(true);
@@ -72,6 +75,24 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
         recyclerViewvendedores.setAdapter(adapter);
         request = Volley.newRequestQueue(getContext());
         cargarwebservice();
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                buscador(""+charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         return root;
     }
 
@@ -115,6 +136,7 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
                 vendedor.setLatitud(jsonObject.optDouble("latitud"));
                 vendedor.setLongitud(jsonObject.optDouble("longitud"));
                 listavendedores.add(vendedor);
+                listauxiliar.add(vendedor);
             }
             progress.hide();
             recyclerViewvendedores.setAdapter(adapter);
@@ -123,5 +145,14 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
             Toast.makeText(getContext(),"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
             progress.hide();
         }
+    }
+    public void buscador(String texto){
+        listavendedores.clear();
+        for (int i=0;i<listauxiliar.size();i++){
+            if (listauxiliar.get(i).getNombrev().toLowerCase().contains(texto.toLowerCase())){
+                listavendedores.add(listauxiliar.get(i));
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 }

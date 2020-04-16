@@ -13,6 +13,7 @@ import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.MapboxMapOptions;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
 public class MapaActivity extends AppCompatActivity {
@@ -58,15 +59,19 @@ public class MapaActivity extends AppCompatActivity {
         Mapbox.getInstance(this, "pk.eyJ1IjoidG9sZWRvMTYiLCJhIjoiY2s4eGR3aHl5MHg5ajNucGsxMHN6YWg0MyJ9.EcFmUIJJCWb47aJAFHddRw");
         String latitud=getIntent().getExtras().getString("latitud");
         String longitu=getIntent().getExtras().getString("longitud");
+        String nombrev=getIntent().getExtras().getString("name");
         setContentView(R.layout.activity_mapa);
         mapView =(MapView)findViewById(R.id.mapamaps);
         mapView.onCreate(savedInstanceState);
         mapView.setStyleUrl(Style.MAPBOX_STREETS);
+
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
-                mapboxMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitu))));
+                mapboxMap.addMarker(new MarkerOptions().position
+                        (new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitu))).title(nombrev));
             }
+
         });
     }
 

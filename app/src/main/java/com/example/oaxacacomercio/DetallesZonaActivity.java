@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +35,14 @@ import java.util.ArrayList;
 public class DetallesZonaActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
     RecyclerView recyclerViewDetalleszona;
     ArrayList<Vendedor> listavendedoresdetalleszona;
+   // ArrayList<Vendedor>listauxiliar;
     ProgressDialog progress;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     DetallesZonaVendedorAdapter adapter;
     TextView txtnombrez,txtClavezona;
+   // private EditText searchzv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +60,10 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
         txtClavezona.setText(String.valueOf(claveZ));
         collapsingToolbarLayout.setTitle(nombreZ);
         listavendedoresdetalleszona=new ArrayList<>();
+     //   listauxiliar=new ArrayList<>();
 
         recyclerViewDetalleszona= (RecyclerView) findViewById(R.id.idRecyclerdetalleszonavendedor);
+      //  searchzv=(EditText)findViewById(R.id.serchvenzona);
         layoutManager= new LinearLayoutManager(this);
         recyclerViewDetalleszona.setLayoutManager(layoutManager);
         recyclerViewDetalleszona.setHasFixedSize(true);
@@ -65,6 +72,22 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
         recyclerViewDetalleszona.setAdapter(adapter);
         request = Volley.newRequestQueue(this);
         cargarwebservice();
+      /*  searchzv.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                buscador(""+charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });*/
     }
 
     private void cargarwebservice() {
@@ -105,7 +128,10 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
                 vendedor.setActividad(jsonObject.optString("tipo_actividad"));
                 vendedor.setGiro(jsonObject.optString("giro"));
                 vendedor.setNomzona(jsonObject.optString("nombre"));
+                vendedor.setLatitud(jsonObject.optDouble("latitud"));
+                vendedor.setLongitud(jsonObject.optDouble("longitud"));
                 listavendedoresdetalleszona.add(vendedor);
+             //   listauxiliar.add(vendedor);
             }
             progress.hide();
             recyclerViewDetalleszona.setAdapter(adapter);
@@ -115,6 +141,16 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
             progress.hide();
         }
     }
+    /*public void buscador(String texto){
+        listavendedoresdetalleszona.clear();
+
+        for (int i=0;i<listauxiliar.size();i++){
+            if (listauxiliar.get(i).getNombrev().toLowerCase().contains(texto.toLowerCase())){
+                listavendedoresdetalleszona.add(listauxiliar.get(i));
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }*/
 
     }
 

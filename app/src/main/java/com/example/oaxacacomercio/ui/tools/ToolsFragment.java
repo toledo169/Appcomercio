@@ -4,10 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,11 +45,13 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
     private ToolsViewModel toolsViewModel;
     RecyclerView recyclerorganizaciones;
     ArrayList<Organizacion>listaorganizacion;
+    ArrayList<Organizacion>listaauxiliar;
     ProgressDialog progress;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     OrganizacionAdapter adapter;
+    private EditText sercho;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,8 +67,10 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
        //     }
        // });
         listaorganizacion=new ArrayList<>();
+        listaauxiliar=new ArrayList<>();
 
         recyclerorganizaciones= (RecyclerView) vista.findViewById(R.id.idRecycler);
+        sercho=(EditText)vista.findViewById(R.id.bucarorganizaciones);
         layoutManager= new LinearLayoutManager(getActivity());
         recyclerorganizaciones.setLayoutManager(layoutManager);
         recyclerorganizaciones.setHasFixedSize(true);
@@ -110,6 +117,23 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
         };
 
         cargarwebservice();
+        sercho.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                buscador(""+charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         return vista;
     }
     private void cargarwebservice(){
@@ -146,6 +170,7 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
                 organizacion.setNombre(jsonObject.optString("nombre_organizacion"));
                 organizacion.setProfesion(jsonObject.optString("nombre_dirigente"));
                 listaorganizacion.add(organizacion);
+                listaauxiliar.add(organizacion);
             }
             progress.hide();
             recyclerorganizaciones.setAdapter(adapter);
@@ -157,4 +182,15 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
         }
 
     }
-}
+    public void buscador(String texto){
+        listaorganizacion.clear();
+        for (int i=0;i<listaauxiliar.size();i++) {
+            if (listaauxiliar.get(i).getNombre().toLowerCase().contains(texto.toLowerCase())) {
+            listaorganizacion.add(listaauxiliar.get(i));
+            }
+        }
+        adapter.notifyDataSetChanged();
+        }
+
+    }
+

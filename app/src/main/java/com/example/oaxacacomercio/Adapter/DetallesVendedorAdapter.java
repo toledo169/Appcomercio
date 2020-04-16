@@ -2,13 +2,16 @@ package com.example.oaxacacomercio.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.oaxacacomercio.MapaActivity;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 
@@ -45,6 +48,7 @@ public class DetallesVendedorAdapter extends RecyclerView.Adapter<DetallesVended
                 TextView nameorgani=(TextView)dialog.findViewById(R.id.nomorganizacion);
                 TextView nameactividad=(TextView)dialog.findViewById(R.id.nomactividad);
                 TextView namezona= (TextView)dialog.findViewById(R.id.zona);
+                Button vermapa=(Button)dialog.findViewById(R.id.btn_mapa);
                 dialogname.setText(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getNombrev());
                 dialogapp.setText(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getApellido_paterno() +" "+ listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getApellido_materno() );
                 girovend.setText(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getGiro());
@@ -53,6 +57,17 @@ public class DetallesVendedorAdapter extends RecyclerView.Adapter<DetallesVended
                 namezona.setText(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getNomzona());
                 Toast.makeText(mcontext,"vendedor seleccionado"+String.valueOf(vendedorHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
                 dialog.show();
+
+                vermapa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent= new Intent(mcontext, MapaActivity.class);
+                        intent.putExtra("latitud",String.valueOf(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getLatitud()));
+                        intent.putExtra("longitud",String.valueOf(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getLongitud()));
+                        intent.putExtra("name",listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getNombrev());
+                        mcontext.startActivity(intent);
+                    }
+                });
             }
         });
 
@@ -83,4 +98,5 @@ public class DetallesVendedorAdapter extends RecyclerView.Adapter<DetallesVended
             textapellidos=(TextView)itemView.findViewById(R.id.txtapellidos);
         }
     }
+
 }

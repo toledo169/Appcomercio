@@ -1,7 +1,10 @@
 package com.example.oaxacacomercio;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,10 +17,14 @@ import com.example.oaxacacomercio.ui.tools.ToolsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -33,6 +40,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class Ventanas extends AppCompatActivity  {
@@ -83,4 +91,33 @@ public class Ventanas extends AppCompatActivity  {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                AlertDialog.Builder builder= new AlertDialog.Builder(Ventanas.this);
+                LayoutInflater inflater= getLayoutInflater();
+                View view= inflater.inflate(R.layout.dialog_cerrar,null);
+                builder.setView(view);
+                final AlertDialog dialog=builder.create();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Button btnsi= view.findViewById(R.id.btnsi);
+                btnsi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finishAffinity();
+                    }
+                });
+                Button btnno=view.findViewById(R.id.btnno);
+                btnno.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+        break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

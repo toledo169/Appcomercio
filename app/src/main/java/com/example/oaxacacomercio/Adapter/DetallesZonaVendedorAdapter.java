@@ -2,13 +2,16 @@ package com.example.oaxacacomercio.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.oaxacacomercio.MapaActivity;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 
@@ -46,6 +49,7 @@ public class DetallesZonaVendedorAdapter extends RecyclerView.Adapter<DetallesZo
                 TextView nameorgani=(TextView)dialog.findViewById(R.id.nomorganizacion);
                 TextView nameactividad=(TextView)dialog.findViewById(R.id.nomactividad);
                 TextView namezona= (TextView)dialog.findViewById(R.id.zona);
+                Button vermapa=(Button)dialog.findViewById(R.id.btn_mapa);
                 dialogname.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getNombrev());
                 dialogapp.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getApellido_paterno() +" "+ listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getApellido_materno() );
                 girovend.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getGiro());
@@ -54,6 +58,16 @@ public class DetallesZonaVendedorAdapter extends RecyclerView.Adapter<DetallesZo
                 namezona.setText(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getNomzona());
                 Toast.makeText(mcontext,"vendedor seleccionado"+String.valueOf(zonaHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
                 dialog.show();
+                vermapa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent= new Intent(mcontext, MapaActivity.class);
+                        intent.putExtra("latitud",String.valueOf(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getLatitud()));
+                        intent.putExtra("longitud",String.valueOf(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getLongitud()));
+                        intent.putExtra("name",listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getNombrev());
+                        mcontext.startActivity(intent);
+                    }
+                });
             }
         });
         return zonaHolder;

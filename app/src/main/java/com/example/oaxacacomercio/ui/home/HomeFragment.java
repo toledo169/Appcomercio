@@ -1,12 +1,17 @@
 package com.example.oaxacacomercio.ui.home;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +43,6 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
        nomb=(TextView)root.findViewById(R.id.nombreusuario);
         String nomusuario=getActivity().getIntent().getStringExtra("name");
         nomb.setText( " " +nomusuario);
@@ -68,6 +72,5 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
-
 
 }
