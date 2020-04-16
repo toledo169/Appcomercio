@@ -28,6 +28,7 @@ public class VendedorAdapter extends  RecyclerView.Adapter<VendedorAdapter.Vende
     List<Vendedor>listavendedor;
     Dialog dialog;
     Context mcontext;
+    public String opcion="vendedor";
     public VendedorAdapter(List<Vendedor> listavendedor,Context mcontext) {
         this.listavendedor = listavendedor;
         this.mcontext=mcontext;
@@ -66,6 +67,7 @@ public class VendedorAdapter extends  RecyclerView.Adapter<VendedorAdapter.Vende
                       @Override
                       public void onClick(View v) {
                           Intent intent= new Intent(mcontext,MapaActivity.class);
+                          intent.putExtra("vendedor",opcion);
                           intent.putExtra("latitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLatitud()));
                           intent.putExtra("longitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLongitud()));
                          intent.putExtra("name",listavendedor.get(vendedorHolder.getAdapterPosition()).getNombrev());
