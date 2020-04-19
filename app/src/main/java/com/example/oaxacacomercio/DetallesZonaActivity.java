@@ -91,9 +91,9 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
     }
 
     private void cargarwebservice() {
-        progress=new ProgressDialog(this);
-        progress.setMessage("Consultando...");
-        progress.show();
+ //       progress=new ProgressDialog(this);
+   //     progress.setMessage("Consultando...");
+   //     progress.show();
         String url="http://192.168.0.11/api/Usuario/listarzonavendedor/"+txtClavezona.getText().toString();
         // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
         //casa angel 192.168.0.23
@@ -106,7 +106,7 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
         Toast.makeText(this, "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
         System.out.println();
         Log.d("ERROR: ", error.toString());
-        progress.hide();
+     //   progress.hide();
 
     }
 
@@ -133,12 +133,12 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
                 listavendedoresdetalleszona.add(vendedor);
              //   listauxiliar.add(vendedor);
             }
-            progress.hide();
+       //     progress.hide();
             recyclerViewDetalleszona.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-            progress.hide();
+//            progress.hide();
         }
     }
     /*public void buscador(String texto){

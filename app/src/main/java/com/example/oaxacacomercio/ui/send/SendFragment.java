@@ -27,7 +27,8 @@ import com.example.oaxacacomercio.Adapter.ZonaAdapter;
 import com.example.oaxacacomercio.DetallesZonaActivity;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
-import com.example.oaxacacomercio.MapaActivity;
+import com.example.oaxacacomercio.Mapas.MapaActivity;
+import com.example.oaxacacomercio.Mapas.MapazonasActivity;
 import com.example.oaxacacomercio.R;
 import com.example.oaxacacomercio.Modelos.Zona;
 
@@ -105,28 +106,12 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
                         new MybuttonClickListener(){
                             @Override
                             public void onClick(int pos) {
-                                if(listazona.get(viewHolder.getAdapterPosition()).getNombre().equals("PERMITIDA")){
-                                    Toast.makeText(getContext(),"PERMITIDA",Toast.LENGTH_SHORT).show();
-                                    idZona="1";
-                                    lat.add(17.060081);
-                                    lat.add(17.059917);
-                                    lat.add(17.058932);
-                                    lat.add(17.059107);
-                                    lon.add(-96.729958);
-                                    lon.add(-96.728998);
-                                    lon.add(-96.729207);
-                                    lon.add(-96.730125);
-                                    Intent i= new Intent(getContext(), MapaActivity.class);
-                                    i.putExtra("lat",lat);
-                                    i.putExtra("lon",lon);
-                                    i.putExtra("idZona",idZona);
-                                    i.putExtra("zonas",opcion);
-                                    startActivity(i);
-                                }else if(listazona.get(viewHolder.getAdapterPosition()).getNombre().equals("RESTRINGIDA")){
-                                    Toast.makeText(getContext(),"RESTRINGIDA",Toast.LENGTH_SHORT).show();
-                                }
-
-                                //Toast.makeText(getContext(),"Eliminar", Toast.LENGTH_SHORT).show();
+                                Intent intent= new Intent(getContext(), MapaActivity.class);
+                                intent.putExtra("id_zona",listazona.get(viewHolder.getAdapterPosition()).getId());
+                               // i.putExtra("lat",lat);
+                               // i.putExtra("lon",lon);
+                               // i.putExtra("idZona",idZona);
+                                getContext().startActivity(intent);
                             }
                         }
                 ));

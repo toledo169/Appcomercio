@@ -7,21 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.oaxacacomercio.MapaActivity;
+import com.example.oaxacacomercio.Mapas.MapaActivity;
+import com.example.oaxacacomercio.Mapas.MapavendedorActivity;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class VendedorAdapter extends  RecyclerView.Adapter<VendedorAdapter.VendedorHolder>{
@@ -66,7 +63,7 @@ public class VendedorAdapter extends  RecyclerView.Adapter<VendedorAdapter.Vende
                   vermapa.setOnClickListener(new View.OnClickListener() {
                       @Override
                       public void onClick(View v) {
-                          Intent intent= new Intent(mcontext,MapaActivity.class);
+                          Intent intent= new Intent(mcontext, MapavendedorActivity.class);
                           intent.putExtra("vendedor",opcion);
                           intent.putExtra("latitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLatitud()));
                           intent.putExtra("longitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLongitud()));

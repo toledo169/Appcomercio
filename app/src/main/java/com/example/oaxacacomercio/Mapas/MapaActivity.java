@@ -1,4 +1,4 @@
-package com.example.oaxacacomercio;
+package com.example.oaxacacomercio.Mapas;
 import android.app.ProgressDialog;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -16,6 +16,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Modelos.Vendedor;
+import com.example.oaxacacomercio.R;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.LineString;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import androidx.core.app.NotificationCompat;
 import timber.log.Timber;
 
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.fillColor;
@@ -87,15 +89,15 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.fillColor;
 
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback, Response.Listener<JSONObject>,Response.ErrorListener {
     private MapView mapView;
-    private static final List<List<Point>> POINTS = new ArrayList<>();
-    private static final List<Point> OUTER_POINTS = new ArrayList<>();
     private ArrayList<Double> lat= new ArrayList<>();
     private ArrayList<Double> lon= new ArrayList<>();
     ProgressDialog progress;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
-    ArrayList<Vendedor> listavendedoresdetalleszona;
-    String idzona,opcion1,opcion2,latitud,longitu,nombrev;
+   private static ArrayList<Vendedor> listavendedoresdetalleszona=new ArrayList<>();
+    String idzona;
+    int claveZ;
+            //,opcion1,opcion2,latitud,longitu,nombrev;
     /*static {
         OUTER_POINTS.add(Point.fromLngLat(-96.729958, 17.060081 ));
 
@@ -106,66 +108,18 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }*/
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        mapView.onSaveInstanceState(outState);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lat = (ArrayList<Double>) getIntent().getSerializableExtra("lat");
-        lon = (ArrayList<Double>) getIntent().getSerializableExtra("lon");
-        idzona=getIntent().getExtras().getString("idZona");
-        if(getIntent().getExtras().getString("zonas")!=null){
-            opcion1=getIntent().getExtras().getString("zonas");
-        }else if(getIntent().getExtras().getString("vendedor")!=null) {
-            opcion2=getIntent().getExtras().getString("vendedor");
-        }
-
-        Toast.makeText(this,opcion1+"dffsdfsdf",Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,opcion2+"dgdfg",Toast.LENGTH_SHORT).show();
-
-        //cargarwebservice();
-        listavendedoresdetalleszona=new ArrayList<>();
-        Mapbox.getInstance(this, "pk.eyJ1IjoidG9sZWRvMTYiLCJhIjoiY2s4eGR3aHl5MHg5ajNucGsxMHN6YWg0MyJ9.EcFmUIJJCWb47aJAFHddRw");
-         latitud=getIntent().getExtras().getString("latitud");
-          longitu=getIntent().getExtras().getString("longitud");
-          nombrev=getIntent().getExtras().getString("name");
+        Mapbox.getInstance(this, "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
         setContentView(R.layout.activity_mapa);
+        //  lat = (ArrayList<Double>) getIntent().getSerializableExtra("lat");
+       // lon = (ArrayList<Double>) getIntent().getSerializableExtra("lon");
+        claveZ=getIntent().getExtras().getInt("id_zona");
+        request = Volley.newRequestQueue(this);
+        cargarwebservice();
         mapView = (MapView) findViewById(R.id.mapamaps);
-        mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+        mapView.onCreate(savedInstanceState);
 
     }
     public void agregarVendedores(MapboxMap mapboxMap){
@@ -177,16 +131,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             );
         }
     }
-    public void agregarVendedor(MapboxMap mapboxMap){
-        mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitu)))
-                    .title(nombrev)
 
-            );
-
-    }
-
-    public void agregarPuntos(){
+    /*public void agregarPuntos(){
         for (int i=0; i<lat.size(); i++){
             OUTER_POINTS.add(Point.fromLngLat(lon.get(i),lat.get(i)));
         }
@@ -195,39 +141,15 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         OUTER_POINTS.add(Point.fromLngLat(-96.728998,17.059917 ));
         OUTER_POINTS.add(Point.fromLngLat(-96.729207,17.058932 ));
         OUTER_POINTS.add(Point.fromLngLat(-96.730125, 17.059107));*/
-        POINTS.add(OUTER_POINTS);
-    }
-
-
-    @Override
-    public void onMapReady(MapboxMap mapboxMap) {
-
-
-        if(opcion1.equals("zonas")){
-            request = Volley.newRequestQueue(this);
-            agregarPuntos();
-            agregarVendedores(mapboxMap);
-            cargarwebservice();
-            mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-                @Override
-                public void onStyleLoaded(@NonNull Style style) {
-                    style.addSource(new GeoJsonSource("source-id", Polygon.fromLngLats(POINTS)));
-                    style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
-                            fillColor(Color.parseColor("#3bb2d0"))), "settlement-label"
-                    );
-                }
-            });
-        }else if(opcion2.equals("vendedor")){
-            agregarVendedor(mapboxMap);
-        }
-
-    }
+     //   POINTS.add(OUTER_POINTS);
+    //}
 
     private void cargarwebservice() {
-        progress=new ProgressDialog(this);
-        progress.setMessage("Consultando...");
-        progress.show();
-        String url="http://192.168.0.11/api/Usuario/listarzonavendedor/"+Integer.parseInt(idzona);
+        //progress=new ProgressDialog(this);
+       // progress.setMessage("Consultando...");
+       // progress.show();
+       // progress.dismiss();
+        String url="http://192.168.0.11/api/Usuario/listarzonavendedor/"+ claveZ;
         // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
         //casa angel 192.168.0.23
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
@@ -239,7 +161,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         Toast.makeText(this, "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
         System.out.println();
         Log.d("ERROR: ", error.toString());
-        progress.hide();
+      //  progress.hide();
+      //  progress.dismiss();
 
     }
 
@@ -266,12 +189,41 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 listavendedoresdetalleszona.add(vendedor);
                 //   listauxiliar.add(vendedor);
             }
-            progress.hide();
+          //  progress.hide();
+          //  progress.dismiss();
             //recyclerViewDetalleszona.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-            progress.hide();
+        //    progress.hide();
+        //    progress.dismiss();
         }
     }
-}
+            @Override
+            public void onMapReady(MapboxMap mapboxMap) {
+             //  agregarVendedores(mapboxMap);
+                mapboxMap.setStyle(Style.MAPBOX_STREETS);
+                        for (int i=0;i<listavendedoresdetalleszona.size();i++){
+                            mapboxMap.addMarker(new MarkerOptions()
+                                    .position(new LatLng(listavendedoresdetalleszona.get(i).getLatitud(),listavendedoresdetalleszona.get(i).getLongitud()))
+                                    .title(listavendedoresdetalleszona.get(i).getNombrev())
+                            );
+
+                        }
+                     //   mapView.onDestroy();
+               listavendedoresdetalleszona.clear(); //lo hace aveces e inverso
+            //    mapView.onStart();
+                        //mapboxMap.clear();
+                    }
+
+
+
+
+            }
+
+
+       // mapboxMap.notify();
+     //   mapView.onStart();
+
+
+

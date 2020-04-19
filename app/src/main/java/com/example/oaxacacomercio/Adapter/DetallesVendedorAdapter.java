@@ -11,7 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.oaxacacomercio.MapaActivity;
+import com.example.oaxacacomercio.Mapas.MapaActivity;
+import com.example.oaxacacomercio.Mapas.MapavendedorActivity;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 
@@ -61,7 +62,7 @@ public class DetallesVendedorAdapter extends RecyclerView.Adapter<DetallesVended
                 vermapa.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent= new Intent(mcontext, MapaActivity.class);
+                        Intent intent= new Intent(mcontext, MapavendedorActivity.class);
                         intent.putExtra("latitud",String.valueOf(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getLatitud()));
                         intent.putExtra("longitud",String.valueOf(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getLongitud()));
                         intent.putExtra("name",listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getNombrev());
