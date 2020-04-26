@@ -4,7 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mapa"
     tools:context=".Mapas.MapaActivity">
+   <com.google.android.material.appbar.AppBarLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:theme="@style/AppTheme.AppBarOverlay">
+      <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbarzonam"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:background="#5d2442"
+          app:popupTheme="@style/AppTheme.PopupOverlay"
+          ></androidx.appcompat.widget.Toolbar>
+   </com.google.android.material.appbar.AppBarLayout>
+
    <com.mapbox.mapboxsdk.maps.MapView
        android:id="@+id/mapamaps"
        android:layout_width="match_parent"

@@ -17,9 +17,14 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
-public class MapavendedorActivity extends AppCompatActivity implements OnMapReadyCallback {
+import java.util.ArrayList;
+
+public class MapaActActivity extends AppCompatActivity implements OnMapReadyCallback {
     private MapView mapView;
-    String latitud,longitu,nombrev;
+    int claveZ;
+    ArrayList<Double> lati;
+    ArrayList<Double>longi;
+    String nomv;
     @Override
     protected void onStart() {
         super.onStart();
@@ -55,39 +60,37 @@ public class MapavendedorActivity extends AppCompatActivity implements OnMapRead
         super.onSaveInstanceState(outState, outPersistentState);
         mapView.onSaveInstanceState(outState);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, "pk.eyJ1IjoidG9sZWRvMTYiLCJhIjoiY2s4eGR3aHl5MHg5ajNucGsxMHN6YWg0MyJ9.EcFmUIJJCWb47aJAFHddRw");
-         latitud=getIntent().getExtras().getString("latitud");
-         longitu=getIntent().getExtras().getString("longitud");
-         nombrev=getIntent().getExtras().getString("name");
-         String app=getIntent().getExtras().getString("apellido_paterno");
-         String apm=getIntent().getExtras().getString("apellido_materno");
-
-        setContentView(R.layout.activity_mapavendedor);
-        Toolbar toolbar = findViewById(R.id.toolbarv);
+        Mapbox.getInstance(this, "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
+        setContentView(R.layout.activity_mapa_act);
+        Toolbar toolbar = findViewById(R.id.toolbaracti);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(nombrev+" "+app+" "+apm);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        String name=getIntent().getExtras().getString("nombre_actividad");
+        nomv=getIntent().getExtras().getString("name");
+        getSupportActionBar().setTitle(name);
+        lati=(ArrayList<Double>)getIntent().getSerializableExtra("lat");
+        longi=(ArrayList<Double>)getIntent().getSerializableExtra("log");
+        // Inflate the layout for this fragment
 
-         mapView=(MapView)findViewById(R.id.mapavendedores);
-        mapView.onCreate(savedInstanceState);
-
+        mapView = (MapView)findViewById(R.id.mapamapsact);
         mapView.getMapAsync(this);
+        mapView.onCreate(savedInstanceState);
     }
 
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         mapboxMap.setStyle(Style.MAPBOX_STREETS);
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                mapboxMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitu))).title(nombrev));
-            }
-        });
+        for (int i = 0; i < lati.size(); i++) {
+            mapboxMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lati.get(i), longi.get(i))).title(nomv)
+            );
+
+        }
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -97,5 +100,4 @@ public class MapavendedorActivity extends AppCompatActivity implements OnMapRead
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

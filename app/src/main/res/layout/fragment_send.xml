@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#500014"
-    >
+    android:id="@+id/zonamain"
 
+    >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idRecyclerzona"
         android:layout_width="match_parent"

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,7 +27,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.OrganizacionAdapter;
-import com.example.oaxacacomercio.DetallesorganizacionActivity;
+import com.example.oaxacacomercio.Detalles.DetallesMapaOrganizacionActivity;
+import com.example.oaxacacomercio.Detalles.DetallesorganizacionActivity;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.Modelos.Organizacion;
@@ -108,8 +108,12 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
                         new MybuttonClickListener(){
                             @Override
                             public void onClick(int pos) {
-
-                                Toast.makeText(getContext(),"Eliminar", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(getContext(), DetallesMapaOrganizacionActivity.class);
+                                intent.putExtra("id_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getDocumento());
+                                intent.putExtra("nombre_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getNombre());
+                                intent.putExtra("nombre_dirigente",listaorganizacion.get(viewHolder.getAdapterPosition()).getProfesion());
+                                getContext().startActivity(intent);
+                             //   Toast.makeText(getContext(),"Eliminar", Toast.LENGTH_SHORT).show();
                             }
                         }
                 ));
@@ -185,7 +189,7 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
     public void buscador(String texto){
         listaorganizacion.clear();
         for (int i=0;i<listaauxiliar.size();i++) {
-            if (listaauxiliar.get(i).getNombre().toLowerCase().contains(texto.toLowerCase())) {
+            if (listaauxiliar.get(i).getNombre().toLowerCase().contains(texto.toLowerCase())||listaauxiliar.get(i).getProfesion().toLowerCase().contains(texto.toLowerCase())) {
             listaorganizacion.add(listaauxiliar.get(i));
             }
         }

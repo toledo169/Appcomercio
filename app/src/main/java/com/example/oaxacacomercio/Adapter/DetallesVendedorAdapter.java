@@ -66,6 +66,8 @@ public class DetallesVendedorAdapter extends RecyclerView.Adapter<DetallesVended
                         intent.putExtra("latitud",String.valueOf(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getLatitud()));
                         intent.putExtra("longitud",String.valueOf(listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getLongitud()));
                         intent.putExtra("name",listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getNombrev());
+                        intent.putExtra("apellido_paterno",listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getApellido_paterno());
+                        intent.putExtra("apellido_materno",listavendedoresdetalle.get(vendedorHolder.getAdapterPosition()).getApellido_materno());
                         mcontext.startActivity(intent);
                     }
                 });

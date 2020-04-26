@@ -66,6 +66,8 @@ public class DetallesZonaVendedorAdapter extends RecyclerView.Adapter<DetallesZo
                         intent.putExtra("latitud",String.valueOf(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getLatitud()));
                         intent.putExtra("longitud",String.valueOf(listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getLongitud()));
                         intent.putExtra("name",listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getNombrev());
+                        intent.putExtra("apellido_paterno",listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getApellido_paterno());
+                        intent.putExtra("apellido_materno",listavendedoresdetallezona.get(zonaHolder.getAdapterPosition()).getApellido_materno());
                         mcontext.startActivity(intent);
                     }
                 });

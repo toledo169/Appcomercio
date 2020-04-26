@@ -9,14 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.oaxacacomercio.DetallesorganizacionActivity;
+import com.example.oaxacacomercio.Detalles.DetallesorganizacionActivity;
 import com.example.oaxacacomercio.Modelos.Organizacion;
 import com.example.oaxacacomercio.R;
 
 import java.util.List;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class OrganizacionAdapter extends RecyclerView.Adapter<OrganizacionAdapter.OrganizacionHolder> {

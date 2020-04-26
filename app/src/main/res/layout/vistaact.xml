@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:padding="4dp"
-    android:id="@+id/contenedorzona">
-
+    android:id="@+id/contenedoract">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +34,7 @@
                 app:srcCompat="@drawable/zona" />
 
             <TextView
-                android:id="@+id/textViewzona"
+                android:id="@+id/textViewact"
                 android:layout_width="114dp"
                 android:layout_height="26dp"
                 android:layout_weight="2"
@@ -52,14 +50,14 @@
                 app:layout_constraintVertical_bias="0.062" />
 
             <TextView
-                android:id="@+id/txtDocumentozona"
+                android:id="@+id/txtDocumentoact"
                 android:layout_width="154dp"
                 android:layout_height="26dp"
                 android:layout_weight=".8"
                 android:text="Documento "
                 android:textColor="#500014"
                 android:textSize="17sp"
-                app:layout_constraintBottom_toTopOf="@+id/txtnombrezona"
+                app:layout_constraintBottom_toTopOf="@+id/txtnombreact"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.967"
                 app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +65,7 @@
                 app:layout_constraintVertical_bias="0.368" />
 
             <TextView
-                android:id="@+id/txtnombrezona"
+                android:id="@+id/txtnombreact"
                 android:layout_width="154dp"
                 android:layout_height="26dp"
                 android:layout_marginBottom="6dp"
@@ -81,7 +79,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/datozona"
+                android:id="@+id/datoact"
                 android:layout_width="114dp"
                 android:layout_height="26dp"
                 android:layout_weight="2"
@@ -93,9 +91,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.391"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewzona" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewact" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

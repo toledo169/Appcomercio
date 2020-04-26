@@ -68,6 +68,8 @@ public class VendedorAdapter extends  RecyclerView.Adapter<VendedorAdapter.Vende
                           intent.putExtra("latitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLatitud()));
                           intent.putExtra("longitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLongitud()));
                          intent.putExtra("name",listavendedor.get(vendedorHolder.getAdapterPosition()).getNombrev());
+                          intent.putExtra("apellido_paterno",listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_paterno());
+                          intent.putExtra("apellido_materno",listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_materno());
                           mcontext.startActivity(intent);
                       }
                   });

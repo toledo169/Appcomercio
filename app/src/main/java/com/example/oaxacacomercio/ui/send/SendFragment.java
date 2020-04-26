@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,11 +27,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.ZonaAdapter;
-import com.example.oaxacacomercio.DetallesZonaActivity;
+import com.example.oaxacacomercio.Detalles.DetallesMapaZonaActivity;
+import com.example.oaxacacomercio.Detalles.DetallesZonaActivity;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
-import com.example.oaxacacomercio.Mapas.MapaActivity;
-import com.example.oaxacacomercio.Mapas.MapazonasActivity;
 import com.example.oaxacacomercio.R;
 import com.example.oaxacacomercio.Modelos.Zona;
 
@@ -54,13 +56,14 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
     private String opcion="zonas";
   //  private GridLayoutManager layoutManager;
     ZonaAdapter adapter;
-
+    NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         sendViewModel =
                 ViewModelProviders.of(this).get(SendViewModel.class);
         View root = inflater.inflate(R.layout.fragment_send, container, false);
+
       //  final TextView textView = root.findViewById(R.id.text_send);
      //   sendViewModel.getText().observe(this, new Observer<String>() {
        //     @Override
@@ -106,8 +109,9 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
                         new MybuttonClickListener(){
                             @Override
                             public void onClick(int pos) {
-                                Intent intent= new Intent(getContext(), MapaActivity.class);
+                                Intent intent= new Intent(getContext(), DetallesMapaZonaActivity.class);
                                 intent.putExtra("id_zona",listazona.get(viewHolder.getAdapterPosition()).getId());
+                                intent.putExtra("nombre",listazona.get(viewHolder.getAdapterPosition()).getNombre());
                                // i.putExtra("lat",lat);
                                // i.putExtra("lon",lon);
                                // i.putExtra("idZona",idZona);

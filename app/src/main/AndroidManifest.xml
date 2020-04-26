@@ -10,11 +10,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Mapas.MapazonasActivity"></activity>
+        <activity android:name=".Mapas.MapaActActivity"></activity>
+        <activity android:name=".Detalles.DetallesMapaActividaActivity" />
+        <activity android:name=".Detalles.DetallesActividadActivity" />
+        <activity android:name=".Vendedor.EventosActivity" />
+        <activity android:name=".Vendedor.NotificacionesActivity" />
+        <activity android:name=".Vendedor.VendedorActivity" />
+        <activity android:name=".Mapas.MapaorganizacionActivity" />
+        <activity
+            android:name=".Detalles.DetallesMapaOrganizacionActivity"
+            android:screenOrientation="locked" />
+        <activity
+            android:name=".Detalles.DetallesMapaZonaActivity"
+            android:screenOrientation="locked" />
         <activity android:name=".Mapas.MapavendedorActivity" />
         <activity android:name=".Mapas.MapaActivity" />
-        <activity android:name=".DetallesZonaActivity" />
-        <activity android:name=".DetallesorganizacionActivity" />
+        <activity
+            android:name=".Detalles.DetallesZonaActivity"
+            android:screenOrientation="locked" />
+        <activity
+            android:name=".Detalles.DetallesorganizacionActivity"
+            android:screenOrientation="locked" />
         <activity
             android:name=".inicio"
             android:screenOrientation="locked">
@@ -36,8 +52,8 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

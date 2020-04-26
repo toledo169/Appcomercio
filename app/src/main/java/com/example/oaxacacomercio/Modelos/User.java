@@ -1,8 +1,24 @@
 package com.example.oaxacacomercio.Modelos;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+
+import static java.lang.String.valueOf;
+
 public class User {
     public int id;
     public String nombre, apellido_paterno, apellido_materno,correoelectronico,cargo,municipio;
+    SharedPreferences sharedPreferences;
+    Context context;
+
+    public User(Context context) {
+        this.context = context;
+        //sharedPreferences=context.getSharedPreferences("userinfo",Context.MODE_PRIVATE);
+    }
+   // public void remove(){
+     //   sharedPreferences.edit().clear().commit();
+   // }
 
     public String getCorreoelectronico() {
         return correoelectronico;
@@ -29,11 +45,15 @@ public class User {
     }
 
     public int getId() {
+     //   String name = sharedPreferences.getString("userdata","");
+      //  id=Integer.parseInt(name);
         return id;
     }
 
     public void setId(int id) {
+
         this.id = id;
+        //sharedPreferences.edit().putString("userdata", valueOf(id)).commit();
     }
 
     public String getNombre() {

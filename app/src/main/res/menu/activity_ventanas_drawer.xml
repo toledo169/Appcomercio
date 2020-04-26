@@ -22,7 +22,7 @@
             android:title="Organizaciones" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Comerciales">
         <menu>
             <item
                 android:id="@+id/nav_share"

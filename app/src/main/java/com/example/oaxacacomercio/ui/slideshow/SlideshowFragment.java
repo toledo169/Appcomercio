@@ -149,7 +149,7 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
     public void buscador(String texto){
         listavendedores.clear();
         for (int i=0;i<listauxiliar.size();i++){
-            if (listauxiliar.get(i).getNombrev().toLowerCase().contains(texto.toLowerCase())){
+            if (listauxiliar.get(i).getNombrev().toLowerCase().contains(texto.toLowerCase())||listauxiliar.get(i).getApellido_paterno().toLowerCase().contains(texto.toLowerCase())){
                 listavendedores.add(listauxiliar.get(i));
             }
         }

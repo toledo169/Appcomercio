@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.oaxacacomercio.DetallesZonaActivity;
+import com.example.oaxacacomercio.Detalles.DetallesZonaActivity;
 import com.example.oaxacacomercio.R;
 import com.example.oaxacacomercio.Modelos.Zona;
 

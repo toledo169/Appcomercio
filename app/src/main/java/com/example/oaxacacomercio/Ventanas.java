@@ -1,7 +1,9 @@
 package com.example.oaxacacomercio;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +29,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -43,9 +46,10 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Ventanas extends AppCompatActivity  {
+public class Ventanas extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+  //  private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +58,14 @@ public class Ventanas extends AppCompatActivity  {
         setContentView(R.layout.activity_ventanas);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       // FloatingActionButton fab = findViewById(R.id.fab);
-       // fab.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-         //   public void onClick(View view) {
-         //       Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.municipiodeoaxaca.gob.mx"));
-         //       startActivity(intent);
-           // }
+    //    prefs=getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        // FloatingActionButton fab = findViewById(R.id.fab);
+        // fab.setOnClickListener(new View.OnClickListener() {
+        //  @Override
+        //   public void onClick(View view) {
+        //       Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.municipiodeoaxaca.gob.mx"));
+        //       startActivity(intent);
+        // }
         //});
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -90,8 +95,7 @@ public class Ventanas extends AppCompatActivity  {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-    @Override
+     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_settings:
@@ -120,4 +124,28 @@ public class Ventanas extends AppCompatActivity  {
         }
         return super.onOptionsItemSelected(item);
     }
+
+   /* @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                Logout();
+                return true;
+            case R.id.forget_logout:
+                removesharedPreferences();
+                Logout();
+                return true;
+            default:
+
+                return super.onOptionsItemSelected(item);
+        }
+    }*/
+   // private void Logout(){
+     //   Intent intent=new Intent(this,MainActivity.class);
+       // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+       // startActivity(intent);
+   // }
+//    private void removesharedPreferences(){
+  //      prefs.edit().clear().apply();
+   // }
 }

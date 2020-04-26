@@ -6,6 +6,8 @@
     android:orientation="vertical"
     android:background="#500014">
     <EditText
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:id="@+id/searchusuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
