@@ -102,6 +102,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     ArrayList<Double>longi;
     ArrayList<Double>latizona;
     ArrayList<Double>longizona;
+    ArrayList<String>nomb;
     private  List<List<Point>> POINTS = new ArrayList<>();
     private  List<Point> OUTER_POINTS = new ArrayList<>();
 
@@ -156,6 +157,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
       //  getSupportActionBar().setTitle(name);
         lati=(ArrayList<Double>)getIntent().getSerializableExtra("lat");
         longi=(ArrayList<Double>)getIntent().getSerializableExtra("log");
+        nomb=(ArrayList<String>)getIntent().getSerializableExtra("nom") ;
         latizona=(ArrayList<Double>)getIntent().getSerializableExtra("latitudzona");
         longizona=(ArrayList<Double>)getIntent().getSerializableExtra("longitudzona");
        String nombreZ=getIntent().getExtras().getString("nombre");
@@ -199,7 +201,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             });
             for (int i = 0; i < lati.size(); i++) {
                 mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(lati.get(i), longi.get(i))).title(nombre)
+                        .position(new LatLng(lati.get(i), longi.get(i))).title(nomb.get(i))
                 );
 
             }

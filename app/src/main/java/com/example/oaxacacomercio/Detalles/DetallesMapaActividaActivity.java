@@ -42,6 +42,7 @@ public class DetallesMapaActividaActivity extends AppCompatActivity  implements 
     TextView tvclave,tvnombre;
     String name;
     String nombrev;
+    ArrayList<String>nom=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +97,7 @@ public class DetallesMapaActividaActivity extends AppCompatActivity  implements 
         Intent intent=new Intent(DetallesMapaActividaActivity.this, MapaActActivity.class);
         intent.putExtra("lat", lat);
         intent.putExtra("log", log);
+        intent.putExtra("nom",nom);
         intent.putExtra("nombre_actividad",name);
         intent.putExtra("name",nombrev);
         startActivity(intent);
@@ -124,6 +126,7 @@ public class DetallesMapaActividaActivity extends AppCompatActivity  implements 
                 listavendedoresdetallesact.add(vendedor);
                 lat.add(vendedor.getLatitud());
                 log.add(vendedor.getLongitud());
+                nom.add(vendedor.getNombrev());
                 //   listauxiliar.add(vendedor);
             }
             progress.hide();

@@ -14,7 +14,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,11 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.oaxacacomercio.Adapter.DetallesVendedorAdapter;
 import com.example.oaxacacomercio.Adapter.DetallesZonaVendedorAdapter;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +50,7 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_zona);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        Toolbar toolbar = findViewById(R.id.toolbardetallez);
+        Toolbar toolbar = findViewById(R.id.toolbarprueba);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

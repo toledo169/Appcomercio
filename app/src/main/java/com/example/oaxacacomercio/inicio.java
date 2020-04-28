@@ -11,6 +11,9 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
+import com.example.oaxacacomercio.Modelos.User;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
+
 public class inicio extends AppCompatActivity {
     private SharedPreferences prefs;
     @Override
@@ -21,12 +24,27 @@ public class inicio extends AppCompatActivity {
       //  Intent intentLogin = new Intent(inicio.this, MainActivity.class);
        // Intent intentmain=new Intent(this,Ventanas.class);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        final User user=new User(inicio.this);
               new Handler().postDelayed(new Runnable() {
                   @Override
                   public void run() {
-                      Intent intent = new Intent(inicio.this, MainActivity.class);
-                      startActivity(intent);
-                      inicio.this.finish();
+                      if(user.getCorreoelectronico()!="") {
+                          Intent intent = new Intent(inicio.this, Ventanas.class);
+                          intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
+                          intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
+                          intent.putExtra(HomeFragment.nombres,user.getNombre());
+                          intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
+                          intent.putExtra(HomeFragment.cargo,user.getCargo());
+                          intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                          startActivity(intent);
+                          finish();
+                      }
+                      else{
+                          Intent intent = new Intent(inicio.this, MainActivity.class);
+                          startActivity(intent);
+                          finish();
+
+                      }
                   }
               },3000);
     }

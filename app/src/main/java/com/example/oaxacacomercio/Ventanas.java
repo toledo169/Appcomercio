@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 import com.example.oaxacacomercio.ui.send.SendFragment;
@@ -109,7 +110,8 @@ public class Ventanas extends AppCompatActivity {
                 btnsi.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        finishAffinity();
+                        logOut();
+                        //finishAffinity();
                     }
                 });
                 Button btnno=view.findViewById(R.id.btnno);
@@ -125,26 +127,31 @@ public class Ventanas extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   /* @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                Logout();
-                return true;
-            case R.id.forget_logout:
-                removesharedPreferences();
-                Logout();
-                return true;
-            default:
+    private void logOut() {
+        new User(Ventanas.this).removeuser();
+        Intent intent= new Intent(Ventanas.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
-                return super.onOptionsItemSelected(item);
-        }
+    /*  @Override
+      public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+          switch (item.getItemId()) {
+              case R.id.action_settings:
+                  Logout();
+                  return true;
+              default:
+
+                  return super.onOptionsItemSelected(item);
+          }
+      }
+
+    public void Logout(){
+        new User(Ventanas.this).removeuser();
+        Intent intent= new Intent(Ventanas.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }*/
-   // private void Logout(){
-     //   Intent intent=new Intent(this,MainActivity.class);
-       // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-       // startActivity(intent);
-   // }
 //    private void removesharedPreferences(){
   //      prefs.edit().clear().apply();
    // }

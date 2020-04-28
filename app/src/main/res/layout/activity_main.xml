@@ -39,7 +39,7 @@
             android:layout_weight="1"
             app:errorEnabled="true"
             app:counterEnabled="true"
-            app:passwordToggleEnabled="true"
+            app:passwordToggleEnabled="false"
             android:id="@+id/usuario"
             android:textColorHint="@android:color/white"
             >
@@ -111,16 +111,6 @@
             android:textStyle="bold"
             android:textColor="#ffffff"
             />
-
-        <Switch
-            android:id="@+id/switchremember"
-            android:layout_width="120dp"
-            android:layout_height="20dp"
-            android:text="Recordar"
-            android:textColor="@android:color/white"
-            android:textSize="15dp"
-            android:textStyle="bold" />
-
         <Button
             android:id="@+id/btn_reset_password"
             android:layout_width="match_parent"

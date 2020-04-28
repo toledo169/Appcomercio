@@ -41,8 +41,9 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
     ArrayList<Vendedor> listavendedoresdetalleszona;
     ArrayList<Double>lat=new ArrayList<>();
     ArrayList<Double>log=new ArrayList<>();
-    ArrayList<Double>latitudZona=new ArrayList<>();
-    ArrayList<Double>longitudzona=new ArrayList<>();
+  static  ArrayList<Double>latitudZona=new ArrayList<>();
+   static    ArrayList<Double>longitudzona=new ArrayList<>();
+    ArrayList<String>nom=new ArrayList<>();
     // ArrayList<Vendedor>listauxiliar;
     ProgressDialog progress;
     JsonRequest jsonObjectRequest;
@@ -102,6 +103,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
             intent.putExtra("log", log);
             intent.putExtra("latitudzona", latitudZona);
             intent.putExtra("longitudzona", longitudzona);
+            intent.putExtra("nom",nom);
             intent.putExtra("nombre",nombreZ);
             intent.putExtra("name",name);
             startActivity(intent);
@@ -126,6 +128,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
             intent.putExtra("log", log);
             intent.putExtra("latitudzona", latitudZona);
             intent.putExtra("longitudzona", longitudzona);
+            intent.putExtra("nom",nom);
             intent.putExtra("nombre",nombreZ);
             intent.putExtra("name",name);
             startActivity(intent);
@@ -149,6 +152,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
             intent.putExtra("log", log);
             intent.putExtra("latitudzona", latitudZona);
             intent.putExtra("longitudzona", longitudzona);
+            intent.putExtra("nom",nom);
             intent.putExtra("nombre",nombreZ);
             intent.putExtra("name",name);
             startActivity(intent);
@@ -194,6 +198,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
                 listavendedoresdetalleszona.add(vendedor);
                 lat.add(vendedor.getLatitud());
                 log.add(vendedor.getLongitud());
+                nom.add(vendedor.getNombrev());
                 //   listauxiliar.add(vendedor);
             }
             //     progress.hide();

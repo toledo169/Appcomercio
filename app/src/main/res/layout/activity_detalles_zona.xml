@@ -15,7 +15,7 @@
         android:id="@+id/appbarlayout_id"
         android:fitsSystemWindows="true">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbardetallez"
+            android:id="@+id/toolbarprueba"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#5d2442"

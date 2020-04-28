@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,6 +31,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.ZonaAdapter;
 import com.example.oaxacacomercio.Detalles.DetallesMapaZonaActivity;
 import com.example.oaxacacomercio.Detalles.DetallesZonaActivity;
+import com.example.oaxacacomercio.FragmentDetalles.DetallesOrganizacionFragment;
+import com.example.oaxacacomercio.FragmentDetalles.DetallesZonaFragment;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.R;
@@ -97,7 +101,15 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
                                 intent.putExtra("id_zona",listazona.get(viewHolder.getAdapterPosition()).getId());
                                 intent.putExtra("nombre",listazona.get(viewHolder.getAdapterPosition()).getNombre());
                                 getContext().startActivity(intent);
-                                Toast.makeText(getContext(),"Detalles", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(),"Detalles", Toast.LENGTH_SHORT).show();
+                               /* Bundle datos=new Bundle();
+                                datos.putInt("id_zona",listazona.get(viewHolder.getAdapterPosition()).getId());
+                                Fragment fragmento= new DetallesZonaFragment();
+                                fragmento.setArguments(datos);
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.nav_host_fragment, fragmento);
+                                fragmentTransaction.commit();*/
                             }
                         }
                 ));

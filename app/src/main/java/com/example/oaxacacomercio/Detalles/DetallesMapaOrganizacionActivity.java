@@ -34,6 +34,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
     ArrayList<Vendedor> listavendedoresdetalles;
     ArrayList<Double>lat=new ArrayList<>();
     ArrayList<Double>log=new ArrayList<>();
+    ArrayList<String>nom=new ArrayList<>();
     // ArrayList<Vendedor> listauxiliar;
     ProgressDialog progress;
     JsonRequest jsonObjectRequest;
@@ -92,8 +93,10 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
         Intent intent=new Intent(DetallesMapaOrganizacionActivity.this, MapaorganizacionActivity.class);
         intent.putExtra("lat", lat);
         intent.putExtra("log", log);
+        intent.putExtra("nom",nom);
         intent.putExtra("nombre_organizacion",name);
         intent.putExtra("name",nombre);
+
         startActivity(intent);
     }
 
@@ -128,6 +131,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
                 listavendedoresdetalles.add(vendedor);
                 lat.add(vendedor.getLatitud());
                 log.add(vendedor.getLongitud());
+                nom.add(vendedor.getNombrev());
                 //   listauxiliar.add(vendedor);
             }
             progress.hide();

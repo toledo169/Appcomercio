@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.OrganizacionAdapter;
 import com.example.oaxacacomercio.Detalles.DetallesMapaOrganizacionActivity;
 import com.example.oaxacacomercio.Detalles.DetallesorganizacionActivity;
+import com.example.oaxacacomercio.FragmentDetalles.DetallesOrganizacionFragment;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.Modelos.Organizacion;
@@ -91,12 +94,21 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
                         new MybuttonClickListener(){
                             @Override
                             public void onClick(int pos) {
-                                Intent i=new Intent(getContext(), DetallesorganizacionActivity.class);
+                               Intent i=new Intent(getContext(), DetallesorganizacionActivity.class);
                                 i.putExtra("id_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getDocumento());
                                 i.putExtra("nombre_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getNombre());
                                 i.putExtra("nombre_dirigente",listaorganizacion.get(viewHolder.getAdapterPosition()).getProfesion());
                                 getContext().startActivity(i);
-                                Toast.makeText(getContext(),"Detalles", Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(getContext(),"Detalles", Toast.LENGTH_SHORT).show();
+                                /*Bundle datos=new Bundle();
+                                datos.putInt("id_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getDocumento());
+                                datos.putString("nombre_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getNombre());
+                                Fragment fragmento= new DetallesOrganizacionFragment();
+                                fragmento.setArguments(datos);
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.nav_host_fragment, fragmento);
+                                fragmentTransaction.commit();*/
                             }
                         }
                         ));
@@ -113,7 +125,7 @@ public class ToolsFragment extends Fragment implements Response.Listener<JSONObj
                                 intent.putExtra("nombre_organizacion",listaorganizacion.get(viewHolder.getAdapterPosition()).getNombre());
                                 intent.putExtra("nombre_dirigente",listaorganizacion.get(viewHolder.getAdapterPosition()).getProfesion());
                                 getContext().startActivity(intent);
-                             //   Toast.makeText(getContext(),"Eliminar", Toast.LENGTH_SHORT).show();
+
                             }
                         }
                 ));

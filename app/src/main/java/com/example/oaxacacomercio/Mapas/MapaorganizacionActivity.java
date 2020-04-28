@@ -25,6 +25,7 @@ public class MapaorganizacionActivity extends AppCompatActivity implements OnMap
     String nomv;
     ArrayList<Double> lati;
     ArrayList<Double>longi;
+    ArrayList<String>nomb;
     @Override
     protected void onStart() {
         super.onStart();
@@ -75,6 +76,8 @@ public class MapaorganizacionActivity extends AppCompatActivity implements OnMap
         getSupportActionBar().setTitle(name);
         lati=(ArrayList<Double>)getIntent().getSerializableExtra("lat");
         longi=(ArrayList<Double>)getIntent().getSerializableExtra("log");
+        nomb=(ArrayList<String>)getIntent().getSerializableExtra("nom") ;
+
         // Inflate the layout for this fragment
 
         mapView = (MapView)findViewById(R.id.mapamapaso);
@@ -87,7 +90,7 @@ public class MapaorganizacionActivity extends AppCompatActivity implements OnMap
         mapboxMap.setStyle(Style.MAPBOX_STREETS);
         for (int i = 0; i < lati.size(); i++) {
             mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(lati.get(i), longi.get(i))).title(nomv)
+                    .position(new LatLng(lati.get(i), longi.get(i))).title(nomb.get(i))
             );
 
         }

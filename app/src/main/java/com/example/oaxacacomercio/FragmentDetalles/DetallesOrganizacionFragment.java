@@ -1,24 +1,24 @@
-package com.example.oaxacacomercio.Detalles;
+package com.example.oaxacacomercio.FragmentDetalles;
+
+import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,10 +29,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.DetallesVendedorAdapter;
-import com.example.oaxacacomercio.Adapter.VendedorAdapter;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,57 +38,88 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DetallesorganizacionActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener {
-    RecyclerView recyclerViewDetalles;
-    ArrayList<Vendedor> listavendedoresdetalles;
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link DetallesOrganizacionFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class DetallesOrganizacionFragment extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener{
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    RecyclerView recyclerViewDetallesf;
+    ArrayList<Vendedor> listavendedoresdetallesf;
     ArrayList<Vendedor> listauxiliar;
-   ArrayList<Double>lat=new ArrayList<>();
+    ArrayList<Double>lat=new ArrayList<>();
     ArrayList<Double>log=new ArrayList<>();
     ProgressDialog progress;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     //TextView tvclave,tvnombre;
-    private EditText serchvo;
+    private EditText serchvof;
     int claved;
     DetallesVendedorAdapter adapter;
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public DetallesOrganizacionFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment DetallesOrganizacionFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static DetallesOrganizacionFragment newInstance(String param1, String param2) {
+        DetallesOrganizacionFragment fragment = new DetallesOrganizacionFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detallesorganizacion);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        Toolbar toolbar = findViewById(R.id.toolbardo);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        String name=getIntent().getExtras().getString("nombre_organizacion");
-        getSupportActionBar().setTitle(name);
-       // String dirigente=getIntent().getExtras().getString("nombre_dirigente");
-         claved=getIntent().getExtras().getInt("id_organizacion");
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        //CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.collapsingtoolbar_id);
-        //collapsingToolbarLayout.setTitleEnabled(true);
-        // tvnombre=(TextView)findViewById(R.id.Nombrevendedordetalles);
-        //TextView tvdirigente=(TextView)findViewById(R.id.otxtProfesion);
-        //tvclave=(TextView)findViewById(R.id.otxclave);
-
-       // tvnombre.setText(name);
-       // tvdirigente.setText(dirigente);
-       // tvclave.setText(String.valueOf(claved));
-       // collapsingToolbarLayout.setTitle(name);
-        listavendedoresdetalles=new ArrayList<>();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view =inflater.inflate(R.layout.fragment_detalles_organizacion, container, false);
+       getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        Bundle datos=getArguments();
+        claved=datos.getInt("id_organizacion");
+       String name=datos.getString("nombre_organizacion");
+       // getSupportActionBar().setTitle(name);
+        listavendedoresdetallesf=new ArrayList<>();
         listauxiliar=new ArrayList<>();
-        recyclerViewDetalles= (RecyclerView) findViewById(R.id.idRecyclerdetallesvendedor);
-        serchvo=(EditText)findViewById(R.id.buscarvendedororga);
-        layoutManager= new LinearLayoutManager(this);
-        recyclerViewDetalles.setLayoutManager(layoutManager);
-        recyclerViewDetalles.setHasFixedSize(true);
+        recyclerViewDetallesf= (RecyclerView)view.findViewById(R.id.idRecyclerdetallesvendedorf);
+        serchvof=(EditText)view.findViewById(R.id.buscarvendedororgaf);
+        layoutManager= new LinearLayoutManager(getContext());
+        recyclerViewDetallesf.setLayoutManager(layoutManager);
+        recyclerViewDetallesf.setHasFixedSize(true);
 
-        adapter=new DetallesVendedorAdapter(listavendedoresdetalles,this);
-        recyclerViewDetalles.setAdapter(adapter);
-        request = Volley.newRequestQueue(this);
+        adapter=new DetallesVendedorAdapter(listavendedoresdetallesf,getContext());
+        recyclerViewDetallesf.setAdapter(adapter);
+        request = Volley.newRequestQueue(getContext());
         cargarwebservice();
-        serchvo.addTextChangedListener(new TextWatcher() {
+        serchvof.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -107,17 +136,11 @@ public class DetallesorganizacionActivity extends AppCompatActivity implements R
 
             }
         });
+        return view;
     }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void cargarwebservice() {
-        progress=new ProgressDialog(this);
+        progress=new ProgressDialog(getContext());
         progress.setMessage("Consultando...");
         progress.show();
         String url="http://192.168.0.11/api/Usuario/deta/"+claved;
@@ -125,17 +148,14 @@ public class DetallesorganizacionActivity extends AppCompatActivity implements R
         //casa angel 192.168.0.23
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
-
     }
-
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this, "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
         System.out.println();
         Log.d("ERROR: ", error.toString());
         progress.hide();
-
     }
 
     @Override
@@ -158,22 +178,22 @@ public class DetallesorganizacionActivity extends AppCompatActivity implements R
                 vendedor.setNomzona(jsonObject.optString("nombre"));
                 vendedor.setLatitud(jsonObject.optDouble("latitud"));
                 vendedor.setLongitud(jsonObject.optDouble("longitud"));
-                listavendedoresdetalles.add(vendedor);
-               listauxiliar.add(vendedor);
+                listavendedoresdetallesf.add(vendedor);
+                listauxiliar.add(vendedor);
             }
             progress.hide();
-            recyclerViewDetalles.setAdapter(adapter);
+            recyclerViewDetallesf.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
             progress.hide();
         }
     }
     public void buscador(String texto){
-        listavendedoresdetalles.clear();
+        listavendedoresdetallesf.clear();
         for (int i=0;i<listauxiliar.size();i++){
             if (listauxiliar.get(i).getNombrev().toLowerCase().contains(texto.toLowerCase())||listauxiliar.get(i).getApellido_paterno().toLowerCase().contains(texto.toLowerCase())){
-                listavendedoresdetalles.add(listauxiliar.get(i));
+                listavendedoresdetallesf.add(listauxiliar.get(i));
             }
         }
         adapter.notifyDataSetChanged();
