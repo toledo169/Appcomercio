@@ -26,6 +26,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Modelos.User;
+import com.example.oaxacacomercio.Modelos.Vendedor;
+import com.example.oaxacacomercio.Vendedor.PermisoFragment;
+import com.example.oaxacacomercio.Vendedor.VendedorActivity;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -71,6 +74,9 @@ public class MainActivity extends AppCompatActivity  implements Response.Listene
         iniciarsesion();
      //   SaveOnPreferences(email);
 
+    }
+    public void loginvendedor(View view){
+        loginvendedor();
     }
    /* private void setCredentialifexists(){
         String email=getUserMailPrefer();
@@ -155,6 +161,73 @@ public class MainActivity extends AppCompatActivity  implements Response.Listene
        goMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(goMain);
     }
+    public void loginvendedor(){
+        progress=new ProgressDialog(this);
+        progress.setMessage("Cargando...");
+        progress.show();
+        String url="http://192.168.0.11/api/Usuario/loginvendedor?name="+inputCorreo.getEditText().getText().toString()+"&password="+inputPassword.getEditText().getText().toString();
+        jsonRequest= new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Vendedor usuario= new Vendedor(MainActivity.this);
+           //     Toast.makeText(,"Inicio de sesión con exito",Toast.LENGTH_SHORT).show();
+                JSONArray jsonArray= response.optJSONArray("vendedor");
+                JSONObject jsonObject=null;
+
+                try {
+                    jsonObject= jsonArray.getJSONObject(0);
+                    System.out.println("los datos son"+jsonArray.length());
+                    usuario.setNombre(jsonObject.optString("name"));
+                    usuario.setApellido_paterno(jsonObject.optString("apellido_paterno"));
+                    usuario.setApellido_materno(jsonObject.optString("apellido_materno"));
+                    usuario.setNumcuenta(jsonObject.optInt("numerocuenta"));
+                    usuario.setNumexpediente(jsonObject.optInt("numero_expediente"));
+                    progress.hide();
+                }
+
+                catch (JSONException e) {
+                    e.printStackTrace();
+                    progress.hide();
+                }
+                Vendedor user=new Vendedor(MainActivity.this);
+                user.setNombre(usuario.getNombrev());
+                user.setApellido_paterno(usuario.getApellido_paterno());
+                user.setApellido_materno(usuario.getApellido_materno());
+                user.setNumcuenta(usuario.getNumcuenta());
+                user.setNumexpediente(usuario.getNumexpediente());
+                Intent goMain = new Intent(MainActivity.this, VendedorActivity.class);
+                goMain.putExtra(PermisoFragment.apellido_paternos,usuario.getApellido_paterno());
+                goMain.putExtra(PermisoFragment.apellido_maternos,usuario.getApellido_materno());
+                goMain.putExtra(PermisoFragment.nombres,usuario.getNombrev());
+                goMain.putExtra(PermisoFragment.numexpediente,usuario.getNumexpediente());
+                goMain.putExtra(PermisoFragment.numcuenta,usuario.getNumcuenta());
+               goMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(goMain);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater= getLayoutInflater();
+                View view= inflater.inflate(R.layout.dialog_desconocido,null);
+                builder.setView(view);
+                final AlertDialog dialog=builder.create();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                Button btnno=view.findViewById(R.id.btnok);
+                btnno.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                progress.hide();
+            }
+        });
+        request.add(jsonRequest);
+    }
+
 
     }
 

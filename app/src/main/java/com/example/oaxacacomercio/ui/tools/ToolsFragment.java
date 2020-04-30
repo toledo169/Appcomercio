@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +29,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.OrganizacionAdapter;
 import com.example.oaxacacomercio.Detalles.DetallesMapaOrganizacionActivity;
 import com.example.oaxacacomercio.Detalles.DetallesorganizacionActivity;
-import com.example.oaxacacomercio.FragmentDetalles.DetallesOrganizacionFragment;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.Modelos.Organizacion;

@@ -100,7 +100,7 @@
             android:layout_height="0dp"
             android:layout_weight="0.15" />
         <Button
-            android:onClick="goMain"
+            android:onClick="loginvendedor"
             android:id="@+id/btn_vendedor"
             android:layout_width="match_parent"
             android:background="@drawable/bnt_vendedor"

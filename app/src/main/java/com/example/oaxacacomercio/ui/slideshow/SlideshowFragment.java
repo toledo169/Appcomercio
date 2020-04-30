@@ -121,7 +121,7 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
         JSONArray json=response.optJSONArray("vendedores");
         try {
             for (int i=0;i<json.length();i++){
-                vendedor=new Vendedor();
+                vendedor=new Vendedor(getContext());
                 JSONObject jsonObject = null;
                 jsonObject=json.getJSONObject(i);
 

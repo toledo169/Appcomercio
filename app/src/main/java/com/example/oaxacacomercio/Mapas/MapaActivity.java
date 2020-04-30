@@ -17,10 +17,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Detalles.DetallesMapaZonaActivity;
+import com.example.oaxacacomercio.MainActivity;
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
 import com.example.oaxacacomercio.ui.send.SendFragment;
+import com.example.oaxacacomercio.ui.share.ShareFragment;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.LineString;
@@ -70,6 +75,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -100,8 +106,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     String nombre;
     ArrayList<Double>lati;
     ArrayList<Double>longi;
-    ArrayList<Double>latizona;
-    ArrayList<Double>longizona;
+     ArrayList<Double>latizona;
+     ArrayList<Double>longizona;
     ArrayList<String>nomb;
     private  List<List<Point>> POINTS = new ArrayList<>();
     private  List<Point> OUTER_POINTS = new ArrayList<>();
@@ -173,7 +179,19 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId()==android.R.id.home){
+            User usuario= new User(this);
+            Intent goMain = new Intent(MapaActivity.this, Ventanas.class);
+
+            goMain.putExtra(HomeFragment.apellido_paternos,usuario.getApellido_paterno());
+            goMain.putExtra(HomeFragment.apellido_maternos,usuario.getApellido_materno());
+            goMain.putExtra(HomeFragment.nombres,usuario.getNombre());
+            goMain.putExtra(HomeFragment.correo,usuario.getCorreoelectronico());
+            goMain.putExtra(HomeFragment.cargo,usuario.getCargo());
+            goMain.putExtra(HomeFragment.municipio,usuario.getMunicipio());
+            //   finish();
+            startActivity(goMain);
             finish();
+         //  Navigation.findNavController(android.R.id.home).navigate(R.id.irmapita);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -192,7 +210,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                 @Override
                 public void onStyleLoaded(@NonNull Style style) {
-                    agregarPuntos();
+                   // agregarPuntos();
+                    for (int i=0; i<latizona.size(); i++){
+                        OUTER_POINTS.add(Point.fromLngLat(longizona.get(i),latizona.get(i)));
+                    }
+                    POINTS.add(OUTER_POINTS);
                     style.addSource(new GeoJsonSource("source-id", Polygon.fromLngLats(POINTS)));
                     style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
                             fillColor(Color.parseColor("#3bb2d0"))), "settlement-label"

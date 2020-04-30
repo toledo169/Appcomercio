@@ -13,8 +13,6 @@
         <activity android:name=".Mapas.MapaActActivity"></activity>
         <activity android:name=".Detalles.DetallesMapaActividaActivity" />
         <activity android:name=".Detalles.DetallesActividadActivity" />
-        <activity android:name=".Vendedor.EventosActivity" />
-        <activity android:name=".Vendedor.NotificacionesActivity" />
         <activity android:name=".Vendedor.VendedorActivity" />
         <activity android:name=".Mapas.MapaorganizacionActivity" />
         <activity

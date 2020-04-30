@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Vendedor.VendedorActivity"
-    android:background="#500014">
-
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/botom_navigation"
+    tools:context=".Vendedor.VendedorActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#5d2442"
+        app:layout_constraintBottom_toBottomOf="@id/tablalayout"/>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablalayout"
+        app:tabIconTint="@android:color/white"
+        app:tabIndicatorColor="#b34766"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation"
-        app:itemTextColor="@android:color/white"
-        android:layout_gravity="bottom"
-        app:itemIconTint="@android:color/white"
-        android:background="#5d2442">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabPaddingTop="15dp"
+        android:paddingBottom="8dp"
+        android:background="#5d2442"
+        app:tabTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabPaddingBottom="8dp"
+        >
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tablalayout"
+        >
+    </androidx.viewpager2.widget.ViewPager2>
+</androidx.constraintlayout.widget.ConstraintLayout>

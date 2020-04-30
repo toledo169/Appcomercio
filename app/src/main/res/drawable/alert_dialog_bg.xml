@@ -7,4 +7,5 @@
         android:left="12dp"
         android:right="12dp"
         android:top="12dp"/>
+    <stroke android:width="5px" android:color="#5d2442" />
 </shape>

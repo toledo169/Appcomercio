@@ -135,7 +135,7 @@ public class DetallesActividadActivity extends AppCompatActivity implements Resp
         JSONArray json=response.optJSONArray("comerciales");
         try {
             for (int i=0;i<json.length();i++){
-                vendedor=new Vendedor();
+                vendedor=new Vendedor(this);
                 JSONObject jsonObject = null;
                 jsonObject=json.getJSONObject(i);
 

@@ -41,8 +41,8 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
     ArrayList<Vendedor> listavendedoresdetalleszona;
     ArrayList<Double>lat=new ArrayList<>();
     ArrayList<Double>log=new ArrayList<>();
-  static  ArrayList<Double>latitudZona=new ArrayList<>();
-   static    ArrayList<Double>longitudzona=new ArrayList<>();
+     ArrayList<Double>latitudZona=new ArrayList<>();
+      ArrayList<Double>longitudzona=new ArrayList<>();
     ArrayList<String>nom=new ArrayList<>();
     // ArrayList<Vendedor>listauxiliar;
     ProgressDialog progress;
@@ -181,7 +181,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
         JSONArray json=response.optJSONArray("zonasvend");
         try {
             for (int i=0;i<json.length();i++){
-                vendedor=new Vendedor();
+                vendedor=new Vendedor(this);
                 JSONObject jsonObject = null;
                 jsonObject=json.getJSONObject(i);
 

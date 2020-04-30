@@ -16,6 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:textColor="#5d2442"
+            android:textStyle="bold"
             android:layout_marginBottom="24dp"
             android:text="¿Esta seguro?"/>
         <TextView
@@ -23,7 +25,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="16sp"
-            android:text="¿Usted desea salir de la aplicación?"/>
+            android:text="¿Usted desea salir de la aplicación?"
+            android:textColor="#5d2442"
+            android:textStyle="bold"/>
     </LinearLayout>
 <View
     android:layout_width="match_parent"

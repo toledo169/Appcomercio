@@ -12,6 +12,9 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.example.oaxacacomercio.Modelos.User;
+import com.example.oaxacacomercio.Modelos.Vendedor;
+import com.example.oaxacacomercio.Vendedor.PermisoFragment;
+import com.example.oaxacacomercio.Vendedor.VendedorActivity;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 
 public class inicio extends AppCompatActivity {
@@ -25,6 +28,7 @@ public class inicio extends AppCompatActivity {
        // Intent intentmain=new Intent(this,Ventanas.class);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         final User user=new User(inicio.this);
+        final Vendedor vendedor=new Vendedor(inicio.this);
               new Handler().postDelayed(new Runnable() {
                   @Override
                   public void run() {
@@ -37,6 +41,16 @@ public class inicio extends AppCompatActivity {
                           intent.putExtra(HomeFragment.cargo,user.getCargo());
                           intent.putExtra(HomeFragment.municipio,user.getMunicipio());
                           startActivity(intent);
+                          finish();
+                      }else if (vendedor.getNombrev()!=""){
+                          Intent goMain = new Intent(inicio.this, VendedorActivity.class);
+                          goMain.putExtra(PermisoFragment.apellido_paternos,vendedor.getApellido_paterno());
+                          goMain.putExtra(PermisoFragment.apellido_maternos,vendedor.getApellido_materno());
+                          goMain.putExtra(PermisoFragment.nombres,vendedor.getNombrev());
+                          goMain.putExtra(PermisoFragment.numexpediente,vendedor.getNumexpediente());
+                          goMain.putExtra(PermisoFragment.numcuenta,vendedor.getNumcuenta());
+                          goMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                          startActivity(goMain);
                           finish();
                       }
                       else{

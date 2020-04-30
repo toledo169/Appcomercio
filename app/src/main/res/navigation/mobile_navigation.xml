@@ -40,5 +40,11 @@
         android:name="com.example.oaxacacomercio.ui.send.SendFragment"
         android:label="Zonas comerciales"
         tools:layout="@layout/fragment_send" />
+    <fragment
+        android:id="@+id/nav_eventos"
+        android:name="com.example.oaxacacomercio.ui.eventos.EventosFragment"
+        android:label="Eventos del mes"
+        tools:layout="@layout/fragment_eventos" />
+
 
 </navigation>

@@ -17,25 +17,27 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:layout_marginBottom="24dp"
+            android:textColor="#5d2442"
+            android:textStyle="bold"
             android:text="Usuario o contraseña incorrecto"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="16sp"
+            android:textColor="#5d2442"
+            android:textStyle="bold"
             android:text="Vuelva a intentarlo"/>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:alpha="0.8"
-        android:background="@android:color/darker_gray"/>
         <Button
             android:id="@+id/btnok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:textColor="@android:color/darker_gray"
+            android:background="@drawable/alert_dialog_bg"
+            android:textColor="#5d2442"
             android:layout_weight="1"
-            android:text="Ok"/>
+            android:textStyle="bold"
+            android:text="Ok"
+            />
 </LinearLayout>

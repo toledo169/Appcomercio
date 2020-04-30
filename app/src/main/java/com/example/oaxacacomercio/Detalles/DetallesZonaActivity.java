@@ -131,7 +131,7 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
         JSONArray json=response.optJSONArray("zonasvend");
         try {
             for (int i=0;i<json.length();i++){
-                vendedor=new Vendedor();
+                vendedor=new Vendedor(this);
                 JSONObject jsonObject = null;
                 jsonObject=json.getJSONObject(i);
 

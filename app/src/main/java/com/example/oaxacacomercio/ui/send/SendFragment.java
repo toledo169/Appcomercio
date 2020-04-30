@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,8 +27,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.ZonaAdapter;
 import com.example.oaxacacomercio.Detalles.DetallesMapaZonaActivity;
 import com.example.oaxacacomercio.Detalles.DetallesZonaActivity;
-import com.example.oaxacacomercio.FragmentDetalles.DetallesOrganizacionFragment;
-import com.example.oaxacacomercio.FragmentDetalles.DetallesZonaFragment;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.R;

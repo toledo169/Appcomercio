@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.MenuItem;
 
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.R;
+import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -98,6 +102,16 @@ public class MapaorganizacionActivity extends AppCompatActivity implements OnMap
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId()==android.R.id.home){
+            User usuario= new User(this);
+            Intent goMain = new Intent(MapaorganizacionActivity.this, Ventanas.class);
+            goMain.putExtra(HomeFragment.apellido_paternos,usuario.getApellido_paterno());
+            goMain.putExtra(HomeFragment.apellido_maternos,usuario.getApellido_materno());
+            goMain.putExtra(HomeFragment.nombres,usuario.getNombre());
+            goMain.putExtra(HomeFragment.correo,usuario.getCorreoelectronico());
+            goMain.putExtra(HomeFragment.cargo,usuario.getCargo());
+            goMain.putExtra(HomeFragment.municipio,usuario.getMunicipio());
+            //   finish();
+            startActivity(goMain);
             finish();
             return true;
         }
