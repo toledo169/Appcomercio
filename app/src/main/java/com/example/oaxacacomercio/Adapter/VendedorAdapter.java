@@ -4,9 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,18 +21,23 @@ import com.example.oaxacacomercio.Mapas.MapavendedorActivity;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class VendedorAdapter extends  RecyclerView.Adapter<VendedorAdapter.VendedorHolder>{
+public class VendedorAdapter extends RecyclerView.Adapter<VendedorAdapter.VendedorHolder>  {
     List<Vendedor>listavendedor;
+    List <Vendedor>listavendedorall;
     Dialog dialog;
     Context mcontext;
     public String opcion="vendedor";
     public VendedorAdapter(List<Vendedor> listavendedor,Context mcontext) {
         this.listavendedor = listavendedor;
+        this.listavendedorall=new ArrayList<>(listavendedor);
         this.mcontext=mcontext;
     }
 
@@ -52,27 +62,27 @@ public class VendedorAdapter extends  RecyclerView.Adapter<VendedorAdapter.Vende
                 TextView namezona= (TextView)dialog.findViewById(R.id.zona);
                 Button vermapa=(Button)dialog.findViewById(R.id.btn_mapa);
                 dialogname.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getNombrev());
-             dialogapp.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_paterno() +" "+ listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_materno() );
-             girovend.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getGiro());
-             nameorgani.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getNomorganizacion());
-             nameactividad.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getActividad());
-             namezona.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getNomzona());
-             Toast.makeText(mcontext,"vendedor seleccionado"+String.valueOf(vendedorHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
-                  dialog.show();
+                dialogapp.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_paterno() +" "+ listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_materno() );
+                girovend.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getGiro());
+                nameorgani.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getNomorganizacion());
+                nameactividad.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getActividad());
+                namezona.setText(listavendedor.get(vendedorHolder.getAdapterPosition()).getNomzona());
+                Toast.makeText(mcontext,"vendedor seleccionado"+String.valueOf(vendedorHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
+                dialog.show();
 
-                  vermapa.setOnClickListener(new View.OnClickListener() {
-                      @Override
-                      public void onClick(View v) {
-                          Intent intent= new Intent(mcontext, MapavendedorActivity.class);
-                          intent.putExtra("vendedor",opcion);
-                          intent.putExtra("latitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLatitud()));
-                          intent.putExtra("longitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLongitud()));
-                         intent.putExtra("name",listavendedor.get(vendedorHolder.getAdapterPosition()).getNombrev());
-                          intent.putExtra("apellido_paterno",listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_paterno());
-                          intent.putExtra("apellido_materno",listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_materno());
-                          mcontext.startActivity(intent);
-                      }
-                  });
+                vermapa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent= new Intent(mcontext, MapavendedorActivity.class);
+                        intent.putExtra("vendedor",opcion);
+                        intent.putExtra("latitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLatitud()));
+                        intent.putExtra("longitud",String.valueOf(listavendedor.get(vendedorHolder.getAdapterPosition()).getLongitud()));
+                        intent.putExtra("name",listavendedor.get(vendedorHolder.getAdapterPosition()).getNombrev());
+                        intent.putExtra("apellido_paterno",listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_paterno());
+                        intent.putExtra("apellido_materno",listavendedor.get(vendedorHolder.getAdapterPosition()).getApellido_materno());
+                        mcontext.startActivity(intent);
+                    }
+                });
 
             }
 
@@ -109,4 +119,5 @@ public class VendedorAdapter extends  RecyclerView.Adapter<VendedorAdapter.Vende
 
 
     }
+
 }

@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/nav_eventos"
         android:name="com.example.oaxacacomercio.ui.eventos.EventosFragment"
-        android:label="Eventos del mes"
+        android:label="Eventos del dia"
         tools:layout="@layout/fragment_eventos" />
 
 

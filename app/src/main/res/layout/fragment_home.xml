@@ -106,6 +106,7 @@
                         android:drawableLeft="@drawable/ic_portrait_black_24dp"
                         android:text=" Apellidos:"
                         android:textColor="#500014"
+                        android:drawableTint="#500014"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -140,6 +141,7 @@
                         android:text=" Correo electrónico:"
                         android:textColor="#500014"
                         android:textSize="22sp"
+                        android:drawableTint="#500014"
                         android:textStyle="bold" />
 
                     <TextView
@@ -171,6 +173,7 @@
                         android:layout_marginTop="8dp"
                         android:drawableLeft="@drawable/ic_person_pin_black_24dp"
                         android:text=" Cargo:"
+                        android:drawableTint="#500014"
                         android:textColor="#500014"
                         android:textSize="22sp"
                         android:textStyle="bold" />
@@ -204,6 +207,7 @@
                         android:drawableLeft="@drawable/ic_place_black_24dp"
                         android:text=" Lugar de Nacimiento:"
                         android:textColor="#500014"
+                        android:drawableTint="#500014"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -235,6 +239,7 @@
                         android:layout_marginTop="8dp"
                         android:drawableLeft="@drawable/ic_streetview_black_24dp"
                         android:text=" Domicilio"
+                        android:drawableTint="#500014"
                         android:textColor="#500014"
                         android:textSize="22sp"
                         android:textStyle="bold" />

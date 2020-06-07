@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Eventuales.PermisosEventualActivity"
+    android:orientation="vertical"
+    android:background="#500014">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarpermnotif"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#5d2442"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            ></androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <EditText
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:id="@+id/bucarpermisosnotif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:drawableLeft="@android:drawable/ic_menu_search"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRecyclerpermisosnotif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+
+</LinearLayout>

@@ -26,10 +26,13 @@
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:id="@+id/buscarvendedoract"
+        android:hint="Buscar"
+        android:textColorHint="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_search"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="5dp"
         android:id="@+id/idRecyclerdetallesvendedoract"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>

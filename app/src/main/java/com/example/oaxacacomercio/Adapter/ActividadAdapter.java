@@ -21,10 +21,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ActividadAdapter extends RecyclerView.Adapter<ActividadAdapter.ActividadHolder> {
-Context mcontext;
-List<Actividad> listaactividades;
+    Context mcontext;
+    List<Actividad> listaactividades;
 
-    public ActividadAdapter(List<Actividad> listaactividades,Context mcontext) {
+    public ActividadAdapter(List<Actividad> listaactividades, Context mcontext) {
         this.mcontext = mcontext;
         this.listaactividades = listaactividades;
     }
@@ -32,18 +32,19 @@ List<Actividad> listaactividades;
     @NonNull
     @Override
     public ActividadHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View vista= LayoutInflater.from(parent.getContext()).inflate(R.layout.vistaact,parent,false);
-        RecyclerView.LayoutParams layoutParams=new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.vistaact, parent, false);
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         vista.setLayoutParams(layoutParams);
-        final ActividadHolder actividadHolder=new ActividadHolder(vista);
+        final ActividadHolder actividadHolder = new ActividadHolder(vista);
         actividadHolder.view_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mcontext,"act seleccionada"+String.valueOf(actividadHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(mcontext, DetallesActividadActivity.class);
-                intent.putExtra("id_actividad",listaactividades.get(actividadHolder.getAdapterPosition()).getId());
-                intent.putExtra("nombre_actividad",listaactividades.get(actividadHolder.getAdapterPosition()).getNombre());
+                Toast.makeText(mcontext, "act seleccionada" + String.valueOf(actividadHolder.getAdapterPosition()),
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mcontext, DetallesActividadActivity.class);
+                intent.putExtra("id_actividad", listaactividades.get(actividadHolder.getAdapterPosition()).getId());
+                intent.putExtra("nombre_actividad", listaactividades.get(actividadHolder.getAdapterPosition()).getNombre());
                 mcontext.startActivity(intent);
             }
         });
@@ -63,15 +64,16 @@ List<Actividad> listaactividades;
     }
 
     public class ActividadHolder extends RecyclerView.ViewHolder {
-        TextView txtNombrezona,Datozona,txtclave,datoclave;
+        TextView txtNombrezona, Datozona, txtclave, datoclave;
         ConstraintLayout view_container;
+
         public ActividadHolder(@NonNull View itemView) {
             super(itemView);
-            view_container=itemView.findViewById(R.id.contenedoract);
-            txtNombrezona=(TextView)itemView.findViewById(R.id.txtnombreact);
-            Datozona=(TextView)itemView.findViewById(R.id.datoact);
-            datoclave=(TextView)itemView.findViewById(R.id.textViewact);
-            txtclave=(TextView)itemView.findViewById(R.id.txtDocumentoact);
+            view_container = itemView.findViewById(R.id.contenedoract);
+            txtNombrezona = (TextView) itemView.findViewById(R.id.txtnombreact);
+            Datozona = (TextView) itemView.findViewById(R.id.datoact);
+            datoclave = (TextView) itemView.findViewById(R.id.textViewact);
+            txtclave = (TextView) itemView.findViewById(R.id.txtDocumentoact);
         }
     }
 }

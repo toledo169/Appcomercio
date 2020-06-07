@@ -1,6 +1,7 @@
 package com.example.oaxacacomercio.Mapas;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -104,6 +105,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapView mapView;
     int claveZ;
     String nombre;
+    int clave;
     ArrayList<Double>lati;
     ArrayList<Double>longi;
      ArrayList<Double>latizona;
@@ -152,15 +154,14 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
+        Mapbox.getInstance(this,
+                "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
         setContentView(R.layout.activity_mapa);
-       // Navigation.findNavController(this,R.id.mapazonaven).navigate(R.id.action_splashFragment_to_AFragment);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
        Toolbar toolbar = findViewById(R.id.toolbarzonam);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-      //  getSupportActionBar().setTitle(name);
         lati=(ArrayList<Double>)getIntent().getSerializableExtra("lat");
         longi=(ArrayList<Double>)getIntent().getSerializableExtra("log");
         nomb=(ArrayList<String>)getIntent().getSerializableExtra("nom") ;
@@ -168,13 +169,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         longizona=(ArrayList<Double>)getIntent().getSerializableExtra("longitudzona");
        String nombreZ=getIntent().getExtras().getString("nombre");
         nombre=getIntent().getExtras().getString("name");
+        clave=getIntent().getExtras().getInt("id_zona");
         getSupportActionBar().setTitle(nombreZ);
-        //  lat = (ArrayList<Double>) getIntent().getSerializableExtra("lat");
-        // lon = (ArrayList<Double>) getIntent().getSerializableExtra("lon");
         mapView = (MapView) findViewById(R.id.mapamaps);
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);
-
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -206,19 +205,30 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
         @Override
         public void onMapReady ( final MapboxMap mapboxMap){
-            //  agregarVendedores(mapboxMap);
             mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                 @Override
                 public void onStyleLoaded(@NonNull Style style) {
-                   // agregarPuntos();
                     for (int i=0; i<latizona.size(); i++){
                         OUTER_POINTS.add(Point.fromLngLat(longizona.get(i),latizona.get(i)));
                     }
                     POINTS.add(OUTER_POINTS);
                     style.addSource(new GeoJsonSource("source-id", Polygon.fromLngLats(POINTS)));
+                    if (clave==1){
                     style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
-                            fillColor(Color.parseColor("#3bb2d0"))), "settlement-label"
-                    );
+                            fillColor(Color.parseColor("#ff0000")),fillOpacity(2.1f)), "settlement-label"
+                    );}
+                    if (clave==2){
+                        style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
+                                fillColor(Color.parseColor("#e5be01")),fillOpacity(2.1f)), "settlement-label"
+                        );}
+                    if (clave==3){
+                        style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
+                                fillColor(Color.parseColor("#008f39")),fillOpacity(2.1f)), "settlement-label"
+                        );}
+                    if (clave==4){
+                        style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
+                                fillColor(Color.TRANSPARENT),fillOpacity(0.1f)), "settlement-label"
+                        );}
                 }
             });
             for (int i = 0; i < lati.size(); i++) {

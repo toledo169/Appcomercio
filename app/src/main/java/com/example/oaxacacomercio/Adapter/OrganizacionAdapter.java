@@ -40,7 +40,7 @@ public class OrganizacionAdapter extends RecyclerView.Adapter<OrganizacionAdapte
                 i.putExtra("id_organizacion",listaorganizaciones.get(viewHolder.getAdapterPosition()).getDocumento());
                 i.putExtra("nombre_organizacion",listaorganizaciones.get(viewHolder.getAdapterPosition()).getNombre());
                 i.putExtra("nombre_dirigente",listaorganizaciones.get(viewHolder.getAdapterPosition()).getProfesion());
-               mcontext.startActivity(i);
+                mcontext.startActivity(i);
 
             }
         });

@@ -4,18 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import dmax.dialog.SpotsDialog;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -30,8 +41,13 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.DetallesVendedorAdapter;
 import com.example.oaxacacomercio.Adapter.VendedorAdapter;
+import com.example.oaxacacomercio.MainActivity;
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
+import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.json.JSONArray;
@@ -40,13 +56,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DetallesorganizacionActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener {
+public class DetallesorganizacionActivity extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
     RecyclerView recyclerViewDetalles;
     ArrayList<Vendedor> listavendedoresdetalles;
     ArrayList<Vendedor> listauxiliar;
-   ArrayList<Double>lat=new ArrayList<>();
+    ArrayList<Double>lat=new ArrayList<>();
     ArrayList<Double>log=new ArrayList<>();
-    ProgressDialog progress;
+    AlertDialog mDialog;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     private LinearLayoutManager layoutManager;
@@ -65,8 +81,8 @@ public class DetallesorganizacionActivity extends AppCompatActivity implements R
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         String name=getIntent().getExtras().getString("nombre_organizacion");
         getSupportActionBar().setTitle(name);
-       // String dirigente=getIntent().getExtras().getString("nombre_dirigente");
-         claved=getIntent().getExtras().getInt("id_organizacion");
+        // String dirigente=getIntent().getExtras().getString("nombre_dirigente");
+        claved=getIntent().getExtras().getInt("id_organizacion");
 
         //CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.collapsingtoolbar_id);
         //collapsingToolbarLayout.setTitleEnabled(true);
@@ -74,10 +90,10 @@ public class DetallesorganizacionActivity extends AppCompatActivity implements R
         //TextView tvdirigente=(TextView)findViewById(R.id.otxtProfesion);
         //tvclave=(TextView)findViewById(R.id.otxclave);
 
-       // tvnombre.setText(name);
-       // tvdirigente.setText(dirigente);
-       // tvclave.setText(String.valueOf(claved));
-       // collapsingToolbarLayout.setTitle(name);
+        // tvnombre.setText(name);
+        // tvdirigente.setText(dirigente);
+        // tvclave.setText(String.valueOf(claved));
+        // collapsingToolbarLayout.setTitle(name);
         listavendedoresdetalles=new ArrayList<>();
         listauxiliar=new ArrayList<>();
         recyclerViewDetalles= (RecyclerView) findViewById(R.id.idRecyclerdetallesvendedor);
@@ -117,10 +133,22 @@ public class DetallesorganizacionActivity extends AppCompatActivity implements R
         return super.onOptionsItemSelected(item);
     }
     private void cargarwebservice() {
-        progress=new ProgressDialog(this);
-        progress.setMessage("Consultando...");
-        progress.show();
-        String url="http://192.168.0.11/api/Usuario/deta/"+claved;
+        mDialog=new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
+        mDialog.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!DetallesorganizacionActivity.this.isFinishing()&&mDialog!=null) {
+                    mDialog.dismiss();
+                }
+            }
+        },3000);
+        String url="http://192.168.0.8/api/Usuario/deta/"+claved;
         // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
         //casa angel 192.168.0.23
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
@@ -131,11 +159,22 @@ public class DetallesorganizacionActivity extends AppCompatActivity implements R
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this, "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
-        System.out.println();
-        Log.d("ERROR: ", error.toString());
-        progress.hide();
-
+        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(DetallesorganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog.setTitleText("Lo sentimos");
+        sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+        sweetAlertDialog.setContentTextSize(15);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setConfirmText("volver a intentarlo");
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                fragmentTransaction.commit();
+            }
+        });
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.show();
+        mDialog.hide();
     }
 
     @Override
@@ -159,14 +198,39 @@ public class DetallesorganizacionActivity extends AppCompatActivity implements R
                 vendedor.setLatitud(jsonObject.optDouble("latitud"));
                 vendedor.setLongitud(jsonObject.optDouble("longitud"));
                 listavendedoresdetalles.add(vendedor);
-               listauxiliar.add(vendedor);
+                listauxiliar.add(vendedor);
             }
-            progress.hide();
+            mDialog.hide();
             recyclerViewDetalles.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-            progress.hide();
+            final User user=new User(DetallesorganizacionActivity.this);
+            //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
+            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(DetallesorganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setTitleText("Lo sentimos");
+            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+            sweetAlertDialog.setContentTextSize(15);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setConfirmText("volver a intentarlo");
+            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    Intent intent = new Intent(DetallesorganizacionActivity.this, Ventanas.class);
+                    intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
+                    intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
+                    intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
+                    intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
+                    intent.putExtra(HomeFragment.nombres,user.getNombre());
+                    intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
+                    intent.putExtra(HomeFragment.cargo,user.getCargo());
+                    intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.show();
+            mDialog.hide();
         }
     }
     public void buscador(String texto){

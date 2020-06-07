@@ -1,21 +1,29 @@
 package com.example.oaxacacomercio.ui.send;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import dmax.dialog.SpotsDialog;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,8 +37,12 @@ import com.example.oaxacacomercio.Detalles.DetallesMapaZonaActivity;
 import com.example.oaxacacomercio.Detalles.DetallesZonaActivity;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
+import com.example.oaxacacomercio.MainActivity;
 import com.example.oaxacacomercio.R;
 import com.example.oaxacacomercio.Modelos.Zona;
+import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
+import com.mapbox.services.android.navigation.ui.v5.NavigationContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,21 +51,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SendFragment extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
+public class SendFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     private SendViewModel sendViewModel;
     RecyclerView recyclerViewzonas;
-    ArrayList<Zona>listazona;
-    ProgressDialog progress;
+    ArrayList<Zona> listazona;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
-    private ArrayList<Double> lat= new ArrayList<>();
-    private ArrayList<Double> lon= new ArrayList<>();
+    private ArrayList<Double> lat = new ArrayList<>();
+    private ArrayList<Double> lon = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private String idZona;
-    private String opcion="zonas";
-  //  private GridLayoutManager layoutManager;
+    private String opcion = "zonas";
     ZonaAdapter adapter;
+    AlertDialog mDialog;
     NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,66 +72,44 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
         sendViewModel =
                 ViewModelProviders.of(this).get(SendViewModel.class);
         View root = inflater.inflate(R.layout.fragment_send, container, false);
-
-      //  final TextView textView = root.findViewById(R.id.text_send);
-     //   sendViewModel.getText().observe(this, new Observer<String>() {
-       //     @Override
-       //     public void onChanged(@Nullable String s) {
-         //       textView.setText(s);
-       //     }
-       // });
-
-        listazona=new ArrayList<>();
-        recyclerViewzonas=(RecyclerView)root.findViewById(R.id.idRecyclerzona);
-        layoutManager= new LinearLayoutManager(getActivity());
-     //   layoutManager= new GridLayoutManager(getActivity(),2);
+        listazona = new ArrayList<>();
+        recyclerViewzonas = (RecyclerView) root.findViewById(R.id.idRecyclerzona);
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewzonas.setLayoutManager(layoutManager);
         recyclerViewzonas.setHasFixedSize(true);
 
-        adapter=new ZonaAdapter(listazona,getContext());
+        adapter = new ZonaAdapter(listazona, getContext());
         recyclerViewzonas.setAdapter(adapter);
-        request= Volley.newRequestQueue(getContext());
-        MySwipeHelper swipeHelper= new MySwipeHelper(getContext(),recyclerViewzonas,200) {
+        request = Volley.newRequestQueue(getContext());
+        MySwipeHelper swipeHelper = new MySwipeHelper(getContext(), recyclerViewzonas, 200) {
             @Override
             public void instanciateMyButton(final RecyclerView.ViewHolder viewHolder, List<Mybutton> buffer) {
                 buffer.add(new Mybutton(getContext(),
-                        "Detalles",
+                        "Vendedores",
                         40,
                         0,
                         Color.parseColor("#5d2442"),
-                        new MybuttonClickListener(){
+                        new MybuttonClickListener() {
                             @Override
                             public void onClick(int pos) {
-                                Intent intent=new Intent(getContext(), DetallesZonaActivity.class);
-                                intent.putExtra("id_zona",listazona.get(viewHolder.getAdapterPosition()).getId());
-                                intent.putExtra("nombre",listazona.get(viewHolder.getAdapterPosition()).getNombre());
+                                Intent intent = new Intent(getContext(), DetallesZonaActivity.class);
+                                intent.putExtra("id_zona", listazona.get(viewHolder.getAdapterPosition()).getId());
+                                intent.putExtra("nombre", listazona.get(viewHolder.getAdapterPosition()).getNombre());
                                 getContext().startActivity(intent);
-                                //Toast.makeText(getContext(),"Detalles", Toast.LENGTH_SHORT).show();
-                               /* Bundle datos=new Bundle();
-                                datos.putInt("id_zona",listazona.get(viewHolder.getAdapterPosition()).getId());
-                                Fragment fragmento= new DetallesZonaFragment();
-                                fragmento.setArguments(datos);
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.nav_host_fragment, fragmento);
-                                fragmentTransaction.commit();*/
                             }
                         }
                 ));
                 buffer.add(new Mybutton(getContext(),
-                        "Ver\n mapa",
+                        "Detalles",
                         40,
                         0,
                         Color.parseColor("#b34766"),
-                        new MybuttonClickListener(){
+                        new MybuttonClickListener() {
                             @Override
                             public void onClick(int pos) {
-                                Intent intent= new Intent(getContext(), DetallesMapaZonaActivity.class);
-                                intent.putExtra("id_zona",listazona.get(viewHolder.getAdapterPosition()).getId());
-                                intent.putExtra("nombre",listazona.get(viewHolder.getAdapterPosition()).getNombre());
-                               // i.putExtra("lat",lat);
-                               // i.putExtra("lon",lon);
-                               // i.putExtra("idZona",idZona);
+                                Intent intent = new Intent(getContext(), DetallesMapaZonaActivity.class);
+                                intent.putExtra("id_zona", listazona.get(viewHolder.getAdapterPosition()).getId());
+                                intent.putExtra("nombre", listazona.get(viewHolder.getAdapterPosition()).getNombre());
                                 getContext().startActivity(intent);
                             }
                         }
@@ -132,44 +121,77 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
     }
 
     private void cargarwebservice() {
-        progress=new ProgressDialog(getContext());
-        progress.setMessage("Consultando...");
-        progress.show();
-        String url="http://192.168.0.11/api/Usuario/listarzona/";
-        jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        mDialog=new SpotsDialog.Builder()
+                .setContext(getContext())
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
+        mDialog.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDialog.dismiss();
+            }
+        },3000);
+        String url = "http://192.168.0.8/api/Usuario/listarzona/";
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
-        System.out.println();
-        Log.d("ERROR: ", error.toString());
-        progress.hide();
-
+        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog.setTitleText("Lo sentimos");
+        sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+        sweetAlertDialog.setContentTextSize(15);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setConfirmText("volver a intentarlo");
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                fragmentTransaction.commit();
+            }
+        });
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.show();
+        mDialog.hide();
     }
 
     @Override
     public void onResponse(JSONObject response) {
-        Zona zona=null;
-        JSONArray json=response.optJSONArray("zonas");
+        Zona zona = null;
+        JSONArray json = response.optJSONArray("zonas");
         try {
-            for (int i=0;i<json.length();i++)
-            {
-            zona= new Zona();
+            for (int i = 0; i < json.length(); i++) {
+                zona = new Zona();
                 JSONObject jsonObject = null;
-                jsonObject=json.getJSONObject(i);
+                jsonObject = json.getJSONObject(i);
                 zona.setNombre(jsonObject.optString("nombre"));
                 zona.setId(jsonObject.optInt("id_zona"));
                 listazona.add(zona);
             }
-            progress.hide();
+            mDialog.hide();
             recyclerViewzonas.setAdapter(adapter);
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getContext(),"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-            progress.hide();
+            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setTitleText("Lo sentimos");
+            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+            sweetAlertDialog.setContentTextSize(15);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setConfirmText("volver a intentarlo");
+            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                    fragmentTransaction.commit();
+                }
+            });
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.show();
+            mDialog.hide();
         }
     }
 }

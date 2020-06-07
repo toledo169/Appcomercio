@@ -3,13 +3,22 @@ package com.example.oaxacacomercio.Detalles;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import dmax.dialog.SpotsDialog;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.transition.Transition;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,11 +32,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.oaxacacomercio.MainActivity;
 import com.example.oaxacacomercio.Mapas.MapaActivity;
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 import com.example.oaxacacomercio.Ventanas;
 import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
 import com.example.oaxacacomercio.ui.send.SendFragment;
 import com.example.oaxacacomercio.ui.send.SendViewModel;
 
@@ -45,7 +57,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
       ArrayList<Double>longitudzona=new ArrayList<>();
     ArrayList<String>nom=new ArrayList<>();
     // ArrayList<Vendedor>listauxiliar;
-    ProgressDialog progress;
+    AlertDialog mDialog;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     int claveZ;
@@ -63,12 +75,10 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         claveZ=getIntent().getExtras().getInt("id_zona");
         nombreZ=getIntent().getExtras().getString("nombre");
         mapaven=(Button)findViewById(R.id.buttonmapa);
         getSupportActionBar().setTitle(nombreZ);
-
         listavendedoresdetalleszona=new ArrayList<>();
         txtnombrez=(TextView)findViewById(R.id.txtnombrezonadetalles1);
         txtClavezona=(TextView)findViewById(R.id.txtDocumentozonadetalles1);
@@ -106,24 +116,36 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
             intent.putExtra("nom",nom);
             intent.putExtra("nombre",nombreZ);
             intent.putExtra("name",name);
+            intent.putExtra("id_zona",claveZ);
             startActivity(intent);
         } else if(claveZ==2) {
-            latitudZona.add(17.062443);
-            longitudzona.add(-96.722420);
-            latitudZona.add(17.063610);
-            longitudzona.add(-96.728265);
-            latitudZona.add(17.057072);
-            longitudzona.add(-96.729607);
-            latitudZona.add(17.056330);
-            longitudzona.add(-96.725784);
-            latitudZona.add(17.055356);
+            //17.062413, -96.722457
+            //17.063644, -96.728261
+            //17.057080, -96.729589
+            //17.056316, -96.725745
+            //17.055361, -96.725945
+            //17.055185, -96.724953
+            //17.056178, -96.724727
+            //17.056046, -96.723841
+            //17.062413, -96.722457
+            latitudZona.add(17.062413);
+            longitudzona.add(-96.722457);
+            latitudZona.add(17.063644);
+            longitudzona.add(-96.728261);
+            latitudZona.add(17.057080);
+            longitudzona.add(-96.729589);
+            latitudZona.add(17.056316);
+            longitudzona.add(-96.725745);
+            latitudZona.add(17.055361);
             longitudzona.add(-96.725945);
-            latitudZona.add(17.055193);
-            longitudzona.add(-96.724967);
-            latitudZona.add(17.056192);
-            longitudzona.add(-96.724730);
-            latitudZona.add(17.062633);
-            longitudzona.add(-96.723390);
+            latitudZona.add(17.055185);
+            longitudzona.add(-96.724953);
+            latitudZona.add(17.056178);
+            longitudzona.add(-96.724727);
+            latitudZona.add(17.056046);
+            longitudzona.add(-96.723841);
+            latitudZona.add(17.062413);
+            longitudzona.add(-96.722457);
             intent.putExtra("lat", lat);
             intent.putExtra("log", log);
             intent.putExtra("latitudzona", latitudZona);
@@ -131,23 +153,21 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
             intent.putExtra("nom",nom);
             intent.putExtra("nombre",nombreZ);
             intent.putExtra("name",name);
+            intent.putExtra("id_zona",claveZ);
             startActivity(intent);
         }else if (claveZ==3) {
-            latitudZona.add(17.061193);
-            longitudzona.add( -96.730709);
-            latitudZona.add(17.061376);
-            longitudzona.add(-96.736053);
-            latitudZona.add(17.061620);
-            longitudzona.add(-96.737746);
-           //
-            latitudZona.add(17.059518);
-            longitudzona.add(-96.727082);
-            latitudZona.add(17.054456);
-            longitudzona.add(-96.732132);
-            latitudZona.add(17.061797);
-            longitudzona.add(-96.734390);// penultimo
-            latitudZona.add(17.057918);
-            longitudzona.add(-96.731456);// ultimo
+            //17.057917, -96.731441
+            //17.061186, -96.730719
+            //17.061151, -96.733687
+            ////17.057917, -96.731441
+            latitudZona.add(17.057917);
+            longitudzona.add(-96.731441);
+            latitudZona.add(17.061186);
+            longitudzona.add(-96.730719);
+            latitudZona.add(17.061151);
+            longitudzona.add(-96.733687);
+            latitudZona.add(17.057917);
+            longitudzona.add(-96.731441);
             intent.putExtra("lat", lat);
             intent.putExtra("log", log);
             intent.putExtra("latitudzona", latitudZona);
@@ -155,26 +175,59 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
             intent.putExtra("nom",nom);
             intent.putExtra("nombre",nombreZ);
             intent.putExtra("name",name);
+            intent.putExtra("id_zona",claveZ);
+            startActivity(intent);
+        }else if (claveZ==4){
+            intent.putExtra("latitudzona", latitudZona);
+            intent.putExtra("longitudzona", longitudzona);
+            intent.putExtra("lat", lat);
+            intent.putExtra("log", log);
+            intent.putExtra("name",name);
+            intent.putExtra("id_zona",claveZ);
             startActivity(intent);
         }
     }
 
     private void cargarwebservice() {
-        String url="http://192.168.0.11/api/Usuario/listarzonavendedor/"+ claveZ;
-        // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
-        //casa angel 192.168.0.23
+        mDialog=new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
+        mDialog.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!DetallesMapaZonaActivity.this.isFinishing()&&mDialog!=null) {
+                    mDialog.dismiss();
+                }
+            }
+        },3000);
+        String url="http://192.168.0.8/api/Usuario/listarzonavendedor/"+ claveZ;
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this, "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
-        System.out.println();
-        Log.d("ERROR: ", error.toString());
-
+        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(DetallesMapaZonaActivity.this,SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog.setTitleText("Lo sentimos");
+        sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+        sweetAlertDialog.setContentTextSize(15);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setConfirmText("volver a intentarlo");
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                fragmentTransaction.commit();
+            }
+        });
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.show();
+        mDialog.hide();
     }
-
     @Override
     public void onResponse(JSONObject response) {
         Vendedor vendedor=null;
@@ -184,7 +237,6 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
                 vendedor=new Vendedor(this);
                 JSONObject jsonObject = null;
                 jsonObject=json.getJSONObject(i);
-
                 vendedor.setId(jsonObject.optInt("id_vendedor"));
                 vendedor.setNombre(jsonObject.optString("name"));
                 vendedor.setApellido_paterno(jsonObject.optString("apellido_paterno"));
@@ -199,13 +251,37 @@ public class DetallesMapaZonaActivity extends AppCompatActivity implements Respo
                 lat.add(vendedor.getLatitud());
                 log.add(vendedor.getLongitud());
                 nom.add(vendedor.getNombrev());
-                //   listauxiliar.add(vendedor);
             }
-            //     progress.hide();
+            mDialog.hide();
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-//            progress.hide();
+            final User user=new User(DetallesMapaZonaActivity.this);
+            //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
+            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(DetallesMapaZonaActivity.this,SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setTitleText("Lo sentimos");
+            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+            sweetAlertDialog.setContentTextSize(15);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setConfirmText("volver a intentarlo");
+            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    Intent intent = new Intent(DetallesMapaZonaActivity.this, Ventanas.class);
+                    intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
+                    intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
+                    intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
+                    intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
+                    intent.putExtra(HomeFragment.nombres,user.getNombre());
+                    intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
+                    intent.putExtra(HomeFragment.cargo,user.getCargo());
+                    intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.show();
+            mDialog.hide();
         }
     }
 }

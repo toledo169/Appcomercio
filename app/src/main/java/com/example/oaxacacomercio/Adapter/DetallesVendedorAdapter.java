@@ -101,5 +101,4 @@ public class DetallesVendedorAdapter extends RecyclerView.Adapter<DetallesVended
             textapellidos=(TextView)itemView.findViewById(R.id.txtapellidos);
         }
     }
-
 }

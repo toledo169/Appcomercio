@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.oaxacacomercio.MainActivity;
+import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -93,23 +94,19 @@ public class PermisoFragment extends Fragment implements View.OnClickListener {
         nomb = (TextView) vista.findViewById(R.id.nombreusuario);
         String nomusuario = getActivity().getIntent().getStringExtra("name");
         nomb.setText(" " + nomusuario);
-
         apellidop = (TextView) vista.findViewById(R.id.apellido);
         String usuario = getActivity().getIntent().getStringExtra("apellido_paterno");
         String apmusuario = getActivity().getIntent().getStringExtra("apellido_materno");
         apellidop.setText(" " + usuario + " " + apmusuario);
-
         correoelect = (TextView) vista.findViewById(R.id.correo);
         int coreo = getActivity().getIntent().getExtras().getInt("numerocuenta");
         correoelect.setText(String.valueOf(" " + coreo));
         numexpedie = (TextView) vista.findViewById(R.id.numexpediente);
         int numexpedient = getActivity().getIntent().getExtras().getInt("numero_expediente");
         numexpedie.setText(String.valueOf(" " + numexpedient));
-
         fabMain =vista.findViewById(R.id.fabcerrar);
         fabOne = vista.findViewById(R.id.sitio);
         fabtwo=vista.findViewById(R.id.cerrarsesion);
-      //  CardView cardView=vista.findViewById(R.id.cardpermiso);
         fabOne.setAlpha(0f);
         fabtwo.setAlpha(0f);
         fabOne.setTranslationY(translationY);
@@ -179,12 +176,12 @@ public class PermisoFragment extends Fragment implements View.OnClickListener {
                         dialog.dismiss();
                     }
                 });
-                dialog.show();
+               dialog.show();
                 break;
         }
     }
     private void logOut() {
-        //new User(Ventanas.thi).removeuser();
+        new Vendedor(getContext()).removeuser();
         Intent intent= new Intent(getContext(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();

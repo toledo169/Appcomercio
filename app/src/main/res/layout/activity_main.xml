@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,28 +19,28 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Municipio de Oaxaca de Juarez"
             android:gravity="center"
-            android:textSize="29dp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"/>
+            android:text="Municipio de Oaxaca de Juarez"
+            android:textColor="@android:color/white"
+            android:textSize="30dp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="177dp"
+            android:layout_height="145dp"
             android:layout_marginTop="0dp"
-            android:layout_weight="0.8"
+            android:layout_weight="0.45"
             android:src="@drawable/logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             app:errorEnabled="true"
             app:counterEnabled="true"
             app:passwordToggleEnabled="false"
-            android:id="@+id/usuario"
+            android:id="@+id/usuarios"
             android:textColorHint="@android:color/white"
             >
 
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Usuario"
                 android:textColorHint="@android:color/white"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:textStyle="bold"
                 android:backgroundTint="@android:color/white"
                 android:textColor="@android:color/white"
@@ -59,7 +59,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             app:errorEnabled="true"
             app:counterEnabled="true"
             app:passwordToggleEnabled="true"
@@ -88,9 +88,9 @@
             android:layout_width="match_parent"
             android:background="@drawable/bnt_login"
             android:layout_height="0dp"
-            android:layout_weight="0.8"
+            android:layout_weight="0.50"
             android:text="Iniciar sesion"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="#610018"
             />
@@ -98,42 +98,40 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15" />
-        <Button
-            android:onClick="loginvendedor"
-            android:id="@+id/btn_vendedor"
-            android:layout_width="match_parent"
-            android:background="@drawable/bnt_vendedor"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            android:text="Iniciar sesion como vendedor"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
-            />
+            android:layout_weight="0.01" />
         <Button
             android:id="@+id/btn_reset_password"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.3"
             android:background="@null"
             android:text="¿Olvidaste tu contraseña?"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="15dp"
             android:textStyle="bold" />
-
         <Button
             android:id="@+id/btn_registrar_prestador"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.3"
             android:background="@null"
             android:text="¿Desea realizar una queja o sugerencia?"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="15dp"
             android:textStyle="bold" />
+        <Button
+            android:id="@+id/btn_ayuda"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:background="@null"
+            android:text="¿Necesita ayuda?"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
     </LinearLayout>
-</ScrollView>
+</FrameLayout>

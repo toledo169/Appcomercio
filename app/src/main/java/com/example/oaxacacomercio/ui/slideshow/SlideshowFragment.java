@@ -1,7 +1,13 @@
 package com.example.oaxacacomercio.ui.slideshow;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -11,14 +17,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import dmax.dialog.SpotsDialog;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,8 +39,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.VendedorAdapter;
+import com.example.oaxacacomercio.MainActivity;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
+import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,31 +51,31 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SlideshowFragment extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
+public class SlideshowFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     private SlideshowViewModel slideshowViewModel;
     RecyclerView recyclerViewvendedores;
     ArrayList<Vendedor>listavendedores;
     ArrayList<Vendedor>listauxiliar;
-    ProgressDialog progress;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     VendedorAdapter adapter;
     private EditText search;
+    AlertDialog mDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
                 ViewModelProviders.of(this).get(SlideshowViewModel.class);
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-    //    final TextView textView = root.findViewById(R.id.text_slideshow);
-     //   slideshowViewModel.getText().observe(this, new Observer<String>() {
-      //      @Override
+        //    final TextView textView = root.findViewById(R.id.text_slideshow);
+        //   slideshowViewModel.getText().observe(this, new Observer<String>() {
+        //      @Override
         //    public void onChanged(@Nullable String s) {
-         //       textView.setText(s);
-          //  }
-       // });
+        //       textView.setText(s);
+        //  }
+        // });
         listavendedores=new ArrayList<>();
         listauxiliar=new ArrayList<>();
 
@@ -97,22 +111,43 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
     }
 
     private void cargarwebservice() {
-        progress=new ProgressDialog(getContext());
-        progress.setMessage("Consultando...");
-        progress.show();
-        String url="http://192.168.0.11/api/Usuario/vendedoreslist/";
+        mDialog=new SpotsDialog.Builder()
+                .setContext(getContext())
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
+        mDialog.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDialog.dismiss();
+            }
+        },3000);
+        String url="http://192.168.0.8/api/Usuario/vendedoreslistar/";
         // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
         //casa angel 192.168.0.23
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
     }
-
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
-        System.out.println();
-        Log.d("ERROR: ", error.toString());
-        progress.hide();
+        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog.setTitleText("Lo sentimos");
+        sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+        sweetAlertDialog.setContentTextSize(15);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setConfirmText("volver a intentarlo");
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                fragmentTransaction.commit();
+            }
+        });
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.show();
+        mDialog.hide();
+       // sDialog.hide();
     }
 
     @Override
@@ -138,12 +173,27 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
                 listavendedores.add(vendedor);
                 listauxiliar.add(vendedor);
             }
-            progress.hide();
+            mDialog.hide();
+         //   sDialog.hide();
             recyclerViewvendedores.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getContext(),"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-            progress.hide();
+            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setTitleText("Lo sentimos");
+            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+            sweetAlertDialog.setContentTextSize(15);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setConfirmText("volver a intentarlo");
+            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                    fragmentTransaction.commit();
+                }
+            });
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.show();
+            mDialog.hide();
         }
     }
     public void buscador(String texto){
@@ -155,4 +205,6 @@ public class SlideshowFragment extends Fragment implements Response.Listener<JSO
         }
         adapter.notifyDataSetChanged();
     }
+
+
 }

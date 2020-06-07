@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.MenuItem;
@@ -68,8 +69,10 @@ public class MapaActActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
+        Mapbox.getInstance(this,
+                "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
         setContentView(R.layout.activity_mapa_act);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         Toolbar toolbar = findViewById(R.id.toolbaracti);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -80,8 +83,6 @@ public class MapaActActivity extends AppCompatActivity implements OnMapReadyCall
         lati=(ArrayList<Double>)getIntent().getSerializableExtra("lat");
         longi=(ArrayList<Double>)getIntent().getSerializableExtra("log");
         nomb=(ArrayList<String>)getIntent().getSerializableExtra("nom") ;
-        // Inflate the layout for this fragment
-
         mapView = (MapView)findViewById(R.id.mapamapsact);
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);

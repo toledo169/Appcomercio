@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.MenuItem;
@@ -28,8 +29,9 @@ public class MapaorganizacionActivity extends AppCompatActivity implements OnMap
     int claveZ;
     String nomv;
     ArrayList<Double> lati;
-    ArrayList<Double>longi;
-    ArrayList<String>nomb;
+    ArrayList<Double> longi;
+    ArrayList<String> nomb;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -69,22 +71,21 @@ public class MapaorganizacionActivity extends AppCompatActivity implements OnMap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
+        Mapbox.getInstance(this,
+                "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
         setContentView(R.layout.activity_mapaorganizacion);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         Toolbar toolbar = findViewById(R.id.toolbarm);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String name=getIntent().getExtras().getString("nombre_organizacion");
-        nomv=getIntent().getExtras().getString("name");
+        String name = getIntent().getExtras().getString("nombre_organizacion");
+        nomv = getIntent().getExtras().getString("name");
         getSupportActionBar().setTitle(name);
-        lati=(ArrayList<Double>)getIntent().getSerializableExtra("lat");
-        longi=(ArrayList<Double>)getIntent().getSerializableExtra("log");
-        nomb=(ArrayList<String>)getIntent().getSerializableExtra("nom") ;
-
-        // Inflate the layout for this fragment
-
-        mapView = (MapView)findViewById(R.id.mapamapaso);
+        lati = (ArrayList<Double>) getIntent().getSerializableExtra("lat");
+        longi = (ArrayList<Double>) getIntent().getSerializableExtra("log");
+        nomb = (ArrayList<String>) getIntent().getSerializableExtra("nom");
+        mapView = (MapView) findViewById(R.id.mapamapaso);
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);
     }
@@ -99,17 +100,18 @@ public class MapaorganizacionActivity extends AppCompatActivity implements OnMap
 
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
-            User usuario= new User(this);
+        if (item.getItemId() == android.R.id.home) {
+            User usuario = new User(this);
             Intent goMain = new Intent(MapaorganizacionActivity.this, Ventanas.class);
-            goMain.putExtra(HomeFragment.apellido_paternos,usuario.getApellido_paterno());
-            goMain.putExtra(HomeFragment.apellido_maternos,usuario.getApellido_materno());
-            goMain.putExtra(HomeFragment.nombres,usuario.getNombre());
-            goMain.putExtra(HomeFragment.correo,usuario.getCorreoelectronico());
-            goMain.putExtra(HomeFragment.cargo,usuario.getCargo());
-            goMain.putExtra(HomeFragment.municipio,usuario.getMunicipio());
+            goMain.putExtra(HomeFragment.apellido_paternos, usuario.getApellido_paterno());
+            goMain.putExtra(HomeFragment.apellido_maternos, usuario.getApellido_materno());
+            goMain.putExtra(HomeFragment.nombres, usuario.getNombre());
+            goMain.putExtra(HomeFragment.correo, usuario.getCorreoelectronico());
+            goMain.putExtra(HomeFragment.cargo, usuario.getCargo());
+            goMain.putExtra(HomeFragment.municipio, usuario.getMunicipio());
             //   finish();
             startActivity(goMain);
             finish();

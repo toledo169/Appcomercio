@@ -9,6 +9,7 @@ import static java.lang.String.valueOf;
 public class User {
     public int id;
     public String nombre, apellido_paterno, apellido_materno,correoelectronico,cargo,municipio;
+    public Integer adminsecre;
     SharedPreferences sharedPreferences;
     Context context;
 
@@ -51,8 +52,8 @@ public class User {
     }
 
     public int getId() {
-     //   String name = sharedPreferences.getString("userdata","");
-      //  id=Integer.parseInt(name);
+        //   String name = sharedPreferences.getString("userdata","");
+        //  id=Integer.parseInt(name);
         return id;
     }
 
@@ -92,5 +93,13 @@ public class User {
         sharedPreferences.edit().putString("useram",apellido_materno).commit();
     }
 
+    public Integer getAdminsecre() {
+        adminsecre=sharedPreferences.getInt("useradmsecre",0);
+        return adminsecre;
+    }
 
+    public void setAdminsecre(Integer adminsecre) {
+        this.adminsecre = adminsecre;
+        sharedPreferences.edit().putInt("useradmsecre",adminsecre).commit();
+    }
 }

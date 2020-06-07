@@ -12,32 +12,32 @@ public class Vendedor {
     Context context;
     public Vendedor(Context context) {
         this.context = context;
-        sharedPreferences=context.getSharedPreferences("uservendedor", Context.MODE_PRIVATE);
+  //   sharedPreferences=context.getSharedPreferences("uservendedor", Context.MODE_PRIVATE);
     }
     public void removeuser(){
         sharedPreferences.edit().clear().commit();
     }
 
     public Integer getNumcuenta() {
-           String name = sharedPreferences.getString("usernumc","");
-          numcuenta=Integer.parseInt(name);
+       // String name = sharedPreferences.getString("usernumc","");
+       //numcuenta=Integer.parseInt(name);
         return numcuenta;
     }
 
     public void setNumcuenta(Integer numcuenta) {
         this.numcuenta = numcuenta;
-        sharedPreferences.edit().putString("usernumc",String.valueOf(numcuenta)).commit();
+       // sharedPreferences.edit().putString("usernumc",String.valueOf(numcuenta)).commit();
     }
 
     public Integer getNumexpediente() {
-        String name = sharedPreferences.getString("usernumex","");
-        numexpediente=Integer.parseInt(name);
+       // String name = sharedPreferences.getString("usernumex","");
+       // numexpediente=Integer.parseInt(name);
         return numexpediente;
     }
 
     public void setNumexpediente(Integer numexpediente) {
         this.numexpediente = numexpediente;
-        sharedPreferences.edit().putString("usernumex",String.valueOf(numexpediente)).commit();
+        //sharedPreferences.edit().putString("usernumex",String.valueOf(numexpediente)).commit();
     }
 
     public Double getLatitud() {
@@ -71,7 +71,6 @@ public class Vendedor {
     public void setNomorganizacion(String nomorganizacion) {
         this.nomorganizacion = nomorganizacion;
     }
-
     public String getActividad() {
         return actividad;
     }
@@ -97,33 +96,34 @@ public class Vendedor {
     }
 
     public String getNombrev() {
-        nombre=sharedPreferences.getString("usernomv","");
+      // nombre=sharedPreferences.getString("usernomv","");
         return nombre;
     }
 
     public void setNombre(String nombre)
     {
         this.nombre = nombre;
-        sharedPreferences.edit().putString("usernomv",nombre).commit();
+       // sharedPreferences.edit().putString("usernomv",nombre).commit();
     }
 
     public String getApellido_paterno() {
-        apellido_paterno=sharedPreferences.getString("userapv","");
+     //   apellido_paterno=sharedPreferences.getString("userapv","");
         return apellido_paterno;
     }
 
     public void setApellido_paterno(String apellido_paterno) {
         this.apellido_paterno = apellido_paterno;
-        sharedPreferences.edit().putString("userapv",apellido_paterno).commit();
+     //  sharedPreferences.edit().putString("userapv",apellido_paterno).commit();
     }
 
     public String getApellido_materno() {
-        apellido_materno=sharedPreferences.getString("useramv","");
+     //   apellido_materno=sharedPreferences.getString("useramv","");
         return apellido_materno;
     }
 
     public void setApellido_materno(String apellido_materno) {
         this.apellido_materno = apellido_materno;
-        sharedPreferences.edit().putString("useramv",apellido_paterno).commit();
+     //   sharedPreferences.edit().putString("useramv",apellido_paterno).commit();
     }
+
 }

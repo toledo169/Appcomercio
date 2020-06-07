@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.MenuItem;
@@ -67,6 +68,7 @@ public class MapavendedorActivity extends AppCompatActivity implements OnMapRead
          String apm=getIntent().getExtras().getString("apellido_materno");
 
         setContentView(R.layout.activity_mapavendedor);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         Toolbar toolbar = findViewById(R.id.toolbarv);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,7 +77,6 @@ public class MapavendedorActivity extends AppCompatActivity implements OnMapRead
 
          mapView=(MapView)findViewById(R.id.mapavendedores);
         mapView.onCreate(savedInstanceState);
-
         mapView.getMapAsync(this);
     }
 
@@ -85,7 +86,8 @@ public class MapavendedorActivity extends AppCompatActivity implements OnMapRead
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                mapboxMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitu))).title(nombrev));
+                mapboxMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitud),
+                        Double.parseDouble(longitu))).title(nombrev));
             }
         });
     }

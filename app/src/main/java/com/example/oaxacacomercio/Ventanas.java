@@ -31,6 +31,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -42,6 +43,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.view.Menu;
 import android.widget.Button;
@@ -51,7 +53,10 @@ public class Ventanas extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
   //  private SharedPreferences prefs;
-
+    int clave;
+    String mail;
+  ///public static final String numexpediente="id";
+   // public static final String correoe = "email";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,15 +64,11 @@ public class Ventanas extends AppCompatActivity {
         setContentView(R.layout.activity_ventanas);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    //    prefs=getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        // FloatingActionButton fab = findViewById(R.id.fab);
-        // fab.setOnClickListener(new View.OnClickListener() {
-        //  @Override
-        //   public void onClick(View view) {
-        //       Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.municipiodeoaxaca.gob.mx"));
-        //       startActivity(intent);
-        // }
-        //});
+      //  int correo = getIntent().getExtras().getInt("id");
+     //   System.out.println("clave porfavor"+correo);
+    //    mail=getIntent().getExtras().getString("email");
+     //   clave=getIntent().getExtras().getInt("id");
+     //   System.out.println("la clave es"+clave);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -100,7 +101,7 @@ public class Ventanas extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_settings:
-                AlertDialog.Builder builder= new AlertDialog.Builder(Ventanas.this);
+              /*  AlertDialog.Builder builder= new AlertDialog.Builder(Ventanas.this);
                 LayoutInflater inflater= getLayoutInflater();
                 View view= inflater.inflate(R.layout.dialog_cerrar,null);
                 builder.setView(view);
@@ -111,7 +112,6 @@ public class Ventanas extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         logOut();
-                        //finishAffinity();
                     }
                 });
                 Button btnno=view.findViewById(R.id.btnno);
@@ -121,38 +121,44 @@ public class Ventanas extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-                dialog.show();
+                dialog.show();*/
+                SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(Ventanas.this, SweetAlertDialog.WARNING_TYPE);
+                sweetAlertDialog.setTitleText("¿Esta seguro");
+                sweetAlertDialog.setContentText("¿Usted desea salir de la aplicación");
+                sweetAlertDialog.setCancelText("Cancelar");
+                sweetAlertDialog.setConfirmText("Continuar");
+                sweetAlertDialog.showCancelButton(true);
+                sweetAlertDialog.setCancelable(false);
+                sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.setTitleText("Cancelado").setContentText("Los cambios han sido descartados").showCancelButton(false)
+                                .setCancelClickListener(null).setConfirmClickListener(null).changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        sDialog.setCancelable(false);
+                        sDialog.setCanceledOnTouchOutside(false);
+                    }
+                });
+                sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.setTitleText("Actualizado").setContentText("Usted esta cerrando cesión")
+                                .showCancelButton(false).setCancelClickListener(null).setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        sDialog.setCancelable(false);
+                        sDialog.setCanceledOnTouchOutside(false);
+                        logOut();
+                    }
+                });
+                sweetAlertDialog.setCanceledOnTouchOutside(false);
+                sweetAlertDialog.show();
         break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void logOut() {
+    public void logOut() {
         new User(Ventanas.this).removeuser();
         Intent intent= new Intent(Ventanas.this,MainActivity.class);
         startActivity(intent);
         finish();
     }
-
-    /*  @Override
-      public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-          switch (item.getItemId()) {
-              case R.id.action_settings:
-                  Logout();
-                  return true;
-              default:
-
-                  return super.onOptionsItemSelected(item);
-          }
-      }
-
-    public void Logout(){
-        new User(Ventanas.this).removeuser();
-        Intent intent= new Intent(Ventanas.this,MainActivity.class);
-        startActivity(intent);
-        finish();
-    }*/
-//    private void removesharedPreferences(){
-  //      prefs.edit().clear().apply();
-   // }
 }

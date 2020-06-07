@@ -3,16 +3,28 @@ package com.example.oaxacacomercio.Detalles;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import dmax.dialog.SpotsDialog;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,8 +36,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.DetallesZonaVendedorAdapter;
+import com.example.oaxacacomercio.MainActivity;
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
+import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
+import com.example.oaxacacomercio.ui.home.HomeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,18 +50,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DetallesZonaActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
+public class DetallesZonaActivity extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
     RecyclerView recyclerViewDetalleszona;
     ArrayList<Vendedor> listavendedoresdetalleszona;
     ArrayList<Vendedor>listauxiliar;
-    ProgressDialog progress;
+    AlertDialog mDialog;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     DetallesZonaVendedorAdapter adapter;
     int claveZ;
-   // TextView txtnombrez,txtClavezona;
-   private EditText searchzv;
+    // TextView txtnombrez,txtClavezona;
+    private EditText searchzv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +76,13 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
         claveZ=getIntent().getExtras().getInt("id_zona");
 
 //        CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.collapsingtoolbar_idzona);
-  //      collapsingToolbarLayout.setTitleEnabled(true);
-     //   txtnombrez=(TextView)findViewById(R.id.txtnombrezonadetalles);
-     //   txtClavezona=(TextView)findViewById(R.id.txtDocumentozonadetalles);
+        //      collapsingToolbarLayout.setTitleEnabled(true);
+        //   txtnombrez=(TextView)findViewById(R.id.txtnombrezonadetalles);
+        //   txtClavezona=(TextView)findViewById(R.id.txtDocumentozonadetalles);
 
-     //   txtnombrez.setText(nombreZ);
-     //   txtClavezona.setText(String.valueOf(claveZ));
-    //    collapsingToolbarLayout.setTitle(nombreZ);
+        //   txtnombrez.setText(nombreZ);
+        //   txtClavezona.setText(String.valueOf(claveZ));
+        //    collapsingToolbarLayout.setTitle(nombreZ);
         listavendedoresdetalleszona=new ArrayList<>();
         listauxiliar=new ArrayList<>();
 
@@ -79,7 +96,7 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
         recyclerViewDetalleszona.setAdapter(adapter);
         request = Volley.newRequestQueue(this);
         cargarwebservice();
-       searchzv.addTextChangedListener(new TextWatcher() {
+        searchzv.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -106,10 +123,22 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
     }
 
     private void cargarwebservice() {
- //       progress=new ProgressDialog(this);
-   //     progress.setMessage("Consultando...");
-   //     progress.show();
-        String url="http://192.168.0.11/api/Usuario/listarzonavendedor/"+claveZ;
+        mDialog=new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
+        mDialog.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!DetallesZonaActivity.this.isFinishing()&&mDialog!=null) {
+                    mDialog.dismiss();
+                }
+            }
+        },3000);
+        String url="http://192.168.0.8/api/Usuario/listarzonavendedor/"+claveZ;
         // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
         //casa angel 192.168.0.23
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
@@ -118,11 +147,22 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this, "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
-        System.out.println();
-        Log.d("ERROR: ", error.toString());
-     //   progress.hide();
-
+        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(DetallesZonaActivity.this,SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog.setTitleText("Lo sentimos");
+        sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+        sweetAlertDialog.setContentTextSize(15);
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.setConfirmText("volver a intentarlo");
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                fragmentTransaction.commit();
+            }
+        });
+        sweetAlertDialog.setCanceledOnTouchOutside(false);
+        sweetAlertDialog.show();
+      mDialog.hide();
     }
 
     @Override
@@ -148,12 +188,38 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
                 listavendedoresdetalleszona.add(vendedor);
                 listauxiliar.add(vendedor);
             }
-       //     progress.hide();
+           mDialog.hide();
+            //     progress.hide();
             recyclerViewDetalleszona.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-//            progress.hide();
+            final User user=new User(DetallesZonaActivity.this);
+            //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
+            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(DetallesZonaActivity.this,SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog.setTitleText("Lo sentimos");
+            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+            sweetAlertDialog.setContentTextSize(15);
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.setConfirmText("volver a intentarlo");
+            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    Intent intent = new Intent(DetallesZonaActivity.this, Ventanas.class);
+                    intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
+                    intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
+                    intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
+                    intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
+                    intent.putExtra(HomeFragment.nombres,user.getNombre());
+                    intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
+                    intent.putExtra(HomeFragment.cargo,user.getCargo());
+                    intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            sweetAlertDialog.setCanceledOnTouchOutside(false);
+            sweetAlertDialog.show();
+            mDialog.hide();
         }
     }
     public void buscador(String texto){
@@ -167,5 +233,5 @@ public class DetallesZonaActivity extends AppCompatActivity implements Response.
         adapter.notifyDataSetChanged();
     }
 
-    }
+}
 

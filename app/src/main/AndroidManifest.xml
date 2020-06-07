@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Mapas.MapaActActivity"></activity>
+        <activity android:name=".Eventuales.PermisosEventualActivity"></activity>
+        <activity android:name=".Mapas.MapaPermiso" />
+        <activity android:name=".Mapas.MapaActActivity" />
         <activity android:name=".Detalles.DetallesMapaActividaActivity" />
         <activity android:name=".Detalles.DetallesActividadActivity" />
         <activity android:name=".Vendedor.VendedorActivity" />
@@ -31,7 +33,8 @@
             android:screenOrientation="locked" />
         <activity
             android:name=".inicio"
-            android:screenOrientation="locked">
+            android:screenOrientation="locked"
+            android:theme="@style/inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

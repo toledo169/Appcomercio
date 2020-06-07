@@ -6,37 +6,33 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/browser"
             android:iconTint="#500014"
             android:title="Inicio"
             />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_person_black_24dp"
+            android:icon="@drawable/person"
             android:title="Perfil" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Vendedores" />
-        <item
-            android:id="@+id/nav_eventos"
-            android:icon="@drawable/ic_event_black_24dp"
-            android:title="Eventos" />
     </group>
 
     <item android:title="Comerciales">
         <menu>
             <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@drawable/vendedores"
+                android:title="Vendedores" />
+            <item
                 android:id="@+id/nav_tools"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/organization"
                 android:title="Organizaciones" />
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_local_grocery_store_black_24dp"
+                android:icon="@drawable/supermarket"
                 android:title="Actividades Comerciales" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/mall"
                 android:title="Zonas comerciales" />
         </menu>
     </item>
