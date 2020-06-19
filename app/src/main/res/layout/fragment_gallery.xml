@@ -1,184 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#500014">
-    <RelativeLayout
-        android:id="@+id/r3"
-        android:layout_width="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="7dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="5dp"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.07999998">
-
-            <LinearLayout
-                android:layout_width="463dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/baloo"
-                        android:text="           ACTUALIZAR DATOS"
-                        android:textColor="#500014"
-                        android:textSize="24sp" />
-                </LinearLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="85dp"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="21dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.37"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/vendedor"
-                        android:tint="#b34766"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Correo Actual:"
-                            android:textColor="#500014"
-                            android:textSize="17dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/correoactualed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="Correo Actualmente:"
-                            android:textColor="#500014"
-                            android:textSize="17dp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="3dp"
-                        android:layout_marginStart="5dp"
-                        android:textColor="#500014"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/emailedita1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:textColorHint="#500014"
-                        app:counterEnabled="true"
-                        app:errorEnabled="true"
-                        app:passwordToggleEnabled="false">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#500014"
-                            android:hint="Correo electronico"
-                            android:inputType="text"
-                            android:textColor="#500014"
-                            android:textColorHint="#500014"
-                            android:textStyle="bold" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/emailedita"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:textColorHint="#500014"
-                        app:counterEnabled="true"
-                        app:errorEnabled="true"
-                        app:passwordToggleEnabled="false">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#500014"
-                            android:hint="Correo electronico"
-                            android:inputType="text"
-                            android:textColor="#500014"
-                            android:textColorHint="#500014"
-                            android:textStyle="bold" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/r2"
-        android:layout_below="@+id/r2"
-        android:layout_marginEnd="16dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85">
+        app:layout_constraintVertical_bias="0.07999998">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="20dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Guardar"
-                android:textSize="20dp"
-                android:textColor="@android:color/white"
+                android:fontFamily="@font/baloo"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="ACTUALIZAR DATOS"
+                android:textColor="#500014"
+                android:textSize="25dp" />
+            <ImageView
+                android:id="@+id/imagequeja"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:tint="#b34766"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.37"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/editar" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Correo Actual:"
+                    android:textColor="#500014"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/correoactualed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:text="Correo Actualmente:"
+                    android:textColor="#500014"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email1edita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColorHint="@color/colorPrimary"
+                app:counterEnabled="true"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#500014"
+                    android:hint="Correo electronico"
+                    android:inputType="text"
+                    android:textColor="#500014"
+                    android:textColorHint="#500014"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailedita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColorHint="@color/colortexto"
+                app:counterEnabled="true"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#500014"
+                    android:hint="Correo electronico"
+                    android:inputType="text"
+                    android:textColor="#500014"
+                    android:textColorHint="#500014"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_editarpassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="1dp"
+                android:layout_weight="0.2"
+                android:background="@null"
+                android:text="¿Desea cambiar su contraseña?"
+                android:textAllCaps="false"
+                android:textColor="#500014"
+                android:textSize="15dp"
                 android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordeditar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:textColorHint="#500014"
+                android:visibility="gone"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:counterEnabled="true"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#500014">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#500014"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="#500014"
+                    android:textColorHint="#500014"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordeditar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:textColorHint="#500014"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:visibility="gone"
+                app:counterEnabled="true"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#500014">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#500014"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="#500014"
+                    android:textColorHint="#500014"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabeditaremailb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#b34766"
-                android:src="@drawable/ic_save_black_24dp"
+                android:src="@drawable/save"
+                android:layout_gravity="right"
                 android:tint="@android:color/white"
+                android:tooltipText="ir a la pagina"
                 app:backgroundTint="#b34766"
                 app:borderWidth="1dp"
                 app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"></com.google.android.material.floatingactionbutton.FloatingActionButton>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

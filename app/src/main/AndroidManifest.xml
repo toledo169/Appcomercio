@@ -15,7 +15,6 @@
         <activity android:name=".Mapas.MapaActActivity" />
         <activity android:name=".Detalles.DetallesMapaActividaActivity" />
         <activity android:name=".Detalles.DetallesActividadActivity" />
-        <activity android:name=".Vendedor.VendedorActivity" />
         <activity android:name=".Mapas.MapaorganizacionActivity" />
         <activity
             android:name=".Detalles.DetallesMapaOrganizacionActivity"
@@ -37,7 +36,6 @@
             android:theme="@style/inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

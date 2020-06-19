@@ -1,26 +1,17 @@
 package com.example.oaxacacomercio;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,9 +21,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Modelos.User;
-import com.example.oaxacacomercio.Modelos.Vendedor;
-import com.example.oaxacacomercio.Vendedor.PermisoFragment;
-import com.example.oaxacacomercio.Vendedor.VendedorActivity;
 import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -154,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 sDialog.setTitleText("Bienvenido").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
             }
         }.start();
-        String url="http://192.168.0.8/api/Usuario/loginv?email="+inputCorreo.getEditText().getText().toString()+"&password="+inputPassword.getEditText().getText().toString();
+        String url="http://192.168.0.2/api/Usuario/loginv?email="+inputCorreo.getEditText().getText().toString()+"&password="+inputPassword.getEditText().getText().toString();
         jsonRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonRequest);
 
@@ -169,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         sweetAlertDialog.setConfirmText("volver a intentarlo");
         sweetAlertDialog.setCanceledOnTouchOutside(false);
         sweetAlertDialog.show();
-        sDialog.hide();
+        sDialog.dismiss();
   //      progress.hide();
     }
     @Override
@@ -188,12 +176,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             usuario.setCargo(jsonObject.optString("cargo"));
             usuario.setMunicipio(jsonObject.optString("nombre"));
             usuario.setAdminsecre(jsonObject.optInt("id"));
-            sDialog.hide();
-//            progress.hide();
+            sDialog.dismiss();
         }
         catch (JSONException e) {
             e.printStackTrace();
-            sDialog.hide();
+            sDialog.dismiss();
 //            progress.hide();
         }
         User user=new User(MainActivity.this);

@@ -9,6 +9,7 @@ import dmax.dialog.SpotsDialog;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -45,7 +46,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DetallesMapaOrganizacionActivity extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
     ArrayList<Vendedor> listavendedoresdetalles;
     ArrayList<Double> lat = new ArrayList<>();
     ArrayList<Double> log = new ArrayList<>();
@@ -54,8 +55,10 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
     JsonRequest jsonObjectRequest;
     RequestQueue request;
     TextView tvclave, tvnombre;
+    SweetAlertDialog sweetAlertDialog;
     String name;
     String nombre;
+    Context context=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
         tvclave.setText(String.valueOf(claved));
         listavendedoresdetalles = new ArrayList<>();
         request = Volley.newRequestQueue(this);
-        cargarwebservice();
+        ejecutarservicio();
     }
 
     @Override
@@ -89,8 +92,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void cargarwebservice() {
+    public void ejecutarservicio(){
         mDialog=new SpotsDialog.Builder()
                 .setContext(this)
                 .setMessage("Espere un momento")
@@ -103,14 +105,99 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
                 if(!DetallesMapaOrganizacionActivity.this.isFinishing()&&mDialog!=null) {
                     mDialog.dismiss();
                 }
-      //          mDialog.dismiss();
+                //          mDialog.dismiss();
             }
         },3000);
         String url = "http://192.168.0.8/api/Usuario/deta/"+tvclave.getText().toString();
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Vendedor vendedor = null;
+                JSONArray json = response.optJSONArray("permisos");
+                try {
+                    for (int i = 0; i < json.length(); i++) {
+                        vendedor = new Vendedor(context);
+                        JSONObject jsonObject = null;
+                        jsonObject = json.getJSONObject(i);
+
+                        vendedor.setId(jsonObject.optInt("id_vendedor"));
+                        vendedor.setNombre(jsonObject.optString("name"));
+                        vendedor.setApellido_paterno(jsonObject.optString("apellido_paterno"));
+                        vendedor.setApellido_materno(jsonObject.optString("apellido_materno"));
+                        vendedor.setNomorganizacion(jsonObject.optString("nombre_organizacion"));
+                        vendedor.setActividad(jsonObject.optString("tipo_actividad"));
+                        vendedor.setGiro(jsonObject.optString("giro"));
+                        vendedor.setNomzona(jsonObject.optString("nombre"));
+                        vendedor.setLatitud(jsonObject.optDouble("latitud"));
+                        vendedor.setLongitud(jsonObject.optDouble("longitud"));
+                        listavendedoresdetalles.add(vendedor);
+                        lat.add(vendedor.getLatitud());
+                        log.add(vendedor.getLongitud());
+                        nom.add(vendedor.getNombrev());
+                        //   listauxiliar.add(vendedor);
+                    }
+                    mDialog.hide();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    final User user=new User(DetallesMapaOrganizacionActivity.this);
+                    //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
+                    sweetAlertDialog=new SweetAlertDialog(DetallesMapaOrganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
+                    sweetAlertDialog.setTitleText("Lo sentimos");
+                    sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+                    sweetAlertDialog.setContentTextSize(15);
+                    sweetAlertDialog.setCancelable(false);
+                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            Intent intent = new Intent(DetallesMapaOrganizacionActivity.this, Ventanas.class);
+                            intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
+                            intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
+                            intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
+                            intent.putExtra(HomeFragment.nombres,user.getNombre());
+                            intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.cargo,user.getCargo());
+                            intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    sweetAlertDialog.setCanceledOnTouchOutside(false);
+                    sweetAlertDialog.show();
+                    mDialog.hide();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                sweetAlertDialog=new SweetAlertDialog(DetallesMapaOrganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
+                sweetAlertDialog.setTitleText("Lo sentimos");
+                sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+                sweetAlertDialog.setContentTextSize(15);
+                sweetAlertDialog.setCancelable(false);
+                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                        fragmentTransaction.commit();
+                    }
+                });
+                sweetAlertDialog.setCanceledOnTouchOutside(false);
+                sweetAlertDialog.show();
+                mDialog.hide();
+            }
+        });
+        request.add(jsonObjectRequest);
+    }
+  /*  private void cargarwebservice() {
+
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
     }
-
+*/
     public void iralmapao(View view) {
         Intent intent = new Intent(DetallesMapaOrganizacionActivity.this, MapaorganizacionActivity.class);
         intent.putExtra("lat", lat);
@@ -120,25 +207,10 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
         intent.putExtra("name", nombre);
         startActivity(intent);
     }
-
+/*
     @Override
     public void onErrorResponse(VolleyError error) {
-        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(DetallesMapaOrganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
-        sweetAlertDialog.setTitleText("Lo sentimos");
-        sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
-        sweetAlertDialog.setContentTextSize(15);
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setConfirmText("volver a intentarlo");
-        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                fragmentTransaction.commit();
-            }
-        });
-        sweetAlertDialog.setCanceledOnTouchOutside(false);
-        sweetAlertDialog.show();
-        mDialog.hide();
+
     }
 
     @Override
@@ -173,7 +245,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
             e.printStackTrace();
             final User user=new User(DetallesMapaOrganizacionActivity.this);
             //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(DetallesMapaOrganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialog=new SweetAlertDialog(DetallesMapaOrganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
             sweetAlertDialog.setTitleText("Lo sentimos");
             sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
             sweetAlertDialog.setContentTextSize(15);
@@ -200,5 +272,12 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity implemen
             mDialog.hide();
         }
 
+    }*/
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
+            sweetAlertDialog.dismiss();
+        }
     }
 }

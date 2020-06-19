@@ -1,52 +1,21 @@
 package com.example.oaxacacomercio.ui.home;
 
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.oaxacacomercio.Eventuales.PermisosEventualActivity;
-import com.example.oaxacacomercio.Modelos.Permisos;
-import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
-import com.example.oaxacacomercio.Vendedor.VendedorActivity;
-import com.example.oaxacacomercio.Ventanas;
+import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.sql.Time;
-import java.util.ArrayList;
-
-public class HomeFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener{
+public class HomeFragment extends Fragment {//implements Response.Listener<JSONObject>, Response.ErrorListener{
 
     private HomeViewModel homeViewModel;
-    private TextView nombre;
+    private TextInputLayout nombre;
     public static final String apellido_paternos = "apellido_paterno";
     public static final String apellido_maternos = "apellido_materno";
     public static final String nombres = "name";
@@ -54,47 +23,47 @@ public class HomeFragment extends Fragment implements Response.Listener<JSONObje
     public static final String cargo = "cargo";
     public static final String municipio = "nombre";
 
-    TextView apellidop, nomb, correoelect, puesto, lugarn;
-    ArrayList<Permisos> listapermisos;
-    ArrayList<Permisos> listaauxiliar;
-    JsonRequest jsonObjectRequest;
-    RequestQueue request;
+    TextInputLayout apellidop, nomb, correoelect, puesto, lugarn,apellidom;
+    //ArrayList<Permisos> listapermisos;
+    //ArrayList<Permisos> listaauxiliar;
+    //JsonRequest jsonObjectRequest;
+    //RequestQueue request;
     //private PendingIntent pendingIntent;
-    private final static String CHANNEL_ID="NOTIFICACION";
-    private final static int NOTIFICACION_ID=0;
-
+   // private final static String CHANNEL_ID="NOTIFICACION";
+   // private final static int NOTIFICACION_ID=0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        nomb = (TextView) root.findViewById(R.id.nombreusuario);
+        nomb = (TextInputLayout) root.findViewById(R.id.nombreusuario);
         String nomusuario = getActivity().getIntent().getStringExtra("name");
-        nomb.setText(" " + nomusuario);
-        apellidop = (TextView) root.findViewById(R.id.apellido);
+        nomb.getEditText().setText(" " + nomusuario);
+        apellidop = (TextInputLayout) root.findViewById(R.id.apellido);
+        apellidom = (TextInputLayout) root.findViewById(R.id.apellidom);
         String usuario = getActivity().getIntent().getStringExtra("apellido_paterno");
         String apmusuario = getActivity().getIntent().getStringExtra("apellido_materno");
-        apellidop.setText(" " + usuario + " " + apmusuario);
-
-        correoelect = (TextView) root.findViewById(R.id.correo);
+        apellidop.getEditText().setText(" " + usuario);
+        apellidom.getEditText().setText(" " + apmusuario);
+        correoelect = (TextInputLayout) root.findViewById(R.id.correo);
         String coreo = getActivity().getIntent().getStringExtra("email");
-        correoelect.setText(" " + coreo);
+        correoelect.getEditText().setText(" " + coreo);
 
-        puesto = (TextView) root.findViewById(R.id.cargo);
+        puesto = (TextInputLayout) root.findViewById(R.id.cargo);
         String puestocargo = getActivity().getIntent().getStringExtra("cargo");
-        puesto.setText(" " + puestocargo);
+        puesto.getEditText().setText(" " + puestocargo);
 
-        lugarn = (TextView) root.findViewById(R.id.lugar);
+        lugarn = (TextInputLayout) root.findViewById(R.id.lugar);
         String nacimiento = getActivity().getIntent().getStringExtra("nombre");
-        lugarn.setText(" " + nacimiento);
-        request = Volley.newRequestQueue(getContext());
-        listapermisos = new ArrayList<>();
-        cargarwebservice();
+        lugarn.getEditText().setText(" " + nacimiento);
+     //   request = Volley.newRequestQueue(getContext());
+      //  listapermisos = new ArrayList<>();
+      //  cargarwebservice();
         return root;
     }
-    private void cargarwebservice() {
-        String url = "http://192.168.0.8/api/Usuario/permisomapa/";
+  /*  private void cargarwebservice() {
+        String url = "http://192.168.0.2/api/Usuario/permisomapa/";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
     }
@@ -170,5 +139,5 @@ public class HomeFragment extends Fragment implements Response.Listener<JSONObje
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

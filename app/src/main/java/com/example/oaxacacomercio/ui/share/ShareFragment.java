@@ -54,7 +54,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShareFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class ShareFragment extends Fragment {
     private ShareViewModel shareViewModel;
     RecyclerView recyclerViewact;
     ArrayList<Actividad> listacti;
@@ -64,6 +64,7 @@ public class ShareFragment extends Fragment implements Response.Listener<JSONObj
     ActividadAdapter adapter;
     NavController navController;
     AlertDialog mDialog;
+    SweetAlertDialog sweetAlertDialog;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         shareViewModel =
@@ -114,12 +115,11 @@ public class ShareFragment extends Fragment implements Response.Listener<JSONObj
                 ));
             }
         };
-        cargarwebservice();
+        ejecutarservicio();
 
         return root;
     }
-
-    private void cargarwebservice() {
+    public void ejecutarservicio(){
         mDialog=new SpotsDialog.Builder()
                 .setContext(getContext())
                 .setMessage("Espere un momento")
@@ -130,6 +130,90 @@ public class ShareFragment extends Fragment implements Response.Listener<JSONObj
             @Override
             public void run() {
                 mDialog.dismiss();
+
+            }
+        },3000);
+        String url = "http://192.168.0.8/api/Usuario/listaractividades";
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Actividad actividad = null;
+                JSONArray json = response.optJSONArray("actividades");
+                try {
+                    for (int i = 0; i < json.length(); i++) {
+                        actividad = new Actividad();
+                        JSONObject jsonObject = null;
+                        jsonObject = json.getJSONObject(i);
+                        actividad.setNombre(jsonObject.optString("nombre_actividad"));
+                        actividad.setId(jsonObject.optInt("id_actividad"));
+                        listacti.add(actividad);
+                    }
+                    mDialog.hide();
+                    recyclerViewact.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+                    sweetAlertDialog.setTitleText("Lo sentimos");
+                    sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+                    sweetAlertDialog.setContentTextSize(15);
+                    sweetAlertDialog.setCancelable(false);
+                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                            fragmentTransaction.commit();
+                        }
+                    });
+                    sweetAlertDialog.setCanceledOnTouchOutside(false);
+                    sweetAlertDialog.show();
+                    mDialog.hide();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+                sweetAlertDialog.setTitleText("Lo sentimos");
+                sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+                sweetAlertDialog.setContentTextSize(15);
+                sweetAlertDialog.setCancelable(false);
+                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                        fragmentTransaction.commit();
+                    }
+                });
+                sweetAlertDialog.setCanceledOnTouchOutside(false);
+                sweetAlertDialog.show();
+                mDialog.hide();
+            }
+        });
+        request.add(jsonObjectRequest);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
+            sweetAlertDialog.dismiss();
+        }
+    }
+
+ /*   private void cargarwebservice() {
+        mDialog=new SpotsDialog.Builder()
+                .setContext(getContext())
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
+        mDialog.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                    mDialog.dismiss();
+
             }
         },3000);
         String url = "http://192.168.0.8/api/Usuario/listaractividades";
@@ -194,5 +278,5 @@ public class ShareFragment extends Fragment implements Response.Listener<JSONObj
             sweetAlertDialog.show();
             mDialog.hide();
         }
-    }
+    }*/
 }

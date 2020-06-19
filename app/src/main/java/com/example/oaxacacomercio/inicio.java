@@ -2,19 +2,14 @@ package com.example.oaxacacomercio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
-import android.view.WindowManager;
 
 import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.Modelos.Vendedor;
-import com.example.oaxacacomercio.Vendedor.PermisoFragment;
-import com.example.oaxacacomercio.Vendedor.VendedorActivity;
 import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 

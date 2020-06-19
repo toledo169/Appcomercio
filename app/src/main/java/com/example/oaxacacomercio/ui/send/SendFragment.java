@@ -33,6 +33,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oaxacacomercio.Adapter.ZonaAdapter;
+import com.example.oaxacacomercio.Detalles.DetallesActividadActivity;
 import com.example.oaxacacomercio.Detalles.DetallesMapaZonaActivity;
 import com.example.oaxacacomercio.Detalles.DetallesZonaActivity;
 import com.example.oaxacacomercio.Helper.MySwipeHelper;
@@ -51,7 +52,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SendFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class SendFragment extends Fragment {
 
     private SendViewModel sendViewModel;
     RecyclerView recyclerViewzonas;
@@ -65,6 +66,7 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
     private String opcion = "zonas";
     ZonaAdapter adapter;
     AlertDialog mDialog;
+    SweetAlertDialog sweetAlertDialog;
     NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -116,11 +118,10 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
                 ));
             }
         };
-        cargarwebservice();
+        ejecutarservicio();
         return root;
     }
-
-    private void cargarwebservice() {
+    public void ejecutarservicio(){
         mDialog=new SpotsDialog.Builder()
                 .setContext(getContext())
                 .setMessage("Espere un momento")
@@ -131,6 +132,90 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
             @Override
             public void run() {
                 mDialog.dismiss();
+
+            }
+        },3000);
+        String url = "http://192.168.0.8/api/Usuario/listarzona/";
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Zona zona = null;
+                JSONArray json = response.optJSONArray("zonas");
+                try {
+                    for (int i = 0; i < json.length(); i++) {
+                        zona = new Zona();
+                        JSONObject jsonObject = null;
+                        jsonObject = json.getJSONObject(i);
+                        zona.setNombre(jsonObject.optString("nombre"));
+                        zona.setId(jsonObject.optInt("id_zona"));
+                        listazona.add(zona);
+                    }
+                    mDialog.hide();
+                    recyclerViewzonas.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+                    sweetAlertDialog.setTitleText("Lo sentimos");
+                    sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+                    sweetAlertDialog.setContentTextSize(15);
+                    sweetAlertDialog.setCancelable(false);
+                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                            fragmentTransaction.commit();
+                        }
+                    });
+                    sweetAlertDialog.setCanceledOnTouchOutside(false);
+                    sweetAlertDialog.show();
+                    mDialog.hide();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+                sweetAlertDialog.setTitleText("Lo sentimos");
+                sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
+                sweetAlertDialog.setContentTextSize(15);
+                sweetAlertDialog.setCancelable(false);
+                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                        fragmentTransaction.commit();
+                    }
+                });
+                sweetAlertDialog.setCanceledOnTouchOutside(false);
+                sweetAlertDialog.show();
+                mDialog.hide();
+            }
+        });
+        request.add(jsonObjectRequest);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
+            sweetAlertDialog.dismiss();
+        }
+    }
+
+   /* private void cargarwebservice() {
+        mDialog=new SpotsDialog.Builder()
+                .setContext(getContext())
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
+        mDialog.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                    mDialog.dismiss();
+
             }
         },3000);
         String url = "http://192.168.0.8/api/Usuario/listarzona/";
@@ -193,5 +278,5 @@ public class SendFragment extends Fragment implements Response.Listener<JSONObje
             sweetAlertDialog.show();
             mDialog.hide();
         }
-    }
+    }*/
 }

@@ -5,18 +5,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#500014"
+    android:background="@android:color/white"
 
     >
-   <EditText
-       android:textColor="@android:color/white"
-       android:textStyle="bold"
-       android:hint="Buscar"
-       android:textColorHint="@android:color/white"
-       android:id="@+id/bucarorganizaciones"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:drawableLeft="@drawable/ic_search"/>
+    <EditText
+        android:textColor="#500014"
+        android:textStyle="bold"
+        android:hint="Buscar"
+        android:textColorHint="#500014"
+        android:id="@+id/bucarorganizaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawableTint="#500014"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="5dp"

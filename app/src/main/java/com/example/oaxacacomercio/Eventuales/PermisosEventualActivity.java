@@ -40,7 +40,10 @@ import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.MainActivity;
 import com.example.oaxacacomercio.Mapas.MapaPermiso;
 import com.example.oaxacacomercio.Modelos.Permisos;
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.R;
+import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 
 import org.json.JSONArray;
@@ -62,6 +65,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
     private LinearLayoutManager layoutManager;
     PermisosAdapter adapter;
     private EditText sercho;
+    SweetAlertDialog sweetAlertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,7 +152,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
     }
     @Override
     public void onErrorResponse(VolleyError error) {
-        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(PermisosEventualActivity.this,SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog=new SweetAlertDialog(PermisosEventualActivity.this,SweetAlertDialog.ERROR_TYPE);
         sweetAlertDialog.setTitleText("Lo sentimos");
         sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
         sweetAlertDialog.setContentTextSize(15);
@@ -190,7 +194,8 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
             System.out.println("la lista contiene"+listapermisos.size());
         } catch (JSONException e) {
             e.printStackTrace();
-            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(PermisosEventualActivity.this,SweetAlertDialog.ERROR_TYPE);
+            final User user=new User(PermisosEventualActivity.this);
+            sweetAlertDialog=new SweetAlertDialog(PermisosEventualActivity.this,SweetAlertDialog.ERROR_TYPE);
             sweetAlertDialog.setTitleText("Lo sentimos");
             sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
             sweetAlertDialog.setContentTextSize(15);
@@ -199,8 +204,19 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
             sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                    fragmentTransaction.commit();
+                    Intent intent = new Intent(PermisosEventualActivity.this, Ventanas.class);
+                    intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
+                    intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
+                    intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
+                    intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
+                    intent.putExtra(HomeFragment.nombres,user.getNombre());
+                    intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
+                    intent.putExtra(HomeFragment.cargo,user.getCargo());
+                    intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                    startActivity(intent);
+                    finish();
+                 //   FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                  //  fragmentTransaction.commit();
                 }
             });
             sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -216,6 +232,13 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
             }
         }
         adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
+            sweetAlertDialog.dismiss();
+        }
     }
     }
 

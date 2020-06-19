@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#500014">
+    android:background="@android:color/white">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,231 +35,144 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:textAlignment="center"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
-            android:textAlignment="center"
-            app:cardUseCompatPadding="true">
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.07999998">
             <LinearLayout
-                android:layout_width="463dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/baloo"
-                        android:text="                 BIENVENIDO"
-                        android:textColor="#500014"
-                        android:textSize="28sp" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:drawableLeft="@drawable/ic_person_black_24dp"
-                        android:text=" Nombre:"
-                        android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/nombreusuario"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="   Dato "
-                        android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="20dp">
 
                 <TextView
-                    android:layout_width="376dp"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="0.01dp"
-                    android:background="#b34766" />
-                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo"
+                    android:gravity="center"
+                    android:text="BIENVENIDO"
+                    android:layout_gravity="center"
+                    android:textColor="#500014"
+                    android:textSize="27dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="3dp"
+                    android:id="@+id/nombreusuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:textColorHint="#500014">
 
-                    <TextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:drawableLeft="@drawable/ic_portrait_black_24dp"
-                        android:text=" Apellidos:"
+                        android:backgroundTint="#500014"
+                        android:hint="Nombre"
+                        android:enabled="false"
+                        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:inputType="textPersonName"
                         android:textColor="#500014"
-                        android:drawableTint="#500014"
-                        android:textSize="22sp"
+                        android:textColorHint="#500014"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/apellido"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="   Dato apellidos "
-                        android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="379dp"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="0.01dp"
-                    android:background="#b34766" />
-                <LinearLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/apellido"
+                    android:layout_marginTop="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <TextView
-
+                    android:textColorHint="#500014">
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
-                        android:text=" Correo electrónico:"
+                        android:backgroundTint="#500014"
+                        android:enabled="false"
+                        android:hint="Apellido paterno"
+                        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:inputType="textPersonName"
                         android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:drawableTint="#500014"
+                        android:textColorHint="#500014"
                         android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:id="@+id/correo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="   Dato correo "
-                        android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="379dp"
-                        android:layout_height="3dp"
-                        android:layout_marginTop="0.01dp"
-                        android:background="#b34766" />
-
-                </LinearLayout>
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="3dp"
+                    android:id="@+id/apellidom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:textColorHint="#500014">
 
-                    <TextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:enabled="false"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:drawableLeft="@drawable/ic_person_pin_black_24dp"
-                        android:text=" Cargo:"
-                        android:drawableTint="#500014"
+                        android:backgroundTint="#500014"
+                        android:hint="Apellido Materno"
+                        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:inputType="textPersonName"
                         android:textColor="#500014"
-                        android:textSize="22sp"
+                        android:textColorHint="#500014"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/cargo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="   Dato Cargo "
-                        android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:layout_width="379dp"
-                        android:layout_height="3dp"
-                        android:layout_marginTop="0.01dp"
-                        android:background="#b34766" />
-                </LinearLayout>
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/correo"
+                    android:layout_marginTop="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <TextView
+                    android:textColorHint="#500014">
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:enabled="false"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:drawableLeft="@drawable/ic_place_black_24dp"
-                        android:text=" Lugar de Nacimiento:"
+                        android:backgroundTint="#500014"
+                        android:hint="Correo electronico"
+                        android:inputType="number"
                         android:textColor="#500014"
-                        android:drawableTint="#500014"
-                        android:textSize="22sp"
+                        android:textColorHint="#500014"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/lugar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="   Dato Nacimiento "
-                        android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="379dp"
-                        android:layout_height="3dp"
-                        android:layout_marginTop="0.01dp"
-                        android:background="#b34766" />
-                </LinearLayout>
-                <LinearLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cargo"
+                    android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="#500014">
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:enabled="false"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:drawableLeft="@drawable/ic_streetview_black_24dp"
-                        android:text=" Domicilio"
-                        android:drawableTint="#500014"
-                        android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/domicilio"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="   Dato Domicilio "
-                        android:textColor="#500014"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
+                    android:backgroundTint="#500014"
+                    android:hint="Cargo"
+                    android:inputType="number"
+                    android:textColor="#500014"
+                    android:textColorHint="#500014"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lugar"
+                    android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="#500014">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:enabled="false"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#500014"
+                    android:hint="Lugar de nacimiento"
+                    android:inputType="number"
+                    android:textColor="#500014"
+                    android:textColorHint="#500014"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-
-
-
         </androidx.cardview.widget.CardView>
 
     </androidx.core.widget.NestedScrollView>
