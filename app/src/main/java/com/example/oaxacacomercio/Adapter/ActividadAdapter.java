@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +42,8 @@ public class ActividadAdapter extends RecyclerView.Adapter<ActividadAdapter.Acti
         actividadHolder.view_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mcontext, "act seleccionada" + String.valueOf(actividadHolder.getAdapterPosition()),
-                        Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(mcontext, "act seleccionada" + String.valueOf(actividadHolder.getAdapterPosition()),
+                //         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mcontext, DetallesActividadActivity.class);
                 intent.putExtra("id_actividad", listaactividades.get(actividadHolder.getAdapterPosition()).getId());
                 intent.putExtra("nombre_actividad", listaactividades.get(actividadHolder.getAdapterPosition()).getNombre());
@@ -54,7 +56,7 @@ public class ActividadAdapter extends RecyclerView.Adapter<ActividadAdapter.Acti
 
     @Override
     public void onBindViewHolder(@NonNull ActividadHolder holder, int position) {
-        holder.txtNombrezona.setText(listaactividades.get(position).getNombre().toString());
+        holder.txtNombrezona.setText("Nombre:" + listaactividades.get(position).getNombre().toString());
         holder.txtclave.setText(listaactividades.get(position).getId().toString());
     }
 
@@ -65,13 +67,12 @@ public class ActividadAdapter extends RecyclerView.Adapter<ActividadAdapter.Acti
 
     public class ActividadHolder extends RecyclerView.ViewHolder {
         TextView txtNombrezona, Datozona, txtclave, datoclave;
-        ConstraintLayout view_container;
-
+        LinearLayout view_container;
         public ActividadHolder(@NonNull View itemView) {
             super(itemView);
             view_container = itemView.findViewById(R.id.contenedoract);
             txtNombrezona = (TextView) itemView.findViewById(R.id.txtnombreact);
-            Datozona = (TextView) itemView.findViewById(R.id.datoact);
+            //          Datozona = (TextView) itemView.findViewById(R.id.datoact);
             datoclave = (TextView) itemView.findViewById(R.id.textViewact);
             txtclave = (TextView) itemView.findViewById(R.id.txtDocumentoact);
         }

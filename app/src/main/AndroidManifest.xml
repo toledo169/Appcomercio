@@ -10,11 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Eventuales.PermisosEventualActivity"></activity>
+        <activity android:name=".password.ConfirmarPasswordActivity"></activity>
+        <activity android:name=".password.PasswordActivity" />
+        <activity
+            android:name=".Eventuales.PermisosEventualActivity"
+            android:screenOrientation="locked" />
         <activity android:name=".Mapas.MapaPermiso" />
         <activity android:name=".Mapas.MapaActActivity" />
-        <activity android:name=".Detalles.DetallesMapaActividaActivity" />
-        <activity android:name=".Detalles.DetallesActividadActivity" />
+        <activity
+            android:name=".Detalles.DetallesMapaActividaActivity"
+            android:screenOrientation="locked" />
+        <activity
+            android:name=".Detalles.DetallesActividadActivity"
+            android:screenOrientation="locked" />
         <activity android:name=".Mapas.MapaorganizacionActivity" />
         <activity
             android:name=".Detalles.DetallesMapaOrganizacionActivity"
@@ -36,23 +44,31 @@
             android:theme="@style/inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Ventanas"
             android:label="@string/title_activity_ventanas"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="locked"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="locked" />
+            android:screenOrientation="locked"
+            android:theme="@style/primera" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-    </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
+        <service
+            android:name=".Eventuales.ServicioEventos"
+            android:enabled="true"
+            android:exported="true" />
+    </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

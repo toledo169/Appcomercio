@@ -46,6 +46,7 @@ import com.example.oaxacacomercio.Ventanas;
 import com.example.oaxacacomercio.inicio;
 import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +67,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
     private LinearLayoutManager layoutManager;
     //TextView tvclave,tvnombre;
     private EditText serchvact;
+    EditText totalven;
     SweetAlertDialog sweetAlertDialog;
     int claved;
     DetallesActividadVendedorAdapter adapter;
@@ -99,7 +101,6 @@ public class DetallesActividadActivity extends AppCompatActivity{
         layoutManager= new LinearLayoutManager(this);
         recyclerViewDetallesact.setLayoutManager(layoutManager);
         recyclerViewDetallesact.setHasFixedSize(true);
-
         adapter=new DetallesActividadVendedorAdapter(listavendedoresdetallesact,this);
         recyclerViewDetallesact.setAdapter(adapter);
         request = Volley.newRequestQueue(this);
@@ -146,7 +147,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
                 }
             }
         },3000);
-        String url="http://192.168.0.8/api/Usuario/listaractividadesvendedor/"+claved;
+        String url="http://192.168.0.9/api/Usuario/listaractividadesvendedor/"+claved;
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -172,6 +173,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
                     }
                     mDialog.hide();
                     recyclerViewDetallesact.setAdapter(adapter);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     final User user=new User(DetallesActividadActivity.this);
@@ -181,7 +183,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
                     sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                     sweetAlertDialog.setContentTextSize(15);
                     sweetAlertDialog.setCancelable(false);
-                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmText("Volver a intentarlo");
                     sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -194,6 +196,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
                             intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
                             intent.putExtra(HomeFragment.cargo,user.getCargo());
                             intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                            intent.putExtra(HomeFragment.fotoperfil,user.getImage());
                             startActivity(intent);
                             finish();
                         }
@@ -206,17 +209,30 @@ public class DetallesActividadActivity extends AppCompatActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                final User user=new User(DetallesActividadActivity.this);
                 sweetAlertDialog=new SweetAlertDialog(DetallesActividadActivity.this,SweetAlertDialog.ERROR_TYPE);
                 sweetAlertDialog.setTitleText("Lo sentimos");
                 sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                 sweetAlertDialog.setContentTextSize(15);
                 sweetAlertDialog.setCancelable(false);
-                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmText("Volver a intentarlo");
                 sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                        fragmentTransaction.commit();
+                       /* FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
+                        fragmentTransaction.commit();*/
+                        Intent intent = new Intent(DetallesActividadActivity.this, Ventanas.class);
+                        intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
+                        intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
+                        intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
+                        intent.putExtra(HomeFragment.nombres,user.getNombre());
+                        intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.cargo,user.getCargo());
+                        intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                        intent.putExtra(HomeFragment.fotoperfil,user.getImage());
+                        startActivity(intent);
+                        finish();
                     }
                 });
                 sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -226,74 +242,6 @@ public class DetallesActividadActivity extends AppCompatActivity{
         });
         request.add(jsonObjectRequest);
     }
-/*
-    private void cargarwebservice() {
-
-        // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
-        //casa angel 192.168.0.23
-        jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
-        request.add(jsonObjectRequest);
-    }
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        Vendedor vendedor=null;
-        JSONArray json=response.optJSONArray("comerciales");
-        try {
-            for (int i=0;i<json.length();i++){
-                vendedor=new Vendedor(this);
-                JSONObject jsonObject = null;
-                jsonObject=json.getJSONObject(i);
-                vendedor.setId(jsonObject.optInt("id_vendedor"));
-                vendedor.setNombre(jsonObject.optString("name"));
-                vendedor.setApellido_paterno(jsonObject.optString("apellido_paterno"));
-                vendedor.setApellido_materno(jsonObject.optString("apellido_materno"));
-                vendedor.setNomorganizacion(jsonObject.optString("nombre_organizacion"));
-                vendedor.setActividad(jsonObject.optString("tipo_actividad"));
-                vendedor.setGiro(jsonObject.optString("giro"));
-                vendedor.setNomzona(jsonObject.optString("nombre"));
-                vendedor.setLatitud(jsonObject.optDouble("latitud"));
-                vendedor.setLongitud(jsonObject.optDouble("longitud"));
-                listavendedoresdetallesact.add(vendedor);
-                listauxiliar.add(vendedor);
-            }
-            mDialog.hide();
-            recyclerViewDetallesact.setAdapter(adapter);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            final User user=new User(DetallesActividadActivity.this);
-        //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-            sweetAlertDialog=new SweetAlertDialog(DetallesActividadActivity.this,SweetAlertDialog.ERROR_TYPE);
-            sweetAlertDialog.setTitleText("Lo sentimos");
-            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
-            sweetAlertDialog.setContentTextSize(15);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setConfirmText("volver a intentarlo");
-            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    Intent intent = new Intent(DetallesActividadActivity.this, Ventanas.class);
-                    intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
-                    intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
-                    intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
-                    intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
-                    intent.putExtra(HomeFragment.nombres,user.getNombre());
-                    intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
-                    intent.putExtra(HomeFragment.cargo,user.getCargo());
-                    intent.putExtra(HomeFragment.municipio,user.getMunicipio());
-                    startActivity(intent);
-                    finish();
-                }
-            });
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.show();
-            mDialog.hide();
-        }
-    }*/
     public void buscador(String texto){
         listavendedoresdetallesact.clear();
         for (int i=0;i<listauxiliar.size();i++){
@@ -310,15 +258,4 @@ public class DetallesActividadActivity extends AppCompatActivity{
             sweetAlertDialog.dismiss();
         }
     }
-    /*Intent intent = new Intent(inicio.this, Ventanas.class);
-                          intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
-                          intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
-                          intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
-                          intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
-                          intent.putExtra(HomeFragment.nombres,user.getNombre());
-                          intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
-                          intent.putExtra(HomeFragment.cargo,user.getCargo());
-                          intent.putExtra(HomeFragment.municipio,user.getMunicipio());
-                          startActivity(intent);
-                          finish();*/
 }

@@ -8,10 +8,20 @@ import static java.lang.String.valueOf;
 
 public class User {
     public int id;
-    public String nombre, apellido_paterno, apellido_materno,correoelectronico,cargo,municipio;
+    public String nombre, apellido_paterno, apellido_materno,correoelectronico,cargo,municipio,image;
     public Integer adminsecre;
     SharedPreferences sharedPreferences;
     Context context;
+
+    public String getImage() {
+        image=sharedPreferences.getString("userfotop","");
+        return image;
+    }
+
+    public void setImage(String image) {
+        sharedPreferences.edit().putString("userfotop",image).commit();
+        this.image = image;
+    }
 
     public User(Context context) {
         this.context = context;

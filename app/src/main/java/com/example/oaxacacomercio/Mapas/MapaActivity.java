@@ -1,4 +1,5 @@
 package com.example.oaxacacomercio.Mapas;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -6,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -99,6 +101,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.fillColor;
 
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -106,13 +109,13 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     int claveZ;
     String nombre;
     int clave;
-    ArrayList<Double>lati;
-    ArrayList<Double>longi;
-     ArrayList<Double>latizona;
-     ArrayList<Double>longizona;
-    ArrayList<String>nomb;
-    private  List<List<Point>> POINTS = new ArrayList<>();
-    private  List<Point> OUTER_POINTS = new ArrayList<>();
+    ArrayList<Double> lati;
+    ArrayList<Double> longi;
+    ArrayList<Double> latizona;
+    ArrayList<Double> longizona;
+    ArrayList<String> nomb;
+    private List<List<Point>> POINTS = new ArrayList<>();
+    private List<Point> OUTER_POINTS = new ArrayList<>();
 
     @Override
     protected void onStart() {
@@ -158,89 +161,96 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 "sk.eyJ1IjoiamFpMTg5IiwiYSI6ImNrOTUyeW95dzA1aXkzZXE5eGRxeXBmZWEifQ.Y4s7OIVr91HZt88ewuVZ-w");
         setContentView(R.layout.activity_mapa);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-       Toolbar toolbar = findViewById(R.id.toolbarzonam);
+        Toolbar toolbar = findViewById(R.id.toolbarzonam);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        lati=(ArrayList<Double>)getIntent().getSerializableExtra("lat");
-        longi=(ArrayList<Double>)getIntent().getSerializableExtra("log");
-        nomb=(ArrayList<String>)getIntent().getSerializableExtra("nom") ;
-        latizona=(ArrayList<Double>)getIntent().getSerializableExtra("latitudzona");
-        longizona=(ArrayList<Double>)getIntent().getSerializableExtra("longitudzona");
-       String nombreZ=getIntent().getExtras().getString("nombre");
-        nombre=getIntent().getExtras().getString("name");
-        clave=getIntent().getExtras().getInt("id_zona");
+        lati = (ArrayList<Double>) getIntent().getSerializableExtra("lat");
+        longi = (ArrayList<Double>) getIntent().getSerializableExtra("log");
+        nomb = (ArrayList<String>) getIntent().getSerializableExtra("nom");
+        latizona = (ArrayList<Double>) getIntent().getSerializableExtra("latitudzona");
+        longizona = (ArrayList<Double>) getIntent().getSerializableExtra("longitudzona");
+        String nombreZ = getIntent().getExtras().getString("nombre");
+        nombre = getIntent().getExtras().getString("name");
+        clave = getIntent().getExtras().getInt("id_zona");
         getSupportActionBar().setTitle(nombreZ);
         mapView = (MapView) findViewById(R.id.mapamaps);
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
-            User usuario= new User(this);
+        if (item.getItemId() == android.R.id.home) {
+            User usuario = new User(this);
             Intent goMain = new Intent(MapaActivity.this, Ventanas.class);
 
-            goMain.putExtra(HomeFragment.apellido_paternos,usuario.getApellido_paterno());
-            goMain.putExtra(HomeFragment.apellido_maternos,usuario.getApellido_materno());
-            goMain.putExtra(HomeFragment.nombres,usuario.getNombre());
-            goMain.putExtra(HomeFragment.correo,usuario.getCorreoelectronico());
-            goMain.putExtra(HomeFragment.cargo,usuario.getCargo());
-            goMain.putExtra(HomeFragment.municipio,usuario.getMunicipio());
+            goMain.putExtra(HomeFragment.apellido_paternos, usuario.getApellido_paterno());
+            goMain.putExtra(HomeFragment.apellido_maternos, usuario.getApellido_materno());
+            goMain.putExtra(HomeFragment.nombres, usuario.getNombre());
+            goMain.putExtra(HomeFragment.correo, usuario.getCorreoelectronico());
+            goMain.putExtra(HomeFragment.cargo, usuario.getCargo());
+            goMain.putExtra(HomeFragment.municipio, usuario.getMunicipio());
+            goMain.putExtra(HomeFragment.fotoperfil, usuario.getImage());
             //   finish();
             startActivity(goMain);
             finish();
-         //  Navigation.findNavController(android.R.id.home).navigate(R.id.irmapita);
+            //  Navigation.findNavController(android.R.id.home).navigate(R.id.irmapita);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-     public void agregarPuntos(){
- for (int i=0; i<latizona.size(); i++){
-            OUTER_POINTS.add(Point.fromLngLat(longizona.get(i),latizona.get(i)));
+    public void agregarPuntos() {
+        for (int i = 0; i < latizona.size(); i++) {
+            OUTER_POINTS.add(Point.fromLngLat(longizona.get(i), latizona.get(i)));
         }
-         POINTS.add(OUTER_POINTS);
+        POINTS.add(OUTER_POINTS);
     }
-        @Override
-        public void onMapReady ( final MapboxMap mapboxMap){
-            mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-                @Override
-                public void onStyleLoaded(@NonNull Style style) {
-                    for (int i=0; i<latizona.size(); i++){
-                        OUTER_POINTS.add(Point.fromLngLat(longizona.get(i),latizona.get(i)));
-                    }
-                    POINTS.add(OUTER_POINTS);
-                    style.addSource(new GeoJsonSource("source-id", Polygon.fromLngLats(POINTS)));
-                    if (clave==1){
-                    style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
-                            fillColor(Color.parseColor("#ff0000")),fillOpacity(2.1f)), "settlement-label"
-                    );}
-                    if (clave==2){
-                        style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
-                                fillColor(Color.parseColor("#e5be01")),fillOpacity(2.1f)), "settlement-label"
-                        );}
-                    if (clave==3){
-                        style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
-                                fillColor(Color.parseColor("#008f39")),fillOpacity(2.1f)), "settlement-label"
-                        );}
-                    if (clave==4){
-                        style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
-                                fillColor(Color.TRANSPARENT),fillOpacity(0.1f)), "settlement-label"
-                        );}
+
+    @Override
+    public void onMapReady(final MapboxMap mapboxMap) {
+        mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+            @Override
+            public void onStyleLoaded(@NonNull Style style) {
+                for (int i = 0; i < latizona.size(); i++) {
+                    OUTER_POINTS.add(Point.fromLngLat(longizona.get(i), latizona.get(i)));
                 }
-            });
-            for (int i = 0; i < lati.size(); i++) {
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(lati.get(i), longi.get(i))).title(nomb.get(i))
-                );
-
+                POINTS.add(OUTER_POINTS);
+                style.addSource(new GeoJsonSource("source-id", Polygon.fromLngLats(POINTS)));
+                if (clave == 1) {
+                    style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
+                            fillColor(Color.parseColor("#ff0000")), fillOpacity(0.6f)), "settlement-label"
+                    );
+                }
+                if (clave == 2) {
+                    style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
+                            fillColor(Color.parseColor("#e5be01")), fillOpacity(0.6f)), "settlement-label"
+                    );
+                }
+                if (clave == 3) {
+                    style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
+                            fillColor(Color.parseColor("#008f39")), fillOpacity(0.6f)), "settlement-label"
+                    );
+                }
+                if (clave == 4) {
+                    style.addLayerBelow(new FillLayer("layer-id", "source-id").withProperties(
+                            fillColor(Color.TRANSPARENT), fillOpacity(0.1f)), "settlement-label"
+                    );
+                }
             }
+        });
+        for (int i = 0; i < lati.size(); i++) {
+            mapboxMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lati.get(i), longi.get(i))).title(nomb.get(i))
+            );
+
         }
-
-
     }
+
+
+}
 
 
 

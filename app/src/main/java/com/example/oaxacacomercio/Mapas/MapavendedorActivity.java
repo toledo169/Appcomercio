@@ -20,7 +20,8 @@ import com.mapbox.mapboxsdk.maps.Style;
 
 public class MapavendedorActivity extends AppCompatActivity implements OnMapReadyCallback {
     private MapView mapView;
-    String latitud,longitu,nombrev;
+    String latitud, longitu, nombrev;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -61,11 +62,11 @@ public class MapavendedorActivity extends AppCompatActivity implements OnMapRead
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, "pk.eyJ1IjoidG9sZWRvMTYiLCJhIjoiY2s4eGR3aHl5MHg5ajNucGsxMHN6YWg0MyJ9.EcFmUIJJCWb47aJAFHddRw");
-         latitud=getIntent().getExtras().getString("latitud");
-         longitu=getIntent().getExtras().getString("longitud");
-         nombrev=getIntent().getExtras().getString("name");
-         String app=getIntent().getExtras().getString("apellido_paterno");
-         String apm=getIntent().getExtras().getString("apellido_materno");
+        latitud = getIntent().getExtras().getString("latitud");
+        longitu = getIntent().getExtras().getString("longitud");
+        nombrev = getIntent().getExtras().getString("name");
+        String app = getIntent().getExtras().getString("apellido_paterno");
+        String apm = getIntent().getExtras().getString("apellido_materno");
 
         setContentView(R.layout.activity_mapavendedor);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
@@ -73,9 +74,9 @@ public class MapavendedorActivity extends AppCompatActivity implements OnMapRead
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(nombrev+" "+app+" "+apm);
+        getSupportActionBar().setTitle(nombrev + " " + app + " " + apm);
 
-         mapView=(MapView)findViewById(R.id.mapavendedores);
+        mapView = (MapView) findViewById(R.id.mapavendedores);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
     }
@@ -91,9 +92,10 @@ public class MapavendedorActivity extends AppCompatActivity implements OnMapRead
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }

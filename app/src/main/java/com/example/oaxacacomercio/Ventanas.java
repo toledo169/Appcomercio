@@ -76,7 +76,7 @@ public class Ventanas extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send,R.id.nav_eventos)
+                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -97,7 +97,7 @@ public class Ventanas extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-     @Override
+   /*  @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_settings:
@@ -122,7 +122,7 @@ public class Ventanas extends AppCompatActivity {
                     }
                 });
                 dialog.show();*/
-                SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(Ventanas.this, SweetAlertDialog.WARNING_TYPE);
+     /*           SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(Ventanas.this, SweetAlertDialog.WARNING_TYPE);
                 sweetAlertDialog.setTitleText("¿Esta seguro");
                 sweetAlertDialog.setContentText("¿Usted desea salir de la aplicación");
                 sweetAlertDialog.setCancelText("Cancelar");
@@ -160,5 +160,5 @@ public class Ventanas extends AppCompatActivity {
         Intent intent= new Intent(Ventanas.this,MainActivity.class);
         startActivity(intent);
         finish();
-    }
+    }*/
 }

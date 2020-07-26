@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,27 +23,28 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ZonaAdapter extends RecyclerView.Adapter<ZonaAdapter.ZonaHolder> {
     List<Zona> listazonas;
     Context mcontext;
-    public ZonaAdapter(List<Zona> listazonas,Context mcontext) {
+
+    public ZonaAdapter(List<Zona> listazonas, Context mcontext) {
 
         this.listazonas = listazonas;
-        this.mcontext=mcontext;
+        this.mcontext = mcontext;
     }
 
     @Override
     public ZonaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View vista= LayoutInflater.from(parent.getContext()).inflate(R.layout.vistazona,parent,false);
-        RecyclerView.LayoutParams layoutParams=new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.vistazona, parent, false);
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         vista.setLayoutParams(layoutParams);
-        final ZonaHolder zonaHolder=new ZonaHolder(vista);
+        final ZonaHolder zonaHolder = new ZonaHolder(vista);
 
         zonaHolder.viewc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mcontext,"zona seleccionada"+String.valueOf(zonaHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(mcontext, DetallesZonaActivity.class);
-                intent.putExtra("id_zona",listazonas.get(zonaHolder.getAdapterPosition()).getId());
-                intent.putExtra("nombre",listazonas.get(zonaHolder.getAdapterPosition()).getNombre());
+                //    Toast.makeText(mcontext,"zona seleccionada"+String.valueOf(zonaHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mcontext, DetallesZonaActivity.class);
+                intent.putExtra("id_zona", listazonas.get(zonaHolder.getAdapterPosition()).getId());
+                intent.putExtra("nombre", listazonas.get(zonaHolder.getAdapterPosition()).getNombre());
                 mcontext.startActivity(intent);
             }
         });
@@ -51,7 +54,7 @@ public class ZonaAdapter extends RecyclerView.Adapter<ZonaAdapter.ZonaHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ZonaHolder holder, int position) {
-        holder.txtNombrezona.setText(listazonas.get(position).getNombre().toString());
+        holder.txtNombrezona.setText("Nombre: " + listazonas.get(position).getNombre().toString());
         holder.txtclave.setText(listazonas.get(position).getId().toString());
     }
 
@@ -61,15 +64,16 @@ public class ZonaAdapter extends RecyclerView.Adapter<ZonaAdapter.ZonaHolder> {
     }
 
     public class ZonaHolder extends RecyclerView.ViewHolder {
-        TextView txtNombrezona,Datozona,txtclave,datoclave;
-        ConstraintLayout viewc;
-        public ZonaHolder( View itemView) {
+        TextView txtNombrezona, Datozona, txtclave, datoclave;
+        LinearLayout viewc;
+
+        public ZonaHolder(View itemView) {
             super(itemView);
-            viewc=itemView.findViewById(R.id.contenedorzona);
-            txtNombrezona=(TextView)itemView.findViewById(R.id.txtnombrezona);
-            Datozona=(TextView)itemView.findViewById(R.id.datozona);
-            datoclave=(TextView)itemView.findViewById(R.id.textViewzona);
-            txtclave=(TextView)itemView.findViewById(R.id.txtDocumentozona);
+            viewc = itemView.findViewById(R.id.contenedorzona);
+            txtNombrezona = (TextView) itemView.findViewById(R.id.txtnombrezona);
+            //  Datozona=(TextView)itemView.findViewById(R.id.datozona);
+            datoclave = (TextView) itemView.findViewById(R.id.textViewzona);
+            txtclave = (TextView) itemView.findViewById(R.id.txtDocumentozona);
         }
     }
 }

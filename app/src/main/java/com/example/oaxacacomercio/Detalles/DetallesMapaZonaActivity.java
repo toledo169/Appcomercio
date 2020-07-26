@@ -50,13 +50,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DetallesMapaZonaActivity extends AppCompatActivity  {
+public class DetallesMapaZonaActivity extends AppCompatActivity {
     ArrayList<Vendedor> listavendedoresdetalleszona;
-    ArrayList<Double>lat=new ArrayList<>();
-    ArrayList<Double>log=new ArrayList<>();
-     ArrayList<Double>latitudZona=new ArrayList<>();
-      ArrayList<Double>longitudzona=new ArrayList<>();
-    ArrayList<String>nom=new ArrayList<>();
+    ArrayList<Double> lat = new ArrayList<>();
+    ArrayList<Double> log = new ArrayList<>();
+    ArrayList<Double> latitudZona = new ArrayList<>();
+    ArrayList<Double> longitudzona = new ArrayList<>();
+    ArrayList<String> nom = new ArrayList<>();
     // ArrayList<Vendedor>listauxiliar;
     AlertDialog mDialog;
     JsonRequest jsonObjectRequest;
@@ -65,44 +65,47 @@ public class DetallesMapaZonaActivity extends AppCompatActivity  {
     String nombreZ;
     String name;
     Button mapaven;
-    TextView txtnombrez,txtClavezona;
+    TextView txtnombrez, txtClavezona,tvtotal;
     private Transition transition;
     Toolbar toolbar;
     SweetAlertDialog sweetAlertDialog;
-    Context context=this;
+    Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_mapa_zona);
-        toolbar = findViewById(R.id.toolbarr);
+        toolbar = findViewById(R.id.toolbarrzonabien);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        claveZ=getIntent().getExtras().getInt("id_zona");
-        nombreZ=getIntent().getExtras().getString("nombre");
-        mapaven=(Button)findViewById(R.id.buttonmapa);
+        claveZ = getIntent().getExtras().getInt("id_zona");
+        nombreZ = getIntent().getExtras().getString("nombre");
+        mapaven = (Button) findViewById(R.id.buttonmapa);
         getSupportActionBar().setTitle(nombreZ);
-        listavendedoresdetalleszona=new ArrayList<>();
-        txtnombrez=(TextView)findViewById(R.id.txtnombrezonadetalles1);
-        txtClavezona=(TextView)findViewById(R.id.txtDocumentozonadetalles1);
+        listavendedoresdetalleszona = new ArrayList<>();
+        txtnombrez = (TextView) findViewById(R.id.txtnombrezonadetalles1);
+        txtClavezona = (TextView) findViewById(R.id.txtDocumentozonadetalles1);
+        tvtotal=(TextView) findViewById(R.id.txttotalvzonadetalles1);
         txtnombrez.setText(nombreZ);
         txtClavezona.setText(String.valueOf(claveZ));
         request = Volley.newRequestQueue(this);
-      ejecutarservicio();
+
+        ejecutarservicio();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void iralmapa(View v){
-        Intent intent=new Intent(DetallesMapaZonaActivity.this, MapaActivity.class);
-        if(claveZ==1) {
+    public void iralmapa(View v) {
+        Intent intent = new Intent(DetallesMapaZonaActivity.this, MapaActivity.class);
+        if (claveZ == 1) {
             latitudZona.add(17.062304);
             longitudzona.add(-96.726491);
             latitudZona.add(17.061726);
@@ -116,12 +119,12 @@ public class DetallesMapaZonaActivity extends AppCompatActivity  {
             intent.putExtra("log", log);
             intent.putExtra("latitudzona", latitudZona);
             intent.putExtra("longitudzona", longitudzona);
-            intent.putExtra("nom",nom);
-            intent.putExtra("nombre",nombreZ);
-            intent.putExtra("name",name);
-            intent.putExtra("id_zona",claveZ);
+            intent.putExtra("nom", nom);
+            intent.putExtra("nombre", nombreZ);
+            intent.putExtra("name", name);
+            intent.putExtra("id_zona", claveZ);
             startActivity(intent);
-        } else if(claveZ==2) {
+        } else if (claveZ == 2) {
             //17.062413, -96.722457
             //17.063644, -96.728261
             //17.057080, -96.729589
@@ -153,12 +156,12 @@ public class DetallesMapaZonaActivity extends AppCompatActivity  {
             intent.putExtra("log", log);
             intent.putExtra("latitudzona", latitudZona);
             intent.putExtra("longitudzona", longitudzona);
-            intent.putExtra("nom",nom);
-            intent.putExtra("nombre",nombreZ);
-            intent.putExtra("name",name);
-            intent.putExtra("id_zona",claveZ);
+            intent.putExtra("nom", nom);
+            intent.putExtra("nombre", nombreZ);
+            intent.putExtra("name", name);
+            intent.putExtra("id_zona", claveZ);
             startActivity(intent);
-        }else if (claveZ==3) {
+        } else if (claveZ == 3) {
             //17.057917, -96.731441
             //17.061186, -96.730719
             //17.061151, -96.733687
@@ -175,48 +178,49 @@ public class DetallesMapaZonaActivity extends AppCompatActivity  {
             intent.putExtra("log", log);
             intent.putExtra("latitudzona", latitudZona);
             intent.putExtra("longitudzona", longitudzona);
-            intent.putExtra("nom",nom);
-            intent.putExtra("nombre",nombreZ);
-            intent.putExtra("name",name);
-            intent.putExtra("id_zona",claveZ);
+            intent.putExtra("nom", nom);
+            intent.putExtra("nombre", nombreZ);
+            intent.putExtra("name", name);
+            intent.putExtra("id_zona", claveZ);
             startActivity(intent);
-        }else if (claveZ==4){
+        } else if (claveZ == 4) {
             intent.putExtra("latitudzona", latitudZona);
             intent.putExtra("longitudzona", longitudzona);
             intent.putExtra("lat", lat);
             intent.putExtra("log", log);
-            intent.putExtra("name",name);
-            intent.putExtra("id_zona",claveZ);
+            intent.putExtra("name", name);
+            intent.putExtra("id_zona", claveZ);
             startActivity(intent);
         }
     }
-    public void ejecutarservicio(){
-        mDialog=new SpotsDialog.Builder()
+
+    public void ejecutarservicio() {
+        mDialog = new SpotsDialog.Builder()
                 .setContext(this)
                 .setMessage("Espere un momento")
                 .setCancelable(false).build();
         mDialog.show();
-        Handler handler=new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                if (!DetallesMapaZonaActivity.this.isFinishing()&&mDialog!=null) {
+                if (!DetallesMapaZonaActivity.this.isFinishing() && mDialog != null) {
                     mDialog.dismiss();
                 }
             }
-        },3000);
-        String url="http://192.168.0.8/api/Usuario/listarzonavendedor/"+ claveZ;
+        }, 3000);
+        String url = "http://192.168.0.9/api/Usuario/listarzonavendedor/" + claveZ;
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Vendedor vendedor=null;
-                JSONArray json=response.optJSONArray("zonasvend");
+                Vendedor vendedor = null;
+                JSONArray json = response.optJSONArray("zonasvend");
                 try {
-                    for (int i=0;i<json.length();i++){
-                        vendedor=new Vendedor(context);
+                    for (int i = 0; i < json.length(); i++) {
+                        vendedor = new Vendedor(context);
                         JSONObject jsonObject = null;
-                        jsonObject=json.getJSONObject(i);
+                        jsonObject = json.getJSONObject(i);
                         vendedor.setId(jsonObject.optInt("id_vendedor"));
                         vendedor.setNombre(jsonObject.optString("name"));
                         vendedor.setApellido_paterno(jsonObject.optString("apellido_paterno"));
@@ -233,28 +237,30 @@ public class DetallesMapaZonaActivity extends AppCompatActivity  {
                         nom.add(vendedor.getNombrev());
                     }
                     mDialog.hide();
+                    tvtotal.setText(" "+ listavendedoresdetalleszona.size());
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    final User user=new User(DetallesMapaZonaActivity.this);
+                    final User user = new User(DetallesMapaZonaActivity.this);
                     //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-                    sweetAlertDialog=new SweetAlertDialog(DetallesMapaZonaActivity.this,SweetAlertDialog.ERROR_TYPE);
+                    sweetAlertDialog = new SweetAlertDialog(DetallesMapaZonaActivity.this, SweetAlertDialog.ERROR_TYPE);
                     sweetAlertDialog.setTitleText("Lo sentimos");
                     sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                     sweetAlertDialog.setContentTextSize(15);
                     sweetAlertDialog.setCancelable(false);
-                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmText("Volver a intentarlo");
                     sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             Intent intent = new Intent(DetallesMapaZonaActivity.this, Ventanas.class);
-                            intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
-                            intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
-                            intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
-                            intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
-                            intent.putExtra(HomeFragment.nombres,user.getNombre());
-                            intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
-                            intent.putExtra(HomeFragment.cargo,user.getCargo());
-                            intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                            intent.putExtra(GalleryFragment.numexpediente, user.getAdminsecre());
+                            intent.putExtra(GalleryFragment.correoe, user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.apellido_paternos, user.getApellido_paterno());
+                            intent.putExtra(HomeFragment.apellido_maternos, user.getApellido_materno());
+                            intent.putExtra(HomeFragment.nombres, user.getNombre());
+                            intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.cargo, user.getCargo());
+                            intent.putExtra(HomeFragment.municipio, user.getMunicipio());
+                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                             startActivity(intent);
                             finish();
                         }
@@ -267,17 +273,28 @@ public class DetallesMapaZonaActivity extends AppCompatActivity  {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                sweetAlertDialog=new SweetAlertDialog(DetallesMapaZonaActivity.this,SweetAlertDialog.ERROR_TYPE);
+                final User user = new User(DetallesMapaZonaActivity.this);
+                sweetAlertDialog = new SweetAlertDialog(DetallesMapaZonaActivity.this, SweetAlertDialog.ERROR_TYPE);
                 sweetAlertDialog.setTitleText("Lo sentimos");
                 sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                 sweetAlertDialog.setContentTextSize(15);
                 sweetAlertDialog.setCancelable(false);
-                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmText("Volver a intentarlo");
                 sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                        fragmentTransaction.commit();
+                        Intent intent = new Intent(DetallesMapaZonaActivity.this, Ventanas.class);
+                        intent.putExtra(GalleryFragment.numexpediente, user.getAdminsecre());
+                        intent.putExtra(GalleryFragment.correoe, user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.apellido_paternos, user.getApellido_paterno());
+                        intent.putExtra(HomeFragment.apellido_maternos, user.getApellido_materno());
+                        intent.putExtra(HomeFragment.nombres, user.getNombre());
+                        intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.cargo, user.getCargo());
+                        intent.putExtra(HomeFragment.municipio, user.getMunicipio());
+                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                        startActivity(intent);
+                        finish();
                     }
                 });
                 sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -287,26 +304,11 @@ public class DetallesMapaZonaActivity extends AppCompatActivity  {
         });
         request.add(jsonObjectRequest);
     }
-/*
-    private void cargarwebservice() {
 
-        jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
-        request.add(jsonObjectRequest);
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-    @Override
-    public void onResponse(JSONObject response) {
-
-        }
-    }*/
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.dismiss();
         }
     }

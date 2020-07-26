@@ -28,9 +28,10 @@ public class MapaActActivity extends AppCompatActivity implements OnMapReadyCall
     private MapView mapView;
     int claveZ;
     ArrayList<Double> lati;
-    ArrayList<Double>longi;
+    ArrayList<Double> longi;
     String nomv;
-    ArrayList<String>nomb;
+    ArrayList<String> nomb;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -66,6 +67,7 @@ public class MapaActActivity extends AppCompatActivity implements OnMapReadyCall
         super.onSaveInstanceState(outState, outPersistentState);
         mapView.onSaveInstanceState(outState);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,13 +79,13 @@ public class MapaActActivity extends AppCompatActivity implements OnMapReadyCall
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String name=getIntent().getExtras().getString("nombre_actividad");
-        nomv=getIntent().getExtras().getString("name");
+        String name = getIntent().getExtras().getString("nombre_actividad");
+        nomv = getIntent().getExtras().getString("name");
         getSupportActionBar().setTitle(name);
-        lati=(ArrayList<Double>)getIntent().getSerializableExtra("lat");
-        longi=(ArrayList<Double>)getIntent().getSerializableExtra("log");
-        nomb=(ArrayList<String>)getIntent().getSerializableExtra("nom") ;
-        mapView = (MapView)findViewById(R.id.mapamapsact);
+        lati = (ArrayList<Double>) getIntent().getSerializableExtra("lat");
+        longi = (ArrayList<Double>) getIntent().getSerializableExtra("log");
+        nomb = (ArrayList<String>) getIntent().getSerializableExtra("nom");
+        mapView = (MapView) findViewById(R.id.mapamapsact);
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);
     }
@@ -99,20 +101,22 @@ public class MapaActActivity extends AppCompatActivity implements OnMapReadyCall
         }
 
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
-            User usuario= new User(this);
+        if (item.getItemId() == android.R.id.home) {
+            User usuario = new User(this);
             Intent goMain = new Intent(MapaActActivity.this, Ventanas.class);
-            goMain.putExtra(HomeFragment.apellido_paternos,usuario.getApellido_paterno());
-            goMain.putExtra(HomeFragment.apellido_maternos,usuario.getApellido_materno());
-            goMain.putExtra(HomeFragment.nombres,usuario.getNombre());
-            goMain.putExtra(HomeFragment.correo,usuario.getCorreoelectronico());
-            goMain.putExtra(HomeFragment.cargo,usuario.getCargo());
-            goMain.putExtra(HomeFragment.municipio,usuario.getMunicipio());
+            goMain.putExtra(HomeFragment.apellido_paternos, usuario.getApellido_paterno());
+            goMain.putExtra(HomeFragment.apellido_maternos, usuario.getApellido_materno());
+            goMain.putExtra(HomeFragment.nombres, usuario.getNombre());
+            goMain.putExtra(HomeFragment.correo, usuario.getCorreoelectronico());
+            goMain.putExtra(HomeFragment.cargo, usuario.getCargo());
+            goMain.putExtra(HomeFragment.municipio, usuario.getMunicipio());
+            goMain.putExtra(HomeFragment.fotoperfil, usuario.getImage());
             //   finish();
             startActivity(goMain);
-               finish();
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

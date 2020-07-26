@@ -8,6 +8,7 @@
     android:id="@+id/infovendedor">
     <androidx.cardview.widget.CardView
         android:id="@+id/cardvendedores"
+        app:cardBackgroundColor="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,114 +17,116 @@
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp">
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
 
-
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView2"
-                android:layout_width="85dp"
+                android:layout_width="60dp"
                 android:layout_height="65dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/vendedor"
-                android:tint="#b34766"/>
+                android:src="@drawable/vendedorfinal"
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="96dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="112dp"
-                android:layout_weight="2"
-                android:text="Clave: "
-                android:textColor="#500014"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/txtclaveven"
-                app:layout_constraintHorizontal_bias="0.09"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                />
 
-            <TextView
-                android:id="@+id/txtclaveven"
-                android:layout_width="140dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="4dp"
-                android:layout_weight=".8"
-                android:text="Documento "
-                android:textColor="#500014"
-                android:textSize="17sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="14dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="96dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="112dp"
-                android:layout_marginTop="3dp"
-                android:layout_weight="2"
-                android:text="Nombre: "
-                android:textColor="#500014"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/txtNombrecalle"
-                app:layout_constraintHorizontal_bias="0.098"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txtNombrecalle"
-                android:layout_width="140dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginTop="3dp"
-                android:layout_weight=".8"
-                android:text="Nombre "
-                android:textColor="#500014"
-                android:textSize="17sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtclaveven" />
+                    <TextView
+                        android:id="@+id/textViewact"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="Clave:"
+                        android:textColor="#500014"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="96dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="112dp"
-                android:layout_marginTop="3dp"
-                android:layout_weight="2"
-                android:text="Apellidos: "
-                android:textColor="#500014"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txtapellidos"
-                app:layout_constraintHorizontal_bias="0.09"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                app:layout_constraintVertical_bias="0.0" />
+                    <TextView
+                        android:id="@+id/txtclaveven"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="Status"
+                        android:textColor="#500014"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtapellidos"
-                android:layout_width="140dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="4dp"
-                android:layout_weight=".8"
-                android:text="Profesion "
-                android:textColor="#500014"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:textColor="#500014"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:textColor="#500014"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:textColor="#500014"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/txtNombrecalle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="Username"
+                        android:textColor="#500014"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/txtapellidos"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="apellidos"
+                        android:textColor="#500014"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

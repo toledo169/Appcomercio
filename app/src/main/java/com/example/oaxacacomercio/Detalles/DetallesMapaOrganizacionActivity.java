@@ -54,7 +54,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
     AlertDialog mDialog;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
-    TextView tvclave, tvnombre;
+    TextView tvclave, tvnombre,tvtotal;
     SweetAlertDialog sweetAlertDialog;
     String name;
     String nombre;
@@ -75,7 +75,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
         tvnombre = (TextView) findViewById(R.id.txtnombrezonadetalles2);
         TextView tvdirigente = (TextView) findViewById(R.id.otxtProfesion2);
         tvclave = (TextView) findViewById(R.id.txtDocumentozonadetalles2);
-
+        tvtotal=(TextView) findViewById(R.id.otxttotalvenderes);
         tvnombre.setText(name);
         tvdirigente.setText(dirigente);
         tvclave.setText(String.valueOf(claved));
@@ -108,7 +108,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
                 //          mDialog.dismiss();
             }
         },3000);
-        String url = "http://192.168.0.8/api/Usuario/deta/"+tvclave.getText().toString();
+        String url = "http://192.168.0.9/api/Usuario/deta/"+tvclave.getText().toString();
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -137,7 +137,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
                         //   listauxiliar.add(vendedor);
                     }
                     mDialog.hide();
-
+                    tvtotal.setText(""+listavendedoresdetalles.size());
                 } catch (JSONException e) {
                     e.printStackTrace();
                     final User user=new User(DetallesMapaOrganizacionActivity.this);
@@ -147,7 +147,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
                     sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                     sweetAlertDialog.setContentTextSize(15);
                     sweetAlertDialog.setCancelable(false);
-                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmText("Volver a intentarlo");
                     sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -160,6 +160,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
                             intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
                             intent.putExtra(HomeFragment.cargo,user.getCargo());
                             intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                            intent.putExtra(HomeFragment.fotoperfil,user.getImage());
                             startActivity(intent);
                             finish();
                         }
@@ -172,17 +173,27 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                final User user=new User(DetallesMapaOrganizacionActivity.this);
                 sweetAlertDialog=new SweetAlertDialog(DetallesMapaOrganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
                 sweetAlertDialog.setTitleText("Lo sentimos");
                 sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                 sweetAlertDialog.setContentTextSize(15);
                 sweetAlertDialog.setCancelable(false);
-                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmText("Volver a intentarlo");
                 sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                        fragmentTransaction.commit();
+                        Intent intent = new Intent(DetallesMapaOrganizacionActivity.this, Ventanas.class);
+                        intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
+                        intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
+                        intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
+                        intent.putExtra(HomeFragment.nombres,user.getNombre());
+                        intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.cargo,user.getCargo());
+                        intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                        intent.putExtra(HomeFragment.fotoperfil,user.getImage());
+                        startActivity(intent);
                     }
                 });
                 sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -192,12 +203,6 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
         });
         request.add(jsonObjectRequest);
     }
-  /*  private void cargarwebservice() {
-
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        request.add(jsonObjectRequest);
-    }
-*/
     public void iralmapao(View view) {
         Intent intent = new Intent(DetallesMapaOrganizacionActivity.this, MapaorganizacionActivity.class);
         intent.putExtra("lat", lat);
@@ -207,72 +212,7 @@ public class DetallesMapaOrganizacionActivity extends AppCompatActivity {
         intent.putExtra("name", nombre);
         startActivity(intent);
     }
-/*
-    @Override
-    public void onErrorResponse(VolleyError error) {
 
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        Vendedor vendedor = null;
-        JSONArray json = response.optJSONArray("permisos");
-        try {
-            for (int i = 0; i < json.length(); i++) {
-                vendedor = new Vendedor(this);
-                JSONObject jsonObject = null;
-                jsonObject = json.getJSONObject(i);
-
-                vendedor.setId(jsonObject.optInt("id_vendedor"));
-                vendedor.setNombre(jsonObject.optString("name"));
-                vendedor.setApellido_paterno(jsonObject.optString("apellido_paterno"));
-                vendedor.setApellido_materno(jsonObject.optString("apellido_materno"));
-                vendedor.setNomorganizacion(jsonObject.optString("nombre_organizacion"));
-                vendedor.setActividad(jsonObject.optString("tipo_actividad"));
-                vendedor.setGiro(jsonObject.optString("giro"));
-                vendedor.setNomzona(jsonObject.optString("nombre"));
-                vendedor.setLatitud(jsonObject.optDouble("latitud"));
-                vendedor.setLongitud(jsonObject.optDouble("longitud"));
-                listavendedoresdetalles.add(vendedor);
-                lat.add(vendedor.getLatitud());
-                log.add(vendedor.getLongitud());
-                nom.add(vendedor.getNombrev());
-                //   listauxiliar.add(vendedor);
-            }
-            mDialog.hide();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            final User user=new User(DetallesMapaOrganizacionActivity.this);
-            //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-            sweetAlertDialog=new SweetAlertDialog(DetallesMapaOrganizacionActivity.this,SweetAlertDialog.ERROR_TYPE);
-            sweetAlertDialog.setTitleText("Lo sentimos");
-            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
-            sweetAlertDialog.setContentTextSize(15);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setConfirmText("volver a intentarlo");
-            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    Intent intent = new Intent(DetallesMapaOrganizacionActivity.this, Ventanas.class);
-                    intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
-                    intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
-                    intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
-                    intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
-                    intent.putExtra(HomeFragment.nombres,user.getNombre());
-                    intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
-                    intent.putExtra(HomeFragment.cargo,user.getCargo());
-                    intent.putExtra(HomeFragment.municipio,user.getMunicipio());
-                    startActivity(intent);
-                    finish();
-                }
-            });
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.show();
-            mDialog.hide();
-        }
-
-    }*/
     @Override
     public void onDestroy() {
         super.onDestroy();

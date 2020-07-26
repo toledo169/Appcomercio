@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.example.oaxacacomercio.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="Actualizar datos"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
@@ -40,11 +40,5 @@
         android:name="com.example.oaxacacomercio.ui.send.SendFragment"
         android:label="Zonas comerciales"
         tools:layout="@layout/fragment_send" />
-    <fragment
-        android:id="@+id/nav_eventos"
-        android:name="com.example.oaxacacomercio.ui.eventos.EventosFragment"
-        android:label="Eventos del dia"
-        tools:layout="@layout/fragment_eventos" />
-
 
 </navigation>

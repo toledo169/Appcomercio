@@ -41,9 +41,11 @@ import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.MainActivity;
 import com.example.oaxacacomercio.Modelos.Organizacion;
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 
 import org.json.JSONArray;
@@ -53,7 +55,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolsFragment extends Fragment  {
+public class ToolsFragment extends Fragment {
     private ToolsViewModel toolsViewModel;
     RecyclerView recyclerorganizaciones;
     ArrayList<Organizacion> listaorganizacion;
@@ -141,21 +143,22 @@ public class ToolsFragment extends Fragment  {
 
         return vista;
     }
-    public void ejecutarservicio(){
-        mDialog=new SpotsDialog.Builder()
+
+    public void ejecutarservicio() {
+        mDialog = new SpotsDialog.Builder()
                 .setContext(getContext())
                 .setMessage("Espere un momento")
                 .setCancelable(false).build();
         mDialog.show();
-        Handler handler=new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mDialog.dismiss();
 
             }
-        },3000);
-        String url = "http://192.168.0.8/api/Usuario/listaractividades";
+        }, 3000);
+        String url = "http://192.168.0.9/api/Usuario/listarorg/";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -179,17 +182,29 @@ public class ToolsFragment extends Fragment  {
                     System.out.println(listaorganizacion);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+                    final User user = new User(getContext());
+                    sweetAlertDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE);
                     sweetAlertDialog.setTitleText("Lo sentimos");
                     sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                     sweetAlertDialog.setContentTextSize(15);
                     sweetAlertDialog.setCancelable(false);
-                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmText("Volver a intentarlo");
                     sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                            fragmentTransaction.commit();
+                        public void onClick(SweetAlertDialog sDialog) {
+                            Intent intent = new Intent(getContext(), Ventanas.class);
+                            intent.putExtra(GalleryFragment.numexpediente, user.getAdminsecre());
+                            intent.putExtra(GalleryFragment.correoe, user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.apellido_paternos, user.getApellido_paterno());
+                            intent.putExtra(HomeFragment.apellido_maternos, user.getApellido_materno());
+                            intent.putExtra(HomeFragment.nombres, user.getNombre());
+                            intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.cargo, user.getCargo());
+                            intent.putExtra(HomeFragment.municipio, user.getMunicipio());
+                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                            startActivity(intent);
+                            getActivity().finish();
+                            sweetAlertDialog.dismiss();
                         }
                     });
                     sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -200,17 +215,29 @@ public class ToolsFragment extends Fragment  {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+                final User user = new User(getContext());
+                sweetAlertDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE);
                 sweetAlertDialog.setTitleText("Lo sentimos");
                 sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                 sweetAlertDialog.setContentTextSize(15);
                 sweetAlertDialog.setCancelable(false);
-                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmText("Volver a intentarlo");
                 sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                        fragmentTransaction.commit();
+                    public void onClick(SweetAlertDialog sDialog) {
+                        Intent intent = new Intent(getContext(), Ventanas.class);
+                        intent.putExtra(GalleryFragment.numexpediente, user.getAdminsecre());
+                        intent.putExtra(GalleryFragment.correoe, user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.apellido_paternos, user.getApellido_paterno());
+                        intent.putExtra(HomeFragment.apellido_maternos, user.getApellido_materno());
+                        intent.putExtra(HomeFragment.nombres, user.getNombre());
+                        intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.cargo, user.getCargo());
+                        intent.putExtra(HomeFragment.municipio, user.getMunicipio());
+                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                        startActivity(intent);
+                        getActivity().finish();
+                        sweetAlertDialog.dismiss();
                     }
                 });
                 sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -220,80 +247,15 @@ public class ToolsFragment extends Fragment  {
         });
         request.add(jsonObjectRequest);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.dismiss();
         }
     }
-  /*  private void cargarwebservice() {
-        mDialog=new SpotsDialog.Builder()
-                .setContext(getContext())
-                .setMessage("Espere un momento")
-                .setCancelable(false).build();
-        mDialog.show();
-        Handler handler=new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                    mDialog.dismiss();
-
-            }
-        },3000);
-        String url = "http://192.168.0.8/api/Usuario/listarorg/";
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        request.add(jsonObjectRequest);
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        Organizacion organizacion = null;
-        JSONArray json = response.optJSONArray("Organizacion");
-        try {
-
-            for (int i = 0; i < json.length(); i++) {
-                organizacion = new Organizacion();
-                JSONObject jsonObject = null;
-                jsonObject = json.getJSONObject(i);
-
-                organizacion.setDocumento(jsonObject.optInt("id_organizacion"));
-                organizacion.setNombre(jsonObject.optString("nombre_organizacion"));
-                organizacion.setProfesion(jsonObject.optString("nombre_dirigente"));
-                listaorganizacion.add(organizacion);
-                listaauxiliar.add(organizacion);
-            }
-           mDialog.hide();
-            recyclerorganizaciones.setAdapter(adapter);
-            System.out.println(listaorganizacion);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
-            sweetAlertDialog.setTitleText("Lo sentimos");
-            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
-            sweetAlertDialog.setContentTextSize(15);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setConfirmText("volver a intentarlo");
-            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                    fragmentTransaction.commit();
-                }
-            });
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.show();
-            mDialog.hide();
-        }
-
-    }
-*/
     public void buscador(String texto) {
         listaorganizacion.clear();
         for (int i = 0; i < listaauxiliar.size(); i++) {

@@ -4,26 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="#500014">
     <EditText
-        android:textColor="#500014"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         android:id="@+id/searchusuario"
         android:hint="Buscar"
-        android:textColorHint="#500014"
+        android:textColorHint="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
         android:drawableLeft="@drawable/ic_search"
-        android:drawableTint="#500014"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="5dp"
-        android:id="@+id/idRecyclerVendedor"
+        android:drawableTint="@android:color/white"/>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="5dp"
+            android:id="@+id/idRecyclerVendedor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/vendedorestotales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#b34766"
+            android:src="@drawable/historia"
+            app:backgroundTint="#b34766"
+            app:borderWidth="4dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginEnd="7dp"
+            android:layout_gravity="bottom|end"
+            android:clickable="true"
+            />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>

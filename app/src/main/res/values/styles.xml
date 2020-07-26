@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/colortexto</item>
+       
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -26,6 +28,23 @@
         <item name="colorPrimaryDark">@android:color/white</item>
         <item name="colorAccent">@android:color/white</item>
     </style>
+    <style name="primera" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/principal</item>
+        <item name="colorPrimaryDark">@color/principal</item>
+        <item name="colorAccent">@color/principal</item>
+
+
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <item name="android:textColorHint">@color/inicio</item>
+        <item name="colorControlNormal">@color/inicio</item>
+        <item name="colorControlActivated">@color/inicio</item>
+        <item name="colorControlHighlight">@color/inicio</item>
+
+    </style>
+
+
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     </style>
@@ -33,5 +52,7 @@
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
-
+    <style name="Hint" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/colortexto</item>
+    </style>
 </resources>

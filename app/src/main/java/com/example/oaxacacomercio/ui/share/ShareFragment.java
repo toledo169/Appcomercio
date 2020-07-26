@@ -42,9 +42,11 @@ import com.example.oaxacacomercio.Helper.MySwipeHelper;
 import com.example.oaxacacomercio.Helper.MybuttonClickListener;
 import com.example.oaxacacomercio.MainActivity;
 import com.example.oaxacacomercio.Modelos.Actividad;
+import com.example.oaxacacomercio.Modelos.User;
 import com.example.oaxacacomercio.Modelos.Zona;
 import com.example.oaxacacomercio.R;
 import com.example.oaxacacomercio.Ventanas;
+import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 
 import org.json.JSONArray;
@@ -65,6 +67,7 @@ public class ShareFragment extends Fragment {
     NavController navController;
     AlertDialog mDialog;
     SweetAlertDialog sweetAlertDialog;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         shareViewModel =
@@ -84,7 +87,7 @@ public class ShareFragment extends Fragment {
             public void instanciateMyButton(final RecyclerView.ViewHolder viewHolder, List<Mybutton> buffer) {
                 buffer.add(new Mybutton(getContext(),
                         "Vendedores",
-                        40,
+                        35,
                         0,
                         Color.parseColor("#5d2442"),
                         new MybuttonClickListener() {
@@ -100,7 +103,7 @@ public class ShareFragment extends Fragment {
                 ));
                 buffer.add(new Mybutton(getContext(),
                         "Detalles",
-                        40,
+                        35,
                         0,
                         Color.parseColor("#b34766"),
                         new MybuttonClickListener() {
@@ -119,21 +122,22 @@ public class ShareFragment extends Fragment {
 
         return root;
     }
-    public void ejecutarservicio(){
-        mDialog=new SpotsDialog.Builder()
+
+    public void ejecutarservicio() {
+        mDialog = new SpotsDialog.Builder()
                 .setContext(getContext())
                 .setMessage("Espere un momento")
                 .setCancelable(false).build();
         mDialog.show();
-        Handler handler=new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mDialog.dismiss();
 
             }
-        },3000);
-        String url = "http://192.168.0.8/api/Usuario/listaractividades";
+        }, 3000);
+        String url = "http://192.168.0.9/api/Usuario/listaractividades";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -153,17 +157,29 @@ public class ShareFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+                    final User user = new User(getContext());
+                    sweetAlertDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE);
                     sweetAlertDialog.setTitleText("Lo sentimos");
                     sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                     sweetAlertDialog.setContentTextSize(15);
                     sweetAlertDialog.setCancelable(false);
-                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmText("Volver a intentarlo");
                     sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                            fragmentTransaction.commit();
+                        public void onClick(SweetAlertDialog sDialog) {
+                            Intent intent = new Intent(getContext(), Ventanas.class);
+                            intent.putExtra(GalleryFragment.numexpediente, user.getAdminsecre());
+                            intent.putExtra(GalleryFragment.correoe, user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.apellido_paternos, user.getApellido_paterno());
+                            intent.putExtra(HomeFragment.apellido_maternos, user.getApellido_materno());
+                            intent.putExtra(HomeFragment.nombres, user.getNombre());
+                            intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.cargo, user.getCargo());
+                            intent.putExtra(HomeFragment.municipio, user.getMunicipio());
+                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                            startActivity(intent);
+                            getActivity().finish();
+                            sweetAlertDialog.dismiss();
                         }
                     });
                     sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -174,17 +190,29 @@ public class ShareFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+                final User user = new User(getContext());
+                sweetAlertDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE);
                 sweetAlertDialog.setTitleText("Lo sentimos");
                 sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                 sweetAlertDialog.setContentTextSize(15);
                 sweetAlertDialog.setCancelable(false);
-                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmText("Volver a intentarlo");
                 sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                        fragmentTransaction.commit();
+                    public void onClick(SweetAlertDialog sDialog) {
+                        Intent intent = new Intent(getContext(), Ventanas.class);
+                        intent.putExtra(GalleryFragment.numexpediente, user.getAdminsecre());
+                        intent.putExtra(GalleryFragment.correoe, user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.apellido_paternos, user.getApellido_paterno());
+                        intent.putExtra(HomeFragment.apellido_maternos, user.getApellido_materno());
+                        intent.putExtra(HomeFragment.nombres, user.getNombre());
+                        intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.cargo, user.getCargo());
+                        intent.putExtra(HomeFragment.municipio, user.getMunicipio());
+                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                        startActivity(intent);
+                        getActivity().finish();
+                        sweetAlertDialog.dismiss();
                     }
                 });
                 sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -194,89 +222,12 @@ public class ShareFragment extends Fragment {
         });
         request.add(jsonObjectRequest);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.dismiss();
         }
     }
-
- /*   private void cargarwebservice() {
-        mDialog=new SpotsDialog.Builder()
-                .setContext(getContext())
-                .setMessage("Espere un momento")
-                .setCancelable(false).build();
-        mDialog.show();
-        Handler handler=new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                    mDialog.dismiss();
-
-            }
-        },3000);
-        String url = "http://192.168.0.8/api/Usuario/listaractividades";
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        request.add(jsonObjectRequest);
-    }
-
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
-        sweetAlertDialog.setTitleText("Lo sentimos");
-        sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
-        sweetAlertDialog.setContentTextSize(15);
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setConfirmText("volver a intentarlo");
-        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                fragmentTransaction.commit();
-            }
-        });
-        sweetAlertDialog.setCanceledOnTouchOutside(false);
-        sweetAlertDialog.show();
-        mDialog.hide();
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-
-        Actividad actividad = null;
-        JSONArray json = response.optJSONArray("actividades");
-        try {
-            for (int i = 0; i < json.length(); i++) {
-                actividad = new Actividad();
-                JSONObject jsonObject = null;
-                jsonObject = json.getJSONObject(i);
-                actividad.setNombre(jsonObject.optString("nombre_actividad"));
-                actividad.setId(jsonObject.optInt("id_actividad"));
-                listacti.add(actividad);
-            }
-            mDialog.hide();
-            recyclerViewact.setAdapter(adapter);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
-            sweetAlertDialog.setTitleText("Lo sentimos");
-            sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
-            sweetAlertDialog.setContentTextSize(15);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setConfirmText("volver a intentarlo");
-            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                    fragmentTransaction.commit();
-                }
-            });
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.show();
-            mDialog.hide();
-        }
-    }*/
 }

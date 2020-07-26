@@ -22,20 +22,23 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_collapseMode="pin"></androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
+        />
     <EditText
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:id="@+id/buscarvendedoract"
         android:hint="Buscar"
+        android:backgroundTint="@android:color/white"
         android:textColorHint="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHighlight ="@android:color/white"
         android:drawableLeft="@drawable/ic_search"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="5dp"
         android:id="@+id/idRecyclerdetallesvendedoract"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
-
 
 </LinearLayout>

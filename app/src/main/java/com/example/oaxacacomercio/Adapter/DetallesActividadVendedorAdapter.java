@@ -33,41 +33,41 @@ public class DetallesActividadVendedorAdapter extends RecyclerView.Adapter<Detal
     @NonNull
     @Override
     public ActividadHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View vista= LayoutInflater.from(parent.getContext()).inflate(R.layout.vistavendedor,parent,false);
-        RecyclerView.LayoutParams layoutParams=new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.vistavendedor, parent, false);
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         vista.setLayoutParams(layoutParams);
-        final ActividadHolder actividadHolder=new ActividadHolder(vista);
-        dialog=new Dialog(mcontext);
+        final ActividadHolder actividadHolder = new ActividadHolder(vista);
+        dialog = new Dialog(mcontext);
         dialog.setContentView(R.layout.detallesvendedorpop);
         actividadHolder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView dialogname=(TextView) dialog.findViewById(R.id.nombrevendedor);
-                TextView dialogapp=(TextView)dialog.findViewById(R.id.apellidosvendedor);
-                TextView girovend=(TextView)dialog.findViewById(R.id.giro);
-                TextView nameorgani=(TextView)dialog.findViewById(R.id.nomorganizacion);
-                TextView nameactividad=(TextView)dialog.findViewById(R.id.nomactividad);
-                TextView namezona= (TextView)dialog.findViewById(R.id.zona);
-                Button vermapa=(Button)dialog.findViewById(R.id.btn_mapa);
+                TextView dialogname = (TextView) dialog.findViewById(R.id.nombrevendedor);
+                TextView dialogapp = (TextView) dialog.findViewById(R.id.apellidosvendedor);
+                TextView girovend = (TextView) dialog.findViewById(R.id.giro);
+                TextView nameorgani = (TextView) dialog.findViewById(R.id.nomorganizacion);
+                TextView nameactividad = (TextView) dialog.findViewById(R.id.nomactividad);
+                TextView namezona = (TextView) dialog.findViewById(R.id.zona);
+                Button vermapa = (Button) dialog.findViewById(R.id.btn_mapa);
                 dialogname.setText(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getNombrev());
-                dialogapp.setText(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getApellido_paterno() +" "+ listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getApellido_materno() );
+                dialogapp.setText(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getApellido_paterno() + " " + listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getApellido_materno());
                 girovend.setText(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getGiro());
                 nameorgani.setText(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getNomorganizacion());
                 nameactividad.setText(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getActividad());
                 namezona.setText(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getNomzona());
-                Toast.makeText(mcontext,"vendedor seleccionado"+String.valueOf(actividadHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(mcontext,"vendedor seleccionado"+String.valueOf(actividadHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
                 dialog.show();
 
                 vermapa.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent= new Intent(mcontext, MapavendedorActivity.class);
-                        intent.putExtra("latitud",String.valueOf(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getLatitud()));
-                        intent.putExtra("longitud",String.valueOf(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getLongitud()));
-                        intent.putExtra("name",listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getNombrev());
-                        intent.putExtra("apellido_paterno",listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getApellido_paterno());
-                        intent.putExtra("apellido_materno",listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getApellido_materno());
+                        Intent intent = new Intent(mcontext, MapavendedorActivity.class);
+                        intent.putExtra("latitud", String.valueOf(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getLatitud()));
+                        intent.putExtra("longitud", String.valueOf(listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getLongitud()));
+                        intent.putExtra("name", listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getNombrev());
+                        intent.putExtra("apellido_paterno", listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getApellido_paterno());
+                        intent.putExtra("apellido_materno", listavendedoresdetalleact.get(actividadHolder.getAdapterPosition()).getApellido_materno());
                         mcontext.startActivity(intent);
                     }
                 });
@@ -79,9 +79,9 @@ public class DetallesActividadVendedorAdapter extends RecyclerView.Adapter<Detal
 
     @Override
     public void onBindViewHolder(@NonNull ActividadHolder holder, int position) {
-        holder.txtclave.setText(listavendedoresdetalleact.get(position).getId().toString()) ;
-        holder.txtnombrev.setText(listavendedoresdetalleact.get(position).getNombrev().toString());
-        holder.textapellidos.setText(listavendedoresdetalleact.get(position).getApellido_paterno().toString());
+        holder.txtclave.setText(listavendedoresdetalleact.get(position).getId().toString());
+        holder.txtnombrev.setText("Nombre: " + listavendedoresdetalleact.get(position).getNombrev().toString());
+        holder.textapellidos.setText("Apellidos: " + listavendedoresdetalleact.get(position).getApellido_paterno().toString());
     }
 
     @Override
@@ -91,13 +91,14 @@ public class DetallesActividadVendedorAdapter extends RecyclerView.Adapter<Detal
 
     public class ActividadHolder extends RecyclerView.ViewHolder {
         LinearLayout item;
-        TextView txtclave,txtnombrev,textapellidos;
+        TextView txtclave, txtnombrev, textapellidos;
+
         public ActividadHolder(@NonNull View itemView) {
             super(itemView);
-            item=(LinearLayout) itemView.findViewById(R.id.infovendedor);
-            txtclave=(TextView)itemView.findViewById(R.id.txtclaveven);
-            txtnombrev=(TextView)itemView.findViewById(R.id.txtNombrecalle);
-            textapellidos=(TextView)itemView.findViewById(R.id.txtapellidos);
+            item = (LinearLayout) itemView.findViewById(R.id.infovendedor);
+            txtclave = (TextView) itemView.findViewById(R.id.txtclaveven);
+            txtnombrev = (TextView) itemView.findViewById(R.id.txtNombrecalle);
+            textapellidos = (TextView) itemView.findViewById(R.id.txtapellidos);
         }
     }
 }

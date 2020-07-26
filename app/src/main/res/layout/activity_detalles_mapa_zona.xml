@@ -1,157 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Detalles.DetallesMapaZonaActivity"
-    android:background="#500014">
+    android:background="#500014"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="332dp"
-        android:layout_height="378dp"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.399">
-
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="338dp"
-            android:layout_height="151dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.466"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.134"
-            app:srcCompat="@drawable/zona" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="317dp"
-            android:layout_height="115dp"
-            app:cardCornerRadius="40dp"
-            app:cardElevation="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.142"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.776">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="317dp"
-                android:layout_height="115dp">
-
-                <TextView
-                    android:id="@+id/textViewzona1"
-                    android:layout_width="116dp"
-                    android:layout_height="23dp"
-                    android:layout_weight="2"
-                    android:text="Clave: "
-                    android:textColor="#500014"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.14"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/txtDocumentozonadetalles1"
-                    android:layout_width="116dp"
-                    android:layout_height="23dp"
-                    android:layout_weight=".8"
-                    android:text="Documento "
-                    android:textColor="#500014"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.14"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.26999998" />
-
-                <TextView
-                    android:id="@+id/txtnombrezonadetalles1"
-                    android:layout_width="190dp"
-                    android:layout_height="23dp"
-                    android:layout_weight=".9"
-                    android:text="Documento "
-                    android:textColor="#500014"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.21"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.81" />
-
-                <TextView
-                    android:id="@+id/datozona1"
-                    android:layout_width="114dp"
-                    android:layout_height="23dp"
-                    android:layout_weight="2"
-                    android:text="Nombre"
-                    android:textColor="#500014"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.14"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.53" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/buttonmapa"
-        android:layout_width="337dp"
-        android:layout_height="53dp"
-        android:layout_weight="0.8"
-        android:background="@drawable/bnt_login"
-        android:text="Continuar"
-        android:textColor="#610018"
-        android:textSize="20dp"
-        android:onClick="iralmapa"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.921" />
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarr"
+        android:id="@+id/toolbarrzonabien"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#5d2442"
         app:titleTextColor="@android:color/white"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_collapseMode="pin"></androidx.appcompat.widget.Toolbar>
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="360dp"
-        android:layout_height="44dp"
-        android:fontFamily="@font/baloo"
-        android:text="Para ver el mapa, presione continuar"
-        android:textColor="@android:color/white"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.772" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageViewp"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:src="@drawable/zona" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="14dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textViewact"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="Clave:"
+                                android:textColor="#500014"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txtDocumentozonadetalles1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text="Status"
+                                android:textColor="#500014"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/datoact"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text="Nombre de la zona comercial:"
+                                android:textColor="#500014"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txtnombrezonadetalles1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text="Username"
+                                android:textColor="#500014"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                         <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/datototalact"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text="Total de vendedores"
+                                android:textColor="#500014"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txttotalvzonadetalles1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text="Username"
+                                android:textColor="#500014"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:id="@+id/buttonmapa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bnt_login"
+            android:onClick="iralmapa"
+            android:text="Continuar"
+            android:textColor="#610018"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo"
+            android:text="Para ver el mapa, presione continuar"
+            android:textColor="@android:color/white"
+            android:textSize="17dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

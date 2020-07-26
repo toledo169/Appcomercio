@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,20 +19,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             ></androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@android:color/white"
-        android:enabled="false"
-        android:text="Start navigation"
-        android:textColor="@android:color/black"
-        mapbox:layout_constraintStart_toStartOf="parent"
-        mapbox:layout_constraintTop_toTopOf="parent" />
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapapermisos"
@@ -43,5 +29,20 @@
         app:mapbox_cameraZoom="15">
 
     </com.mapbox.mapboxsdk.maps.MapView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recorridoinicial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:backgroundTint="#b34766"
+        android:src="@drawable/navegacion"
+        android:enabled="false"
+        android:tint="@android:color/white"
+        android:tooltipText="ir a la pagina"
+        app:backgroundTint="#b34766"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="50dp"
+        app:borderWidth="1dp"
+        app:fabSize="normal"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
-</RelativeLayout>
+</FrameLayout>

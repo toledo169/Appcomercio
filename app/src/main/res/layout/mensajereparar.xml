@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffff"
+    android:orientation="vertical"
+    >
+
+
+    <TextView
+        android:layout_marginTop="170dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginEnd="10dp"
+        android:padding="7dp"
+        android:text="Lo sentimos, ha ocurrido un error inesperado"
+        android:textColor="#500014"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/image_view_error"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/mantenimiento" />
+
+    <Button
+        android:layout_marginTop="5dp"
+        android:id="@+id/btn_intentar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.50"
+        android:background="@drawable/bnt_pagina"
+        android:onClick="intentar"
+        android:text="Volver a intentarlo"
+        android:textColor="#fff"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="215dp"/>
+
+</LinearLayout>

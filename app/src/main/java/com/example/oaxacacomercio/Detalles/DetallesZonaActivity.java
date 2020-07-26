@@ -51,10 +51,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DetallesZonaActivity extends AppCompatActivity  {
+public class DetallesZonaActivity extends AppCompatActivity {
     RecyclerView recyclerViewDetalleszona;
     ArrayList<Vendedor> listavendedoresdetalleszona;
-    ArrayList<Vendedor>listauxiliar;
+    ArrayList<Vendedor> listauxiliar;
     AlertDialog mDialog;
     JsonRequest jsonObjectRequest;
     RequestQueue request;
@@ -64,7 +64,8 @@ public class DetallesZonaActivity extends AppCompatActivity  {
     // TextView txtnombrez,txtClavezona;
     private EditText searchzv;
     SweetAlertDialog sweetAlertDialog;
-    Context context=this;
+    Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,28 +75,20 @@ public class DetallesZonaActivity extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        String nombreZ=getIntent().getExtras().getString("nombre");
+        String nombreZ = getIntent().getExtras().getString("nombre");
         getSupportActionBar().setTitle(nombreZ);
-        claveZ=getIntent().getExtras().getInt("id_zona");
+        claveZ = getIntent().getExtras().getInt("id_zona");
 
-//        CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.collapsingtoolbar_idzona);
-        //      collapsingToolbarLayout.setTitleEnabled(true);
-        //   txtnombrez=(TextView)findViewById(R.id.txtnombrezonadetalles);
-        //   txtClavezona=(TextView)findViewById(R.id.txtDocumentozonadetalles);
+        listavendedoresdetalleszona = new ArrayList<>();
+        listauxiliar = new ArrayList<>();
 
-        //   txtnombrez.setText(nombreZ);
-        //   txtClavezona.setText(String.valueOf(claveZ));
-        //    collapsingToolbarLayout.setTitle(nombreZ);
-        listavendedoresdetalleszona=new ArrayList<>();
-        listauxiliar=new ArrayList<>();
-
-        recyclerViewDetalleszona= (RecyclerView) findViewById(R.id.idRecyclerdetalleszonavendedor);
-        searchzv=(EditText)findViewById(R.id.serchvenzona);
-        layoutManager= new LinearLayoutManager(this);
+        recyclerViewDetalleszona = (RecyclerView) findViewById(R.id.idRecyclerdetalleszonavendedor);
+        searchzv = (EditText) findViewById(R.id.serchvenzona);
+        layoutManager = new LinearLayoutManager(this);
         recyclerViewDetalleszona.setLayoutManager(layoutManager);
         recyclerViewDetalleszona.setHasFixedSize(true);
 
-        adapter=new DetallesZonaVendedorAdapter(listavendedoresdetalleszona,this);
+        adapter = new DetallesZonaVendedorAdapter(listavendedoresdetalleszona, this);
         recyclerViewDetalleszona.setAdapter(adapter);
         request = Volley.newRequestQueue(this);
         ejecutarservicio();
@@ -107,7 +100,7 @@ public class DetallesZonaActivity extends AppCompatActivity  {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                buscador(""+charSequence);
+                buscador("" + charSequence);
             }
 
             @Override
@@ -116,41 +109,43 @@ public class DetallesZonaActivity extends AppCompatActivity  {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    public void ejecutarservicio(){
-        mDialog=new SpotsDialog.Builder()
+
+    public void ejecutarservicio() {
+        mDialog = new SpotsDialog.Builder()
                 .setContext(this)
                 .setMessage("Espere un momento")
                 .setCancelable(false).build();
         mDialog.show();
-        Handler handler=new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                if (!DetallesZonaActivity.this.isFinishing()&&mDialog!=null) {
+                if (!DetallesZonaActivity.this.isFinishing() && mDialog != null) {
                     mDialog.dismiss();
                 }
             }
-        },3000);
-        String url="http://192.168.0.8/api/Usuario/listarzonavendedor/"+claveZ;
+        }, 3000);
+        String url = "http://192.168.0.9/api/Usuario/listarzonavendedor/" + claveZ;
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Vendedor vendedor=null;
-                JSONArray json=response.optJSONArray("zonasvend");
+                Vendedor vendedor = null;
+                JSONArray json = response.optJSONArray("zonasvend");
                 try {
-                    for (int i=0;i<json.length();i++){
-                        vendedor=new Vendedor(context);
+                    for (int i = 0; i < json.length(); i++) {
+                        vendedor = new Vendedor(context);
                         JSONObject jsonObject = null;
-                        jsonObject=json.getJSONObject(i);
+                        jsonObject = json.getJSONObject(i);
 
                         vendedor.setId(jsonObject.optInt("id_vendedor"));
                         vendedor.setNombre(jsonObject.optString("name"));
@@ -170,26 +165,27 @@ public class DetallesZonaActivity extends AppCompatActivity  {
                     recyclerViewDetalleszona.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    final User user=new User(DetallesZonaActivity.this);
+                    final User user = new User(DetallesZonaActivity.this);
                     //    Toast.makeText(this,"no se ha podido establecer conexion"+" "+response,Toast.LENGTH_LONG).show();
-                    sweetAlertDialog=new SweetAlertDialog(DetallesZonaActivity.this,SweetAlertDialog.ERROR_TYPE);
+                    sweetAlertDialog = new SweetAlertDialog(DetallesZonaActivity.this, SweetAlertDialog.ERROR_TYPE);
                     sweetAlertDialog.setTitleText("Lo sentimos");
                     sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                     sweetAlertDialog.setContentTextSize(15);
                     sweetAlertDialog.setCancelable(false);
-                    sweetAlertDialog.setConfirmText("volver a intentarlo");
+                    sweetAlertDialog.setConfirmText("Volver a intentarlo");
                     sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             Intent intent = new Intent(DetallesZonaActivity.this, Ventanas.class);
-                            intent.putExtra(GalleryFragment.numexpediente,user.getAdminsecre());
-                            intent.putExtra(GalleryFragment.correoe,user.getCorreoelectronico());
-                            intent.putExtra(HomeFragment.apellido_paternos,user.getApellido_paterno());
-                            intent.putExtra(HomeFragment.apellido_maternos,user.getApellido_materno());
-                            intent.putExtra(HomeFragment.nombres,user.getNombre());
-                            intent.putExtra(HomeFragment.correo,user.getCorreoelectronico());
-                            intent.putExtra(HomeFragment.cargo,user.getCargo());
-                            intent.putExtra(HomeFragment.municipio,user.getMunicipio());
+                            intent.putExtra(GalleryFragment.numexpediente, user.getAdminsecre());
+                            intent.putExtra(GalleryFragment.correoe, user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.apellido_paternos, user.getApellido_paterno());
+                            intent.putExtra(HomeFragment.apellido_maternos, user.getApellido_materno());
+                            intent.putExtra(HomeFragment.nombres, user.getNombre());
+                            intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
+                            intent.putExtra(HomeFragment.cargo, user.getCargo());
+                            intent.putExtra(HomeFragment.municipio, user.getMunicipio());
+                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                             startActivity(intent);
                             finish();
                         }
@@ -202,17 +198,28 @@ public class DetallesZonaActivity extends AppCompatActivity  {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                sweetAlertDialog=new SweetAlertDialog(DetallesZonaActivity.this,SweetAlertDialog.ERROR_TYPE);
+                final User user = new User(DetallesZonaActivity.this);
+                sweetAlertDialog = new SweetAlertDialog(DetallesZonaActivity.this, SweetAlertDialog.ERROR_TYPE);
                 sweetAlertDialog.setTitleText("Lo sentimos");
                 sweetAlertDialog.setContentText("En este momento no se puede realizar su petición");
                 sweetAlertDialog.setContentTextSize(15);
                 sweetAlertDialog.setCancelable(false);
-                sweetAlertDialog.setConfirmText("volver a intentarlo");
+                sweetAlertDialog.setConfirmText("Volver a intentarlo");
                 sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment());
-                        fragmentTransaction.commit();
+                        Intent intent = new Intent(DetallesZonaActivity.this, Ventanas.class);
+                        intent.putExtra(GalleryFragment.numexpediente, user.getAdminsecre());
+                        intent.putExtra(GalleryFragment.correoe, user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.apellido_paternos, user.getApellido_paterno());
+                        intent.putExtra(HomeFragment.apellido_maternos, user.getApellido_materno());
+                        intent.putExtra(HomeFragment.nombres, user.getNombre());
+                        intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
+                        intent.putExtra(HomeFragment.cargo, user.getCargo());
+                        intent.putExtra(HomeFragment.municipio, user.getMunicipio());
+                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                        startActivity(intent);
+                        finish();
                     }
                 });
                 sweetAlertDialog.setCanceledOnTouchOutside(false);
@@ -222,39 +229,22 @@ public class DetallesZonaActivity extends AppCompatActivity  {
         });
         request.add(jsonObjectRequest);
     }
-/*
-    private void cargarwebservice() {
 
-        // cuarto xoxo http://192.168.0.11/api/Usuario/listarorg
-        //casa angel 192.168.0.23
-        jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
-        request.add(jsonObjectRequest);
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-
-        }
-    }*/
-    public void buscador(String texto){
+    public void buscador(String texto) {
         listavendedoresdetalleszona.clear();
 
-        for (int i=0;i<listauxiliar.size();i++){
-            if (listauxiliar.get(i).getNombrev().toLowerCase().contains(texto.toLowerCase())||listauxiliar.get(i).getApellido_paterno().toLowerCase().contains(texto.toLowerCase())){
+        for (int i = 0; i < listauxiliar.size(); i++) {
+            if (listauxiliar.get(i).getNombrev().toLowerCase().contains(texto.toLowerCase()) || listauxiliar.get(i).getApellido_paterno().toLowerCase().contains(texto.toLowerCase())) {
                 listavendedoresdetalleszona.add(listauxiliar.get(i));
             }
         }
         adapter.notifyDataSetChanged();
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.dismiss();
         }
     }

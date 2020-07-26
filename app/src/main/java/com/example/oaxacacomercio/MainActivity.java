@@ -20,7 +20,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.oaxacacomercio.Eventuales.ServicioEventos;
 import com.example.oaxacacomercio.Modelos.User;
+import com.example.oaxacacomercio.password.PasswordActivity;
 import com.example.oaxacacomercio.ui.gallery.GalleryFragment;
 import com.example.oaxacacomercio.ui.home.HomeFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -33,31 +35,32 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
     private TextInputLayout inputCorreo, inputPassword;
     private Button usuarioadmi;// vendedor;
-   // private ProgressDialog progreso;
+    // private ProgressDialog progreso;
     private RequestQueue request;
     private JsonRequest jsonRequest;
     SweetAlertDialog sDialog;
-    private int i=-1;
+    private int i = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        Button buttonshow=findViewById(R.id.btn_ayuda);
+        Button buttonshow = findViewById(R.id.btn_ayuda);
         buttonshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(
-                        MainActivity.this,R.style.BottomSheetDialogTheme);
-                View bottomsheetview=LayoutInflater.from(getApplicationContext())
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        MainActivity.this, R.style.BottomSheetDialogTheme);
+                View bottomsheetview = LayoutInflater.from(getApplicationContext())
                         .inflate(
                                 R.layout.layout_bottom_sheet,
-                                (LinearLayout)findViewById(R.id.bottomSheetContainer)
+                                (LinearLayout) findViewById(R.id.bottomSheetContainer)
                         );
                 bottomsheetview.findViewById(R.id.helpag).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.municipiodeoaxaca.gob.mx"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.municipiodeoaxaca.gob.mx"));
                         startActivity(intent);
                         bottomSheetDialog.dismiss();
                     }
@@ -67,52 +70,37 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
 
         });
-        // prefs=getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        // setCredentialifexists();
-        // FragmentManager fm = getSupportFragmentManager();
-        // fm.beginTransaction().replace(R.id.escena, new HomeFragment()).commit();
+        Button ressetpassword = findViewById(R.id.btn_reset_password);
+        ressetpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PasswordActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
         crearComponentes();
-        request= Volley.newRequestQueue(this);
+        request = Volley.newRequestQueue(this);
     }
-    /* private void SaveOnPreferences(String email){
-         if(switchremeber.isChecked()){
-             SharedPreferences.Editor editor= prefs.edit();
-             editor.putString("email",email);
-           //  editor.commit();
-             editor.apply();
-         }
-     }*/
-    //private String getUserMailPrefer() {
-    //  return prefs.getString("email","");
-    //}
-    public void goMain(View v){
-                        iniciarsesion();
+    public void goMain(View v) {
+        iniciarsesion();
     }
- //   public void loginvendedor(View view){
-   //   loginvendedor();
-   // }
-    /* private void setCredentialifexists(){
-         String email=getUserMailPrefer();
-         if(TextUtils.isEmpty(email)){
-             inputCorreo.getEditText().setText(email);
-         }
-     }*/
-    private void crearComponentes(){
-        usuarioadmi=findViewById(R.id.btn_login);
-        inputCorreo=findViewById(R.id.usuarios);
-        inputPassword=findViewById(R.id.password);
-        //switchremeber=findViewById(R.id.switchremember);
+    private void crearComponentes() {
+        usuarioadmi = findViewById(R.id.btn_login);
+        inputCorreo = findViewById(R.id.usuarios);
+        inputPassword = findViewById(R.id.password);
     }
-    private void iniciarsesion(){
-        sDialog=new SweetAlertDialog(MainActivity.this,SweetAlertDialog.PROGRESS_TYPE).setTitleText("cargando...");
+
+    private void iniciarsesion() {
+        sDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE).setTitleText("cargando...");
         sDialog.show();
         sDialog.setCancelable(false);
-        new CountDownTimer(800 * 7,800){
+        new CountDownTimer(800 * 7, 800) {
 
             @Override
             public void onTick(long l) {
                 i++;
-                switch (i){
+                switch (i) {
                     case 0:
                         sDialog.getProgressHelper().setBarColor(getResources().getColor(R.color.blue_btn_bg_color));
                         break;
@@ -136,39 +124,42 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                         break;
                 }
             }
+
             @Override
             public void onFinish() {
-                i=-1;
+                i = -1;
                 sDialog.setTitleText("Bienvenido").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
             }
         }.start();
-        String url="http://192.168.0.2/api/Usuario/loginv?email="+inputCorreo.getEditText().getText().toString()+"&password="+inputPassword.getEditText().getText().toString();
-        jsonRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        String url = "http://192.168.0.9/api/Usuario/loginv?email=" + inputCorreo.getEditText().getText().toString() + "&password=" + inputPassword.getEditText().getText().toString();
+        jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonRequest);
 
     }
+
     @Override
     public void onErrorResponse(VolleyError error) {
-        SweetAlertDialog sweetAlertDialog=new SweetAlertDialog(MainActivity.this,SweetAlertDialog.ERROR_TYPE);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.ERROR_TYPE);
         sweetAlertDialog.setTitleText("Datos incorrectos");
-        sweetAlertDialog.setContentText("usuario o contraseña incorrecto");
+        sweetAlertDialog.setContentText("Usuario o contraseña incorrectos");
         sweetAlertDialog.setContentTextSize(15);
         sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setConfirmText("volver a intentarlo");
+        sweetAlertDialog.setConfirmText("Volver a intentarlo");
         sweetAlertDialog.setCanceledOnTouchOutside(false);
         sweetAlertDialog.show();
         sDialog.dismiss();
-  //      progress.hide();
+        //      progress.hide();
     }
+
     @Override
     public void onResponse(JSONObject response) {
-        User usuario= new User(this);
-     //   Toast.makeText(this,"Inicio de sesión con exito",Toast.LENGTH_SHORT).show();
-        JSONArray jsonArray= response.optJSONArray("admin");
-        JSONObject jsonObject=null;
+        User usuario = new User(this);
+        //   Toast.makeText(this,"Inicio de sesión con exito",Toast.LENGTH_SHORT).show();
+        JSONArray jsonArray = response.optJSONArray("admin");
+        JSONObject jsonObject = null;
         try {
-            jsonObject= jsonArray.getJSONObject(0);
-            System.out.println("los datos son"+jsonArray.length());
+            jsonObject = jsonArray.getJSONObject(0);
+            System.out.println("los datos son" + jsonArray.length());
             usuario.setNombre(jsonObject.optString("name"));
             usuario.setApellido_paterno(jsonObject.optString("apellido_paterno"));
             usuario.setApellido_materno(jsonObject.optString("apellido_materno"));
@@ -176,14 +167,14 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             usuario.setCargo(jsonObject.optString("cargo"));
             usuario.setMunicipio(jsonObject.optString("nombre"));
             usuario.setAdminsecre(jsonObject.optInt("id"));
+            usuario.setImage(jsonObject.optString("foto_perfil"));
             sDialog.dismiss();
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
             sDialog.dismiss();
 //            progress.hide();
         }
-        User user=new User(MainActivity.this);
+        User user = new User(MainActivity.this);
         user.setCorreoelectronico(usuario.getCorreoelectronico());
         user.setNombre(usuario.getNombre());
         user.setApellido_paterno(usuario.getApellido_paterno());
@@ -191,16 +182,19 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         user.setCargo(usuario.getCargo());
         user.setMunicipio(usuario.getMunicipio());
         user.setAdminsecre(usuario.getAdminsecre());
+        user.setImage(usuario.getImage());
         Intent goMain = new Intent(MainActivity.this, Ventanas.class);
-        goMain.putExtra(GalleryFragment.numexpediente,usuario.getAdminsecre());
-        goMain.putExtra(GalleryFragment.correoe,usuario.getCorreoelectronico());
-        goMain.putExtra(HomeFragment.apellido_paternos,usuario.getApellido_paterno());
-        goMain.putExtra(HomeFragment.apellido_maternos,usuario.getApellido_materno());
-        goMain.putExtra(HomeFragment.nombres,usuario.getNombre());
-        goMain.putExtra(HomeFragment.correo,usuario.getCorreoelectronico());
-        goMain.putExtra(HomeFragment.cargo,usuario.getCargo());
-        goMain.putExtra(HomeFragment.municipio,usuario.getMunicipio());
-        goMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        goMain.putExtra(GalleryFragment.numexpediente, usuario.getAdminsecre());
+        goMain.putExtra(GalleryFragment.correoe, usuario.getCorreoelectronico());
+        goMain.putExtra(HomeFragment.apellido_paternos, usuario.getApellido_paterno());
+        goMain.putExtra(HomeFragment.apellido_maternos, usuario.getApellido_materno());
+        goMain.putExtra(HomeFragment.nombres, usuario.getNombre());
+        goMain.putExtra(HomeFragment.correo, usuario.getCorreoelectronico());
+        goMain.putExtra(HomeFragment.cargo, usuario.getCargo());
+        goMain.putExtra(HomeFragment.municipio, usuario.getMunicipio());
+        goMain.putExtra(HomeFragment.fotoperfil, usuario.getImage());
+        goMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startService(new Intent(MainActivity.this, ServicioEventos.class));
         startActivity(goMain);
     }
 }

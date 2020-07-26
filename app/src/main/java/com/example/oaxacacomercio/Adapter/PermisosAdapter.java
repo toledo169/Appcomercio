@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +23,15 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PermisosAdapter extends RecyclerView.Adapter<PermisosAdapter.PermisosHolder>{
+public class PermisosAdapter extends RecyclerView.Adapter<PermisosAdapter.PermisosHolder> {
     List<Permisos> listapermisos;
     Context mcontext;
+
     public PermisosAdapter(List<Permisos> listapermisos, Context mcontext) {
         this.listapermisos = listapermisos;
         this.mcontext = mcontext;
     }
+
     @NonNull
     @Override
     public PermisosHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,23 +43,25 @@ public class PermisosAdapter extends RecyclerView.Adapter<PermisosAdapter.Permis
         viewHolder.view_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mcontext, "vendedor seleccionado" + String.valueOf(viewHolder.getAdapterPosition()),
-                        Toast.LENGTH_SHORT).show();
+                //      Toast.makeText(mcontext, "vendedor seleccionado" + String.valueOf(viewHolder.getAdapterPosition()),
+                //           Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mcontext, MapaPermiso.class);
                 intent.putExtra("latitud", String.valueOf(listapermisos.get(viewHolder.getAdapterPosition()).getLatitud()));
                 intent.putExtra("longitud", String.valueOf(listapermisos.get(viewHolder.getAdapterPosition()).getLongitud()));
                 intent.putExtra("latitud_fin", String.valueOf(listapermisos.get(viewHolder.getAdapterPosition()).getLatitudfinal()));
                 intent.putExtra("longitud_fin", String.valueOf(listapermisos.get(viewHolder.getAdapterPosition()).getLongitudfinal()));
-                intent.putExtra("giro",listapermisos.get(viewHolder.getAdapterPosition()).getGiro());
+                intent.putExtra("giro", listapermisos.get(viewHolder.getAdapterPosition()).getGiro());
                 mcontext.startActivity(intent);
             }
         });
         return viewHolder;
     }
+
     @Override
     public void onBindViewHolder(@NonNull PermisosHolder holder, int position) {
         holder.txtDocumento.setText(listapermisos.get(position).getGiro().toString());
-        holder.txtNombre.setText(listapermisos.get(position).getHorainicio().toString());
+        holder.txtNombre.setText("Empieza a las: " + listapermisos.get(position).getHorainicio().toString());
+        holder.txthora.setText("Termina a las: " + listapermisos.get(position).getHorafin().toString());
     }
 
     @Override
@@ -64,14 +70,16 @@ public class PermisosAdapter extends RecyclerView.Adapter<PermisosAdapter.Permis
     }
 
     public class PermisosHolder extends RecyclerView.ViewHolder {
-        TextView txtDocumento, txtNombre;
+        TextView txtDocumento, txtNombre, txthora;
         ImageView imageView;
-        ConstraintLayout view_container;
+        LinearLayout view_container;
+
         public PermisosHolder(@NonNull View itemView) {
             super(itemView);
             view_container = itemView.findViewById(R.id.contenedorpermiso);
             txtDocumento = (TextView) itemView.findViewById(R.id.txtgiro);
             txtNombre = (TextView) itemView.findViewById(R.id.txthorainicio);
+            txthora = (TextView) itemView.findViewById(R.id.txthorafinal);
             imageView = (ImageView) itemView.findViewById(R.id.imageViewp);
         }
     }
