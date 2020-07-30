@@ -1,10 +1,14 @@
 package com.example.oaxacacomercio.password;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.android.volley.AuthFailureError;
@@ -35,6 +39,12 @@ public class ConfirmarPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmar_password);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        Toolbar toolbar = findViewById(R.id.passwordresset);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Recuperación de contraseña");
         inputpassword1 = findViewById(R.id.passworforgot);
         inputpassword = findViewById(R.id.passwordforgoot);
         email= getIntent().getExtras().getString("email");
@@ -115,17 +125,14 @@ public class ConfirmarPasswordActivity extends AppCompatActivity {
             //    Toast.makeText(getContext(),"Email valido",Toast.LENGTH_SHORT).show();
             return true;
         } else {
-            inputpassword1.setError("La contraseña es demasiado debil");
-            inputpassword.setError("La contraseña es demasiado debil");
-            //Toast.makeText(getContext(),"Email invalido",Toast.LENGTH_SHORT).show();
-            sweetAlertDialog = new SweetAlertDialog(ConfirmarPasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
-            sweetAlertDialog.setTitleText("Datos incorrectos");
-            sweetAlertDialog.setContentText("Ingrese una contraseña valida");
-            sweetAlertDialog.setContentTextSize(15);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setConfirmText("Volver a intentarlo");
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.show();
+            inputpassword1.setError("La contraseña debe contener minimo un digito numerico\n" +
+                    "La contraseña debe contener minimo una letra mayuscula\n"+
+                    "La contraseña debe contener minimo un caracter especial\n"+
+                    "La contraseña debe contener entre 6 y 15 caracteres\n");
+            inputpassword.setError("La contraseña debe contener minimo un digito numerico\n" +
+                    "La contraseña debe contener minimo una letra mayuscula\n"+
+                    "La contraseña debe contener minimo un caracter especial\n"+
+                    "La contraseña debe contener entre 6 y 15 caracteres\n");
             return false;
         }
     }
@@ -135,14 +142,6 @@ public class ConfirmarPasswordActivity extends AppCompatActivity {
         } else {
             inputpassword.setError("Las contraseñas no coinciden");
             inputpassword1.setError("Las contraseñas no coinciden");
-            sweetAlertDialog = new SweetAlertDialog(ConfirmarPasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
-            sweetAlertDialog.setTitleText("Datos incorrectos");
-            sweetAlertDialog.setContentText("Las contraseñas deben ser iguales");
-            sweetAlertDialog.setContentTextSize(15);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setConfirmText("Volver a intentarlo");
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.show();
             return false;
         }
     }
@@ -156,7 +155,7 @@ public class ConfirmarPasswordActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ConfirmarPasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
+                sweetAlertDialog = new SweetAlertDialog(ConfirmarPasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
                 sweetAlertDialog.setTitleText("Lo sentimos");
                 sweetAlertDialog.setContentText("Ha ocurrido un error inesperado, intentelo ms tarde");
                 sweetAlertDialog.setContentTextSize(15);
@@ -184,5 +183,20 @@ public class ConfirmarPasswordActivity extends AppCompatActivity {
         };
         requestQueue = Volley.newRequestQueue(ConfirmarPasswordActivity.this);
         requestQueue.add(stringRequest);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
+            sweetAlertDialog.dismiss();
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

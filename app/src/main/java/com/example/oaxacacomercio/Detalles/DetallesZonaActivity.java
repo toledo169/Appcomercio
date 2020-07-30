@@ -2,6 +2,7 @@ package com.example.oaxacacomercio.Detalles;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,8 +24,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -62,7 +66,7 @@ public class DetallesZonaActivity extends AppCompatActivity {
     DetallesZonaVendedorAdapter adapter;
     int claveZ;
     // TextView txtnombrez,txtClavezona;
-    private EditText searchzv;
+   // private EditText searchzv;
     SweetAlertDialog sweetAlertDialog;
     Context context = this;
 
@@ -83,7 +87,7 @@ public class DetallesZonaActivity extends AppCompatActivity {
         listauxiliar = new ArrayList<>();
 
         recyclerViewDetalleszona = (RecyclerView) findViewById(R.id.idRecyclerdetalleszonavendedor);
-        searchzv = (EditText) findViewById(R.id.serchvenzona);
+  //      searchzv = (EditText) findViewById(R.id.serchvenzona);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewDetalleszona.setLayoutManager(layoutManager);
         recyclerViewDetalleszona.setHasFixedSize(true);
@@ -92,22 +96,6 @@ public class DetallesZonaActivity extends AppCompatActivity {
         recyclerViewDetalleszona.setAdapter(adapter);
         request = Volley.newRequestQueue(this);
         ejecutarservicio();
-        searchzv.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                buscador("" + charSequence);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
 
     @Override
@@ -247,6 +235,27 @@ public class DetallesZonaActivity extends AppCompatActivity {
         if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.dismiss();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater= getMenuInflater();
+        inflater.inflate(R.menu.search_menu,menu);
+        MenuItem item= menu.findItem(R.id.search_vendedoraction);
+        SearchView searchView=(SearchView)item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buscador("" + newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }
 

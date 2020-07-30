@@ -2,6 +2,7 @@ package com.example.oaxacacomercio.Detalles;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -66,7 +69,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
     Context thiscontext=this;
     private LinearLayoutManager layoutManager;
     //TextView tvclave,tvnombre;
-    private EditText serchvact;
+    //private EditText serchvact;
     EditText totalven;
     SweetAlertDialog sweetAlertDialog;
     int claved;
@@ -97,7 +100,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
         listavendedoresdetallesact=new ArrayList<>();
         listauxiliar=new ArrayList<>();
         recyclerViewDetallesact= (RecyclerView) findViewById(R.id.idRecyclerdetallesvendedoract);
-        serchvact=(EditText)findViewById(R.id.buscarvendedoract);
+      //  serchvact=(EditText)findViewById(R.id.buscarvendedoract);
         layoutManager= new LinearLayoutManager(this);
         recyclerViewDetallesact.setLayoutManager(layoutManager);
         recyclerViewDetallesact.setHasFixedSize(true);
@@ -105,7 +108,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
         recyclerViewDetallesact.setAdapter(adapter);
         request = Volley.newRequestQueue(this);
         ejecutarservicio();
-        serchvact.addTextChangedListener(new TextWatcher() {
+        /*serchvact.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -122,6 +125,7 @@ public class DetallesActividadActivity extends AppCompatActivity{
 
             }
         });
+         */
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -257,5 +261,26 @@ public class DetallesActividadActivity extends AppCompatActivity{
         if ( sweetAlertDialog!=null &&sweetAlertDialog.isShowing() ){
             sweetAlertDialog.dismiss();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater= getMenuInflater();
+        inflater.inflate(R.menu.search_menu,menu);
+        MenuItem item= menu.findItem(R.id.search_vendedoraction);
+        SearchView searchView=(SearchView)item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buscador("" + newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }

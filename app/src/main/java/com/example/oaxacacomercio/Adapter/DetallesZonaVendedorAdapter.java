@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,8 @@ import com.example.oaxacacomercio.Mapas.MapavendedorActivity;
 import com.example.oaxacacomercio.Modelos.Vendedor;
 import com.example.oaxacacomercio.R;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import androidx.annotation.NonNull;

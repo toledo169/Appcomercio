@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class VendedorAdapter extends RecyclerView.Adapter<VendedorAdapter.VendedorHolder> {
+public class VendedorAdapter extends RecyclerView.Adapter<VendedorAdapter.VendedorHolder>{
     List<Vendedor> listavendedor;
     List<Vendedor> listavendedorall;
     Dialog dialog;
@@ -103,6 +103,7 @@ public class VendedorAdapter extends RecyclerView.Adapter<VendedorAdapter.Vended
     public int getItemCount() {
         return listavendedor.size();
     }
+
 
     public class VendedorHolder extends RecyclerView.ViewHolder {
         LinearLayout item;

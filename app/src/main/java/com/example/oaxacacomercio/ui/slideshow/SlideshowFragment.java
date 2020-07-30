@@ -73,6 +73,7 @@ public class SlideshowFragment extends Fragment {
     SweetAlertDialog sweetAlertDialog;
     FloatingActionButton totalvendedor;
     String fechatotal;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
@@ -84,7 +85,7 @@ public class SlideshowFragment extends Fragment {
         search = (EditText) root.findViewById(R.id.searchusuario);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewvendedores.setLayoutManager(layoutManager);
-        totalvendedor=(FloatingActionButton) root.findViewById(R.id.vendedorestotales);
+        totalvendedor = (FloatingActionButton) root.findViewById(R.id.vendedorestotales);
         recyclerViewvendedores.setHasFixedSize(true);
         adapter = new VendedorAdapter(listavendedores, getContext());
         recyclerViewvendedores.setAdapter(adapter);
@@ -95,15 +96,17 @@ public class SlideshowFragment extends Fragment {
         int mes = c.get(Calendar.MONTH);
         int dia = c.get(Calendar.DAY_OF_MONTH);
         Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-         fechatotal = formatter.format(c.getTime());
+        fechatotal = formatter.format(c.getTime());
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 buscador("" + charSequence);
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
             }
@@ -255,6 +258,5 @@ public class SlideshowFragment extends Fragment {
         }
         adapter.notifyDataSetChanged();
     }
-
-
 }
+

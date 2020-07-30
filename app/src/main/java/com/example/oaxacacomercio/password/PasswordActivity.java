@@ -1,10 +1,14 @@
 package com.example.oaxacacomercio.password;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -40,6 +44,12 @@ private TextInputLayout inputCorreo1, inputcorreo;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        Toolbar toolbar = findViewById(R.id.password);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Recuperación de contraseña");
         inputCorreo1 = findViewById(R.id.emailforgot);
         inputcorreo = findViewById(R.id.emailforgot1);
         FloatingActionButton fab = findViewById(R.id.fabforgotemail);
@@ -47,6 +57,8 @@ private TextInputLayout inputCorreo1, inputcorreo;
             @Override
             public void onClick(View view) {
                 if (inputCorreo1.getEditText().getText().toString().isEmpty()|inputcorreo.getEditText().getText().toString().isEmpty()) {
+                    inputcorreo.setError("Debe rellenar el campo correo");
+                    inputCorreo1.setError("Debe rellenar el campo correo");
                     sweetAlertDialog = new SweetAlertDialog(PasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
                     sweetAlertDialog.setTitleText("Datos incorrectos");
                     sweetAlertDialog.setContentText("Debe rellenar todos los campos");
@@ -74,14 +86,6 @@ private TextInputLayout inputCorreo1, inputcorreo;
             inputcorreo.setError("No es un correo valido");
             inputCorreo1.setError("No es un correo valido");
             //Toast.makeText(getContext(),"Email invalido",Toast.LENGTH_SHORT).show();
-            sweetAlertDialog = new SweetAlertDialog(PasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
-            sweetAlertDialog.setTitleText("Datos incorrectos");
-            sweetAlertDialog.setContentText("Ingrese un correo electrónico valido");
-            sweetAlertDialog.setContentTextSize(15);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setConfirmText("Volver a intentarlo");
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.show();
             return false;
         }
 
@@ -92,14 +96,6 @@ private TextInputLayout inputCorreo1, inputcorreo;
         } else {
             inputcorreo.setError("Los correos no coinciden");
             inputCorreo1.setError("Los correos no coinciden");
-            sweetAlertDialog = new SweetAlertDialog(PasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
-            sweetAlertDialog.setTitleText("Datos incorrectos");
-            sweetAlertDialog.setContentText("Los correos deben ser iguales");
-            sweetAlertDialog.setContentTextSize(15);
-            sweetAlertDialog.setCancelable(false);
-            sweetAlertDialog.setConfirmText("Volver a intentarlo");
-            sweetAlertDialog.setCanceledOnTouchOutside(false);
-            sweetAlertDialog.show();
             return false;
         }
     }
@@ -144,8 +140,8 @@ private TextInputLayout inputCorreo1, inputcorreo;
                 listapermisos.add(organizacion);
             }
             if (listapermisos.isEmpty() == true) {
-                inputcorreo.setError("Correo no encontrado");
-                inputCorreo1.setError("Correo no encontrado");
+                //inputcorreo.setError("Correo no encontrado");
+                //inputCorreo1.setError("Correo no encontrado");
                 sweetAlertDialog = new SweetAlertDialog(PasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
                 sweetAlertDialog.setTitleText("Lo sentimos");
                 sweetAlertDialog.setContentText("El correo escrito no se encuentra registrado");
@@ -172,14 +168,8 @@ private TextInputLayout inputCorreo1, inputcorreo;
             }
             else {
                 if (inputCorreo1.getEditText().getText().toString().isEmpty() || inputcorreo.getEditText().getText().toString().isEmpty()) {
-                    sweetAlertDialog = new SweetAlertDialog(PasswordActivity.this, SweetAlertDialog.ERROR_TYPE);
-                    sweetAlertDialog.setTitleText("Datos incorrectos");
-                    sweetAlertDialog.setContentText("Debe rellenar todos los campos");
-                    sweetAlertDialog.setContentTextSize(15);
-                    sweetAlertDialog.setCancelable(false);
-                    sweetAlertDialog.setConfirmText("Volver a intentarlo");
-                    sweetAlertDialog.setCanceledOnTouchOutside(false);
-                    sweetAlertDialog.show();
+                    inputCorreo1.setError("Debe rellenar el campo correo");
+                    inputcorreo.setError("Debe rellenar el campo correo");
                 } else {
                     if (validateemail(inputCorreo1) == true) {
                         if (iguales(inputCorreo1, inputcorreo) == true) {
@@ -256,5 +246,13 @@ private TextInputLayout inputCorreo1, inputcorreo;
         if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.dismiss();
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

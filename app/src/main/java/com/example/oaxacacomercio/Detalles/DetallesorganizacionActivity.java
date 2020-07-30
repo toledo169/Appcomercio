@@ -2,6 +2,7 @@ package com.example.oaxacacomercio.Detalles;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,11 +26,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,7 +69,7 @@ public class DetallesorganizacionActivity extends AppCompatActivity {
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     //TextView tvclave,tvnombre;
-    private EditText serchvo;
+   // private EditText serchvo;
     int claved;
     DetallesVendedorAdapter adapter;
     SweetAlertDialog sweetAlertDialog;
@@ -90,7 +91,7 @@ public class DetallesorganizacionActivity extends AppCompatActivity {
         listavendedoresdetalles = new ArrayList<>();
         listauxiliar = new ArrayList<>();
         recyclerViewDetalles = (RecyclerView) findViewById(R.id.idRecyclerdetallesvendedor);
-        serchvo = (EditText) findViewById(R.id.buscarvendedororga);
+     //   serchvo = (EditText) findViewById(R.id.buscarvendedororga);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewDetalles.setLayoutManager(layoutManager);
         recyclerViewDetalles.setHasFixedSize(true);
@@ -99,23 +100,6 @@ public class DetallesorganizacionActivity extends AppCompatActivity {
         recyclerViewDetalles.setAdapter(adapter);
         request = Volley.newRequestQueue(this);
         ejecutarservicio();
-        serchvo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                buscador("" + charSequence);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
 
     @Override
@@ -253,6 +237,27 @@ public class DetallesorganizacionActivity extends AppCompatActivity {
         if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.dismiss();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater= getMenuInflater();
+        inflater.inflate(R.menu.search_menu,menu);
+        MenuItem item= menu.findItem(R.id.search_vendedoraction);
+        androidx.appcompat.widget.SearchView searchView=(androidx.appcompat.widget.SearchView)item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buscador("" + newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }
 
