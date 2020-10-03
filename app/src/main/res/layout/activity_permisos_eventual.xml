@@ -21,19 +21,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             ></androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <EditText
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:hint="Buscar"
-        android:id="@+id/bucarpermisosnotif"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawableTint="@android:color/white"
-        android:textColorHighlight ="@android:color/white"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idRecyclerpermisosnotif"
         android:layout_width="match_parent"

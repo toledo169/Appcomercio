@@ -86,12 +86,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#500014"
-                    android:hint="Correo electronico"
+                    android:hint="Correo electrónico"
                     android:inputType="text"
                     android:textColor="#500014"
                     android:textColorHint="#500014"
-                    app:hintTextAppearance="@style/Hint"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:hintTextAppearance="@style/Hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -106,16 +106,17 @@
                 app:counterEnabled="true"
                 app:errorEnabled="true"
                 app:passwordToggleEnabled="false">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#500014"
-                    android:hint="Correo electronico"
+                    android:hint="Correo electrónico"
                     android:inputType="text"
                     android:textColor="#500014"
                     android:textColorHint="#500014"
-                    app:hintTextAppearance="@style/Hint"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:hintTextAppearance="@style/Hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -151,12 +152,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#500014"
-                    android:hint="Password"
+                    android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:textColor="#500014"
                     android:textColorHint="#500014"
-                    app:hintTextAppearance="@style/Hint"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:hintTextAppearance="@style/Hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -173,16 +174,17 @@
                 app:errorEnabled="true"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="#500014">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#500014"
-                    android:hint="Password"
+                    android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:textColor="#500014"
                     android:textColorHint="#500014"
-                    app:hintTextAppearance="@style/Hint"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:hintTextAppearance="@style/Hint" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabeditaremailb"

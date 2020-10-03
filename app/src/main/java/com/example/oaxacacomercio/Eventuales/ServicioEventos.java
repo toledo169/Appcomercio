@@ -90,7 +90,7 @@ public class ServicioEventos extends Service {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 5; i++) {
                 hilo();
             }
             return true;
@@ -105,7 +105,7 @@ public class ServicioEventos extends Service {
     }
 
     public void ejecutarservicio() {
-        String url = "http://192.168.0.9/api/Usuario/permisomapa/";
+        String url = "http://192.168.10.233/api/Usuario/permisomapa/";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

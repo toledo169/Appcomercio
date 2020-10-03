@@ -6,20 +6,7 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#500014"
-
     >
-    <EditText
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:hint="Buscar"
-        android:textColorHint="@android:color/white"
-        android:id="@+id/bucarorganizaciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_search"
-        android:drawableTint="@android:color/white"
-        android:backgroundTint="@android:color/white"
-        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="5dp"

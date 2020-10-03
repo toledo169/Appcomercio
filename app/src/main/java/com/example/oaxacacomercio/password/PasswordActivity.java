@@ -100,7 +100,7 @@ private TextInputLayout inputCorreo1, inputcorreo;
         }
     }
     private void cargarwebservice() {
-        String url = "http://192.168.0.9/api/Usuario/listarcorreo/" + inputCorreo1.getEditText().getText().toString();
+        String url = "http://192.168.10.233/api/Usuario/listarcorreo/" + inputCorreo1.getEditText().getText().toString();
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
     }

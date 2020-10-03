@@ -14,12 +14,12 @@ public class User {
     Context context;
 
     public String getImage() {
-        image=sharedPreferences.getString("userfotop","");
+    //    image=sharedPreferences.getString("userfotop","");
         return image;
     }
 
     public void setImage(String image) {
-        sharedPreferences.edit().putString("userfotop",image).commit();
+      //  sharedPreferences.edit().putString("userfotop",image).commit();
         this.image = image;
     }
 

@@ -134,7 +134,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:maxLines="1"
-                                android:text="Numero total de vendedores:"
+                                android:text="Total de vendedores:"
                                 android:textColor="#500014"
                                 android:textSize="17dp"
                                 android:textStyle="bold" />

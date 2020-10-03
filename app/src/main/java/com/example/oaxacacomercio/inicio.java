@@ -36,7 +36,7 @@ public class inicio extends AppCompatActivity {
                     intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                     intent.putExtra(HomeFragment.cargo, user.getCargo());
                     intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                    intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                 //   intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                     startActivity(intent);
                     finish();
                 }

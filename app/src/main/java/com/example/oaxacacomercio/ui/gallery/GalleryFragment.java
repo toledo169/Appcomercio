@@ -237,7 +237,7 @@ public class GalleryFragment extends Fragment implements Response.Listener<JSONO
                         intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                         intent.putExtra(HomeFragment.cargo, user.getCargo());
                         intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+//                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                         startActivity(intent);
                         getActivity().finish();
                         sweetAlertDialog.dismiss();
@@ -288,7 +288,7 @@ public class GalleryFragment extends Fragment implements Response.Listener<JSONO
                         intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                         intent.putExtra(HomeFragment.cargo, user.getCargo());
                         intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+  //                      intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                         startActivity(intent);
                         getActivity().finish();
                         sweetAlertDialog.dismiss();
@@ -312,7 +312,7 @@ public class GalleryFragment extends Fragment implements Response.Listener<JSONO
     }
 
     private void cargarwebservice() {
-        String url = "http://192.168.0.9/api/Usuario/listarcorreo/" + inputCorreo1.getEditText().getText().toString();
+        String url = "http://192.168.10.233/api/Usuario/listarcorreo/" + inputCorreo1.getEditText().getText().toString();
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
     }
@@ -392,7 +392,7 @@ public class GalleryFragment extends Fragment implements Response.Listener<JSONO
                                                 .showCancelButton(false).setCancelClickListener(null).setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                         sDialog.setCancelable(false);
                                         sDialog.setCanceledOnTouchOutside(false);
-                                        ejecutarserviciotodo("http://192.168.0.9/api/Usuario/editatodo?id=" + correo + "&email=" + inputCorreo1.getEditText().getText().toString() + "&password=" + inputpassword1.getEditText().getText().toString());
+                                        ejecutarserviciotodo("http://192.168.10.233/api/Usuario/editatodo?id=" + correo + "&email=" + inputCorreo1.getEditText().getText().toString() + "&password=" + inputpassword1.getEditText().getText().toString());
                                         logOut();
                                     }
                                 });
@@ -440,7 +440,7 @@ public class GalleryFragment extends Fragment implements Response.Listener<JSONO
                                         sDialog.setCancelable(false);
                                         sDialog.setCanceledOnTouchOutside(false);
                                         //      ejecutarservicio("http://192.168.0.2/api/Usuario/edita?id=" + correo + "&email=" + inputCorreo1.getEditText().getText().toString() + "&password=" + mail);
-                                        ejecutarservicio("http://192.168.0.9/api/Usuario/edita?id=" + correo + "&email=" + inputCorreo1.getEditText().getText().toString());
+                                        ejecutarservicio("http://192.168.10.233/api/Usuario/edita?id=" + correo + "&email=" + inputCorreo1.getEditText().getText().toString());
                                         logOut();
                                     }
                                 });
@@ -497,7 +497,7 @@ public class GalleryFragment extends Fragment implements Response.Listener<JSONO
                     intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                     intent.putExtra(HomeFragment.cargo, user.getCargo());
                     intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                    intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+    //                intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                     startActivity(intent);
                     getActivity().finish();
                 }

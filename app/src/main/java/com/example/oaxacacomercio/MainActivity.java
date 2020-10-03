@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 sDialog.setTitleText("Bienvenido").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
             }
         }.start();
-        String url = "http://192.168.0.9/api/Usuario/loginv?email=" + inputCorreo.getEditText().getText().toString() + "&password=" + inputPassword.getEditText().getText().toString();
+        String url = "http://192.168.10.233/api/Usuario/loginv?email=" + inputCorreo.getEditText().getText().toString() + "&password=" + inputPassword.getEditText().getText().toString();
         jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonRequest);
 
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             usuario.setCargo(jsonObject.optString("cargo"));
             usuario.setMunicipio(jsonObject.optString("nombre"));
             usuario.setAdminsecre(jsonObject.optInt("id"));
-            usuario.setImage(jsonObject.optString("foto_perfil"));
+        //    usuario.setImage(jsonObject.optString("foto_perfil"));
             sDialog.dismiss();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         user.setCargo(usuario.getCargo());
         user.setMunicipio(usuario.getMunicipio());
         user.setAdminsecre(usuario.getAdminsecre());
-        user.setImage(usuario.getImage());
+        //user.setImage(usuario.getImage());
         Intent goMain = new Intent(MainActivity.this, Ventanas.class);
         goMain.putExtra(GalleryFragment.numexpediente, usuario.getAdminsecre());
         goMain.putExtra(GalleryFragment.correoe, usuario.getCorreoelectronico());
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         goMain.putExtra(HomeFragment.correo, usuario.getCorreoelectronico());
         goMain.putExtra(HomeFragment.cargo, usuario.getCargo());
         goMain.putExtra(HomeFragment.municipio, usuario.getMunicipio());
-        goMain.putExtra(HomeFragment.fotoperfil, usuario.getImage());
+        //goMain.putExtra(HomeFragment.fotoperfil, usuario.getImage());
         goMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startService(new Intent(MainActivity.this, ServicioEventos.class));
         startActivity(goMain);

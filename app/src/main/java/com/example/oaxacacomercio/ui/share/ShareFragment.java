@@ -97,7 +97,7 @@ public class ShareFragment extends Fragment {
                                 intent.putExtra("id_actividad", listacti.get(viewHolder.getAdapterPosition()).getId());
                                 intent.putExtra("nombre_actividad", listacti.get(viewHolder.getAdapterPosition()).getNombre());
                                 getContext().startActivity(intent);
-                                Toast.makeText(getContext(), "Detalles", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(getContext(), "Detalles", Toast.LENGTH_SHORT).show();
                             }
                         }
                 ));
@@ -137,7 +137,7 @@ public class ShareFragment extends Fragment {
 
             }
         }, 3000);
-        String url = "http://192.168.0.9/api/Usuario/listaractividades";
+        String url = "http://192.168.10.233/api/Usuario/listaractividades";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -176,7 +176,7 @@ public class ShareFragment extends Fragment {
                             intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                             intent.putExtra(HomeFragment.cargo, user.getCargo());
                             intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                     //       intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                             startActivity(intent);
                             getActivity().finish();
                             sweetAlertDialog.dismiss();
@@ -209,7 +209,7 @@ public class ShareFragment extends Fragment {
                         intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                         intent.putExtra(HomeFragment.cargo, user.getCargo());
                         intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                       // intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                         startActivity(intent);
                         getActivity().finish();
                         sweetAlertDialog.dismiss();

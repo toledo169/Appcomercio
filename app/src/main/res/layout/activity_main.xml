@@ -15,12 +15,13 @@
         android:orientation="vertical"
         android:padding="15dp"
         >
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Municipio de Oaxaca de Juarez"
+            android:text="Municipio de Oaxaca de Juárez"
             android:textColor="@android:color/white"
             android:textSize="30dp"
             android:textStyle="bold" />
@@ -70,7 +71,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="Contraseña"
                 android:textColorHint="@android:color/white"
                 android:textStyle="bold"
                 android:inputType="textPassword"

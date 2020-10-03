@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {//im
     public static final String correo = "email";
     public static final String cargo = "cargo";
     public static final String municipio = "nombre";
-    public static final String fotoperfil = "foto_perfil";
+    //public static final String fotoperfil = "foto_perfil";
 
     TextInputLayout apellidop, nomb, correoelect, puesto, lugarn, apellidom;
     ImageView fotoper;
@@ -84,10 +84,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {//im
         //   request = Volley.newRequestQueue(getContext());
         //  listapermisos = new ArrayList<>();
         //  cargarwebservice();
-        fotoper = (ImageView) root.findViewById(R.id.fotoperfil);
+      //  fotoper = (ImageView) root.findViewById(R.id.fotoperfil);
         //   fotoper.setAdjustViewBounds(true);
-        String foto = getActivity().getIntent().getStringExtra("foto_perfil");
-        Picasso.get().load(foto).into(fotoper);
+       // String foto = getActivity().getIntent().getStringExtra("foto_perfil");
+       // Picasso.get().load(foto).into(fotoper);
         fabMain = root.findViewById(R.id.fabcerrar);
         fabOne = root.findViewById(R.id.sitio);
         fabtwo = root.findViewById(R.id.cerrarsesion);

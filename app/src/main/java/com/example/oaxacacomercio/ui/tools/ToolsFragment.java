@@ -64,7 +64,7 @@ public class ToolsFragment extends Fragment {
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     OrganizacionAdapter adapter;
-    private EditText sercho;
+   // private EditText sercho;
     AlertDialog mDialog;
     SweetAlertDialog sweetAlertDialog;
 
@@ -77,7 +77,7 @@ public class ToolsFragment extends Fragment {
         listaorganizacion = new ArrayList<>();
         listaauxiliar = new ArrayList<>();
         recyclerorganizaciones = (RecyclerView) vista.findViewById(R.id.idRecycler);
-        sercho = (EditText) vista.findViewById(R.id.bucarorganizaciones);
+     //   sercho = (EditText) vista.findViewById(R.id.bucarorganizaciones);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerorganizaciones.setLayoutManager(layoutManager);
         recyclerorganizaciones.setHasFixedSize(true);
@@ -124,7 +124,7 @@ public class ToolsFragment extends Fragment {
         };
 
         ejecutarservicio();
-        sercho.addTextChangedListener(new TextWatcher() {
+       /* sercho.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -140,7 +140,7 @@ public class ToolsFragment extends Fragment {
 
             }
         });
-
+        */
         return vista;
     }
 
@@ -158,7 +158,7 @@ public class ToolsFragment extends Fragment {
 
             }
         }, 3000);
-        String url = "http://192.168.0.9/api/Usuario/listarorg/";
+        String url = "http://192.168.10.233/api/Usuario/listarorg/";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -201,7 +201,7 @@ public class ToolsFragment extends Fragment {
                             intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                             intent.putExtra(HomeFragment.cargo, user.getCargo());
                             intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                      //      intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                             startActivity(intent);
                             getActivity().finish();
                             sweetAlertDialog.dismiss();
@@ -234,7 +234,7 @@ public class ToolsFragment extends Fragment {
                         intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                         intent.putExtra(HomeFragment.cargo, user.getCargo());
                         intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                    //    intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                         startActivity(intent);
                         getActivity().finish();
                         sweetAlertDialog.dismiss();

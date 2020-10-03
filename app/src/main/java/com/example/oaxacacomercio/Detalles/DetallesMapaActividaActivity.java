@@ -107,7 +107,7 @@ public class DetallesMapaActividaActivity extends AppCompatActivity {
                 }
             }
         }, 3000);
-        String url = "http://192.168.0.9/api/Usuario/listaractividadesvendedor/" + tvclave.getText().toString();
+        String url = "http://192.168.10.233/api/Usuario/listaractividadesvendedor/" + tvclave.getText().toString();
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -158,7 +158,7 @@ public class DetallesMapaActividaActivity extends AppCompatActivity {
                             intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                             intent.putExtra(HomeFragment.cargo, user.getCargo());
                             intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                          //  intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                             startActivity(intent);
                             finish();
                         }
@@ -190,7 +190,7 @@ public class DetallesMapaActividaActivity extends AppCompatActivity {
                         intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                         intent.putExtra(HomeFragment.cargo, user.getCargo());
                         intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                        //intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                         startActivity(intent);
                         finish();
                     }

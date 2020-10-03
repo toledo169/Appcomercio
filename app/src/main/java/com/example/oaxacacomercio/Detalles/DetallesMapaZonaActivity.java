@@ -210,7 +210,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity {
                 }
             }
         }, 3000);
-        String url = "http://192.168.0.9/api/Usuario/listarzonavendedor/" + claveZ;
+        String url = "http://192.168.10.233/api/Usuario/listarzonavendedor/" + claveZ;
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -260,7 +260,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity {
                             intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                             intent.putExtra(HomeFragment.cargo, user.getCargo());
                             intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                           // intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                             startActivity(intent);
                             finish();
                         }
@@ -292,7 +292,7 @@ public class DetallesMapaZonaActivity extends AppCompatActivity {
                         intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                         intent.putExtra(HomeFragment.cargo, user.getCargo());
                         intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                       // intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                         startActivity(intent);
                         finish();
                     }

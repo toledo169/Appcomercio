@@ -26,18 +26,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </androidx.recyclerview.widget.RecyclerView>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/vendedorestotales"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="35dp"
+            android:layout_marginEnd="7dp"
             android:backgroundTint="#b34766"
+            android:clickable="true"
             android:src="@drawable/historia"
             app:backgroundTint="#b34766"
-            app:borderWidth="4dp"
-            android:layout_marginBottom="50dp"
-            android:layout_marginEnd="7dp"
-            android:layout_gravity="bottom|end"
-            android:clickable="true"
-            />
+            app:borderWidth="4dp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>

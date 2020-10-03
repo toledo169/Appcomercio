@@ -2,6 +2,7 @@ package com.example.oaxacacomercio.Eventuales;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,8 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -64,7 +67,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
     RequestQueue request;
     private LinearLayoutManager layoutManager;
     PermisosAdapter adapter;
-    private EditText sercho;
+   // private EditText sercho;
     SweetAlertDialog sweetAlertDialog;
 
     @Override
@@ -75,7 +78,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
         listapermisos = new ArrayList<>();
         listaauxiliar = new ArrayList<>();
         recyclerViewzonas = (RecyclerView) findViewById(R.id.idRecyclerpermisosnotif);
-        sercho = (EditText) findViewById(R.id.bucarpermisosnotif);
+     //   sercho = (EditText) findViewById(R.id.bucarpermisosnotif);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewzonas.setLayoutManager(layoutManager);
         recyclerViewzonas.setHasFixedSize(true);
@@ -88,7 +91,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
         getSupportActionBar().setTitle("Eventos del dia");
         request = Volley.newRequestQueue(this);
         cargarwebservice();
-        sercho.addTextChangedListener(new TextWatcher() {
+       /* sercho.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -102,6 +105,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
             public void afterTextChanged(Editable editable) {
             }
         });
+        */
     }
 
     private void cargarwebservice() {
@@ -117,7 +121,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
                 mDialog.dismiss();
             }
         }, 3000);
-        String url = "http://192.168.0.9/api/Usuario/permisomapa/";
+        String url = "http://192.168.10.233/api/Usuario/permisomapa/";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
     }
@@ -154,7 +158,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
                 intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                 intent.putExtra(HomeFragment.cargo, user.getCargo());
                 intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+           //     intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                 startActivity(intent);
                 finish();
                 sweetAlertDialog.dismiss();
@@ -208,7 +212,7 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
                     intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                     intent.putExtra(HomeFragment.cargo, user.getCargo());
                     intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                    intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+             //       intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                     startActivity(intent);
                     finish();
                     sweetAlertDialog.dismiss();
@@ -238,6 +242,26 @@ public class PermisosEventualActivity extends AppCompatActivity implements Respo
         if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.dismiss();
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater= getMenuInflater();
+        inflater.inflate(R.menu.search_menu,menu);
+        MenuItem item= menu.findItem(R.id.search_vendedoraction);
+        SearchView searchView=(SearchView)item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buscador("" + newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }
 

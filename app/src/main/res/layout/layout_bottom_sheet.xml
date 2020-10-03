@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="Municipio de Oaxaca de Juarez"
+                android:text="Municipio de Oaxaca de Juárez"
                 android:textColor="#500014"
                 android:textSize="16sp"
                 android:textStyle="bold" />

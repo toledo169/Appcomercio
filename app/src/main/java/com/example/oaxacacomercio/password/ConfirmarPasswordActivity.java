@@ -95,7 +95,7 @@ public class ConfirmarPasswordActivity extends AppCompatActivity {
                                             .showCancelButton(false).setCancelClickListener(null).setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     sDialog.setCancelable(false);
                                     sDialog.setCanceledOnTouchOutside(false);
-                                    ejecutarserviciotodo("http://192.168.0.9/api/Usuario/editapass?email=" + email + "&password=" + inputpassword1.getEditText().getText().toString());
+                                    ejecutarserviciotodo("http://192.168.10.233/api/Usuario/editapass?email=" + email + "&password=" + inputpassword1.getEditText().getText().toString());
                                     Intent intent= new Intent(ConfirmarPasswordActivity.this, MainActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);

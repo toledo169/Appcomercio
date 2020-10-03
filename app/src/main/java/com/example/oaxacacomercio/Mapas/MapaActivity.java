@@ -191,7 +191,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             goMain.putExtra(HomeFragment.correo, usuario.getCorreoelectronico());
             goMain.putExtra(HomeFragment.cargo, usuario.getCargo());
             goMain.putExtra(HomeFragment.municipio, usuario.getMunicipio());
-            goMain.putExtra(HomeFragment.fotoperfil, usuario.getImage());
+            //goMain.putExtra(HomeFragment.fotoperfil, usuario.getImage());
             //   finish();
             startActivity(goMain);
             finish();

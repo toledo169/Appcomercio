@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:contentDescription="@string/app_name"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:layout_gravity="center_vertical|center_horizontal"
                 app:layout_collapseMode="parallax"

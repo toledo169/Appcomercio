@@ -128,7 +128,7 @@ public class SlideshowFragment extends Fragment {
 
             }
         }, 3000);
-        String url = "http://192.168.0.9/api/Usuario/vendedoreslistar/";
+        String url = "http://192.168.10.233/api/Usuario/vendedoreslistar/";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -189,7 +189,7 @@ public class SlideshowFragment extends Fragment {
                             intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                             intent.putExtra(HomeFragment.cargo, user.getCargo());
                             intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                            intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                     //       intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                             startActivity(intent);
                             getActivity().finish();
                             sweetAlertDialog.dismiss();
@@ -222,7 +222,7 @@ public class SlideshowFragment extends Fragment {
                         intent.putExtra(HomeFragment.correo, user.getCorreoelectronico());
                         intent.putExtra(HomeFragment.cargo, user.getCargo());
                         intent.putExtra(HomeFragment.municipio, user.getMunicipio());
-                        intent.putExtra(HomeFragment.fotoperfil, user.getImage());
+                       // intent.putExtra(HomeFragment.fotoperfil, user.getImage());
                         startActivity(intent);
                         getActivity().finish();
                         sweetAlertDialog.dismiss();
